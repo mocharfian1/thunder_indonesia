@@ -1,0 +1,13 @@
+
+assets/doc_penawaran/
+
+INVOICE.pdf
+
+application/config/database.php
+
+application/config/
+
+*.pdf
+*.xlsx
+
+application/third_party/mpdf60/
