@@ -62,6 +62,92 @@ class Consumable extends CI_Controller {
 
 		$this->load->view('view-index',$var);
 	}
+
+	public function v_addSparepart(){
+		$query = $this->db->get_where('consumable_kategori',array(
+			'is_delete'=>0
+		));
+
+		$var['kategori'] = '';
+
+		if($query->num_rows()>0){
+			$var['kategori'] = $query->result();
+		}else{
+			$var['kategori'] = array();
+		}
+
+		$this->load->view('consumable/v-add_sparepart',$var);
+	}
+
+	public function submitAdd(){
+		header('Content-type:application/json');
+
+		// $type = $this->input->get('type');
+		$this->db->insert('consumable_item',$this->input->post());
+	}
+
+	public function getKategoriConsumable(){
+		$query = $this->db->get_where('consumable_kategori',array(
+			'is_delete'=>0
+		));
+
+		if($query->num_rows()>0){
+			echo json_encode(array(
+				'success'=>true,
+				'data'=>$query->result()
+			));
+		}else{
+			echo json_encode(array(
+				'success'=>false,
+				'data'=>null
+			));
+		}
+	}
+
+	public function getSubKategoriConsumable(){
+		header('Content-type:application/json');
+		$id_kat = $this->input->post('id_kat');
+
+		$query = $this->db->get_where('consumable_sub_kategori',array(
+			'id_kategori'=>$id_kat,
+			'is_delete'=>0
+		));
+
+		if($query->num_rows()>0){
+			echo json_encode(array(
+				'success'=>true,
+				'data'=>$query->result()
+			));
+		}else{
+			echo json_encode(array(
+				'success'=>false,
+				'data'=>null
+			));
+		}
+	}
+
+	public function chBarcode(){
+		header('Content-type:application/json');
+
+		$barcode = $this->input->post('barcode');
+
+		$query = $this->db->get_where('consumable_item',array(
+			'barcode'=>$barcode,
+			'is_delete'=>0
+		));
+
+		if($query->num_rows()>0){
+			echo json_encode(array(
+				'success'=>false,
+				'message'=>'Barcode sudah digunakan'
+			));
+		}else{
+			echo json_encode(array(
+				'success'=>true,
+				'message'=>'Barcode dapat dugunakan'
+			));
+		}
+	}
 }
 
 ?>

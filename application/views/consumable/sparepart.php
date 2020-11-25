@@ -9,8 +9,8 @@
 
         <br>
         <!-- <a href="<?php //echo base_url('kategori/add'); ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
-        <button type="button" id="addRow" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-kategori"><span class="glyphicon glyphicon-plus"></span>
-          Tambah Kategori
+        <button type="button" id="addRow" class="btn btn-success" onclick="addSparepart()">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Kategori
         </button>
         <br>
         <hr style="border-top: 3px double #8c8b8b;">
