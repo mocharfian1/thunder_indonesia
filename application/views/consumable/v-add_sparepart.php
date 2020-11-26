@@ -3,6 +3,7 @@
     <label for="barcode">Barcode</label>
     <input type="number" class="form-control" id="barcode" placeholder="Enter Barcode" onkeydown="ckBarcode(this)">
     <small id="notif_barcode" class="form-text text-muted">Barcode otomatis mendeteksi jika ada kesamaan.</small>
+    <input id="bc_cek" type="hidden">
   </div>
   <div class="form-group">
     <label for="barcode">Nama Barang</label>

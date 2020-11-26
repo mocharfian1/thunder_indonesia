@@ -5,6 +5,62 @@ var del_item_paket = [];
 var indexFind = 0;
 var st_btn_add = true;
 
+
+$(function(){
+	$.post(URL+'/produk/getKategori').done((data)=>{
+		// alert(data.data.length);
+		var i;
+		for(i=0; i<data.data.length; i++){
+			var newOption = new Option(data.data[i].description, data.data[i].id);
+			$('#selKategori').append(newOption);
+		}
+	}).fail((e)=>{
+
+	});
+});
+
+
+var kat;
+var sub_kat;
+
+function getSubKat(e){
+	kat = $(e).val();
+	$('#selSubKategori').html('<option disabled selected>-- Pilih Sub Kategori --</option>');
+	// var optSub = new Option('-- Pilih Sub Kategori --','',false,false);
+	// $('#selSubKategori').append(optSub);
+	$.post(URL+'/produk/getSubKategori',{id:$(e).val()}).done((data)=>{
+		
+		var i;
+		for(i=0; i<data.data.length; i++){
+			var optSub = new Option(data.data[i].sub_description, data.data[i].id);
+			$('#selSubKategori').append(optSub);
+		}
+	}).fail((e)=>{
+
+	});
+}
+
+function getItem(e){
+	sub_kat = $(e).val();
+	$('#item_select').html('<option disabled selected>-- Pilih Item --</option>');
+
+	$.post(URL+'/produk/getItemPem',{id_sub:$(e).val(),id_kat:kat}).done((data)=>{
+		
+		var i;
+		for(i=0; i<data.data.length; i++){
+			var value = 	data.data[i].ID_ITEM +'|'+
+                            data.data[i].barcode +'|'+
+                            data.data[i].nama_item +'|'+
+                            data.data[i].qty+'|'+
+                            data.data[i].harga_jual;
+			var optSub = new Option(data.data[i].nama_item, value);
+			$('#item_select').append(optSub);
+		}
+	}).fail((e)=>{
+
+	});
+}
+
 $(document).ready(function(){
 	
 	$('#tb_paket').DataTable();

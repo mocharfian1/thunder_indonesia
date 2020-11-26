@@ -60,6 +60,7 @@
           <li class="<?php echo $s_active=='consumable-sparepart'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_sparepart'); ?>"><i class="fa fa-circle-o"></i> Sparepart</a></li>
           <li class="<?php echo $s_active=='consumable-atk'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_atk'); ?>"><i class="fa fa-circle-o"></i> ATK</a></li>
           <li class="<?php echo $s_active=='consumable-lainnya'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_lainnya'); ?>"><i class="fa fa-circle-o"></i> Barang Pendukung</a></li>
+          <li class="<?php echo $s_active=='consumable-kategori_sub'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_kategori_sub'); ?>"><i class="fa fa-circle-o"></i> Kategori & Sub Kategori</a></li>
         </ul>
       </li>
   <?php } ?>

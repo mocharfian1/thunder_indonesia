@@ -102,20 +102,31 @@
                               <div class="form-group">
                                 <label for="item_select">Select Item</label>
                                 <div class="input-group">
-                                  
-                                  <select class="select2 act" id="item_select" onchange="ch_select($(this).val())">
-                                        <option disabled="disabled" selected="selected">--Select Item--</option>
-                                    <?php foreach ($items as $key => $value) { ?>
-                                        <?php 
-                                          $val =  $value->ID_ITEM . '|' .
-                                                  $value->barcode . '|' .
-                                                  $value->nama_item . '|' .
-                                                  $value->qty . '|' .
-                                                  $value->harga_jual;
-                                        ?>
-                                        <option value="<?php echo $val; ?>"><?php echo $value->nama_item . ' - ' . $value->barcode; ?> (Stock : <?= $value->qty; ?>)</option>
-                                    <?php } ?>
-                                  </select>
+                                  <div class="col-xs-6">
+                                    <select class="select2 act" id="selKategori" onchange="getSubKat(this)">
+                                        <option disabled selected>-- Pilih Kategori --</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-xs-6">
+                                    <select class="select2 act" id="selSubKategori" onchange="getItem(this)">
+                                      <option>-- Pilih Sub Kategori --</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-xs-12">
+                                    <select class="select2 act" id="item_select" onchange="ch_select($(this).val())">
+                                          <option disabled="disabled" selected="selected">--Select Item--</option>
+                                      <?php foreach ($items as $key => $value) { ?>
+                                          <?php 
+                                            $val =  $value->ID_ITEM . '|' .
+                                                    $value->barcode . '|' .
+                                                    $value->nama_item . '|' .
+                                                    $value->qty . '|' .
+                                                    $value->harga_jual;
+                                          ?>
+                                          <option value="<?php echo $val; ?>"><?php echo $value->nama_item . ' - ' . $value->barcode; ?> (Stock : <?= $value->qty; ?>)</option>
+                                      <?php } ?>
+                                    </select>
+                                  </div>
                                   
                                   <span  onclick="u_barcode()" class="input-group-addon" data-toggle="tooltip" data-placement="top" title="Use Barcode" style="cursor: pointer;"><i class="glyphicon glyphicon-barcode"></i></span>
                                 </div>
