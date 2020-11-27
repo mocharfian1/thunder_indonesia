@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <div id="table-wrapper">
         <center>
           <h2>SET UP <?php echo $page_title; ?></h2>
@@ -9,7 +9,7 @@
 
         <br>
         <!-- <a href="<?php //echo base_url('kategori/add'); ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
-        <button type="button" id="addRow" class="btn btn-success" onclick="addSparepart()">
+        <button type="button" id="addRow" class="btn btn-success" onclick="add_kategori()">
             <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Kategori
         </button>
         <br>
@@ -18,23 +18,60 @@
         <table id="tb_item" class="table table-bordered table-striped table-hover datatable" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>Nomor</th>
-              <th>Barcode</th>
-              <th>Nama Barang</th>
-              <th>Kategori</th>
-              <th>Sub Kategori</th>
-              <th>Qty</th>
-              <th>Satuan</th>
+              <th>No.</th>
+              <th>Nama Kategori</th>
             </tr>
           </thead>
           <tbody>
-              <td>Nomor</td>
-              <td>Barcode</td>
-              <td>Nama Barang</td>
-              <td>Kategori</td>
-              <td>Sub Kategori</td>
-              <td>Qty</td>
-              <td>Satuan</td>
+              <?php if(!empty($kategori)){ ?>
+                <?php $no =1; ?>
+                <?php foreach ($kategori as $key => $value) { ?>
+                  <tr>
+                    <td><?= $no; ?></td>
+                    <td><?= $value->description; ?></td>
+                  </tr>
+                <?php $no++; } ?>
+              <?php } ?>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div id="table-wrapper">
+        <center>
+          <h2>SET UP <?php echo $page_title_2; ?></h2>
+          <hr style="border-top: 3px double #8c8b8b;">
+          <?php //$this->load->view('tpl_form_message'); ?>
+        </center>
+
+        <br>
+        <!-- <a href="<?php //echo base_url('kategori/add'); ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
+        <button type="button" id="addRow" class="btn btn-success" onclick="add_sub_kategori()">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Sub Kategori
+        </button>
+        <br>
+        <hr style="border-top: 3px double #8c8b8b;">
+
+        <table id="tb_item" class="table table-bordered table-striped table-hover datatable" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Nama Kategori</th>
+              <th>Nama Sub Kategori</th>
+            </tr>
+          </thead>
+          <tbody>
+              <?php if(!empty($sub_kategori)){ ?>
+                <?php $no =1; ?>
+                <?php foreach ($sub_kategori as $key => $value) { ?>
+                  <tr>
+                    <td><?= $no; ?></td>
+                    <td><?= $value->description; ?></td>
+                    <td><?= $value->sub_description; ?></td>
+                  </tr>
+                <?php $no++; } ?>
+              <?php } ?>
           </tbody>
         </table>
     </div>

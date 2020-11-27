@@ -49,7 +49,7 @@
   <?php } ?>
 
   <?php if($user == 'Super Admin'||$user=='Kepala Divisi' || $user == 'Admin'||$user=='Admin Gudang'){ ?>
-      <li class="treeview <?php echo $s_active=='consumable' || $s_active=='consumable-sparepart' || $s_active=='consumable-atk' || $s_active=='consumable-lainnya' || $s_active=='consumable-kategori_sub' ? 'active':''; ?>">
+      <li class="treeview <?php echo $s_active=='consumable' || $s_active=='consumable-SPAREPART' || $s_active=='consumable-ATK' || $s_active=='consumable-PENDUKUNG' || $s_active=='consumable-kategori_sub' ? 'active':''; ?>">
         <a href="#">
           <i class="fa fa-shopping-bag"></i> <span>Consumable</span>
           <span class="pull-right-container">
@@ -57,9 +57,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="<?php echo $s_active=='consumable-sparepart'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_sparepart'); ?>"><i class="fa fa-circle-o"></i> Sparepart</a></li>
-          <li class="<?php echo $s_active=='consumable-atk'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_atk'); ?>"><i class="fa fa-circle-o"></i> ATK</a></li>
-          <li class="<?php echo $s_active=='consumable-lainnya'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_lainnya'); ?>"><i class="fa fa-circle-o"></i> Barang Pendukung</a></li>
+          <li class="<?php echo $s_active=='consumable-SPAREPART'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_table?type=SPAREPART'); ?>"><i class="fa fa-circle-o"></i> Sparepart</a></li>
+          <li class="<?php echo $s_active=='consumable-ATK'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_table?type=ATK'); ?>"><i class="fa fa-circle-o"></i> ATK</a></li>
+          <li class="<?php echo $s_active=='consumable-PENDUKUNG'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_table?type=PENDUKUNG'); ?>"><i class="fa fa-circle-o"></i> Barang Pendukung</a></li>
           <li class="<?php echo $s_active=='consumable-kategori_sub'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_kategori_sub'); ?>"><i class="fa fa-circle-o"></i> Kategori & Sub Kategori</a></li>
         </ul>
       </li>

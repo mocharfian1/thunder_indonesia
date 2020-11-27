@@ -9,8 +9,8 @@
 
         <br>
         <!-- <a href="<?php //echo base_url('kategori/add'); ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
-        <button type="button" id="addRow" class="btn btn-success" onclick="addSparepart()">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Kategori
+        <button type="button" id="addRow" class="btn btn-success" onclick="add_item(`<?= $_GET['type']; ?>`)">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Item
         </button>
         <br>
         <hr style="border-top: 3px double #8c8b8b;">
@@ -28,13 +28,19 @@
             </tr>
           </thead>
           <tbody>
-              <td>Nomor</td>
-              <td>Barcode</td>
-              <td>Nama Barang</td>
-              <td>Kategori</td>
-              <td>Sub Kategori</td>
-              <td>Qty</td>
-              <td>Satuan</td>
+            <?php if(!empty($barang)){ ?>
+              <?php $no=1; foreach ($barang as $key => $value) { ?>
+                <tr>
+                  <td><?= $no; ?></td>
+                  <td><?= $value->barcode; ?></td>
+                  <td><?= $value->item_name; ?></td>
+                  <td><?= $value->description; ?></td>
+                  <td><?= $value->sub_description; ?></td>
+                  <td><?= $value->qty; ?></td>
+                  <td><?= $value->satuan; ?></td>
+                </tr>
+              <?php $no++; } ?>
+            <?php } ?>
           </tbody>
         </table>
     </div>

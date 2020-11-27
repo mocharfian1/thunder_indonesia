@@ -21,63 +21,88 @@ class Consumable extends CI_Controller {
 		$this->load->view('view-index',$var);
 	}
 
-	public function consumable_sparepart(){
+	public function consumable_table(){
 		$var['title'] 		= 'Sparepart';
 		$var['page_title'] 	= 'CONSUMABLE';
-		$var['content'] 	= 'consumable/sparepart';
-		$var['s_active'] 	= 'consumable-sparepart';
+		$var['content'] 	= 'consumable/item';
+		$var['s_active'] 	= 'consumable-'.$this->input->get('type');
 		$var['js'] 			= 'js-consumable';
 		$var['plugin'] 		= 'plugin_1';
 		$var['user'] 		= $_SESSION['user_type'];
 		// $var['mode'] = 'view';
+
+		$var['type'] = $this->input->get('type');
 		
+		$query = $this->db->query("
+			select 
+				ck.description,cs.sub_description,i.*
+			from
+				consumable_item i
+				join consumable_kategori ck on i.id_kategori=ck.id
+				join consumable_sub_kategori cs on i.id_sub_kategori=cs.id
+			where
+				i.`type`='".$var['type']."'
+				and i.is_delete=0
+		");
 
-		$this->load->view('view-index',$var);
-	}
+		$var['barang'] = array();
 
-	public function consumable_atk(){
-		$var['title'] 		= 'ATK';
-		$var['page_title'] 	= 'CONSUMABLE';
-		$var['content'] 	= 'consumable/atk';
-		$var['s_active'] 	= 'consumable-atk';
-		$var['js'] 			= 'js-consumable';
-		$var['plugin'] 		= 'plugin_1';
-		$var['user'] 		= $_SESSION['user_type'];
-		// $var['mode'] = 'view';
-		
-
-		$this->load->view('view-index',$var);
-	}
-
-	public function consumable_lainnya(){
-		$var['title'] 		= 'Barang Pendukung';
-		$var['page_title'] 	= 'CONSUMABLE';
-		$var['content'] 	= 'consumable/lainnya';
-		$var['s_active'] 	= 'consumable-lainnya';
-		$var['js'] 			= 'js-consumable';
-		$var['plugin'] 		= 'plugin_1';
-		$var['user'] 		= $_SESSION['user_type'];
-		// $var['mode'] = 'view';
-		
+		if($query->num_rows()>0){
+			$var['barang'] = $query->result();
+		}
 
 		$this->load->view('view-index',$var);
 	}
 
 	public function consumable_kategori_sub(){
 		$var['title'] 		= 'Kategori & Sub Kategori';
-		$var['page_title'] 	= 'CONSUMABLE';
+		$var['page_title'] 	= 'KATGEORI';
+		$var['page_title_2']= 'SUB KATGEORI';
 		$var['content'] 	= 'consumable/kategori_sub';
 		$var['s_active'] 	= 'consumable-kategori_sub';
 		$var['js'] 			= 'js-consumable';
 		$var['plugin'] 		= 'plugin_1';
 		$var['user'] 		= $_SESSION['user_type'];
 		// $var['mode'] = 'view';
+
+		$query_sub = $this->db->query("
+			select 
+				ck.description,
+				cs.sub_description
+			from 
+				consumable_kategori ck
+				join consumable_sub_kategori cs on ck.id=cs.id_kategori
+			where
+				ck.is_delete = 0
+				and cs.is_delete = 0
+		");
+
+		$var['sub_kategori'] = array();
+
+		if($query_sub->num_rows()>0){
+			$var['sub_kategori'] = $query_sub->result();
+		}
+
+		$query_kat = $this->db->query("
+			select 
+				ck.description
+			from 
+				consumable_kategori ck
+			where
+				ck.is_delete = 0
+		");
+
+		$var['kategori'] = array();
+
+		if($query_kat->num_rows()>0){
+			$var['kategori'] = $query_kat->result();
+		}
 		
 
 		$this->load->view('view-index',$var);
 	}
 
-	public function v_addSparepart(){
+	public function v_add_item(){
 		$query = $this->db->get_where('consumable_kategori',array(
 			'is_delete'=>0
 		));
@@ -90,7 +115,7 @@ class Consumable extends CI_Controller {
 			$var['kategori'] = array();
 		}
 
-		$this->load->view('consumable/v-add_sparepart',$var);
+		$this->load->view('consumable/v-add_item',$var);
 	}
 
 	public function submitAdd(){
@@ -101,6 +126,7 @@ class Consumable extends CI_Controller {
 	}
 
 	public function getKategoriConsumable(){
+		header('Content-type:application/json');
 		$query = $this->db->get_where('consumable_kategori',array(
 			'is_delete'=>0
 		));
@@ -159,6 +185,52 @@ class Consumable extends CI_Controller {
 			echo json_encode(array(
 				'success'=>true,
 				'message'=>'Barcode dapat dugunakan'
+			));
+		}
+	}
+
+	public function create_kategori(){
+		header('Content-type:application/json');
+
+		$nama = $this->input->post('nama_kategori');
+
+		$query = $this->db->insert('consumable_kategori',array(
+			'description'	=>	$nama
+		));
+
+		if($query){
+			echo json_encode(array(
+				'success'=>true,
+				'message'=>'Berhasil menambah data'
+			));
+		}else{
+			echo json_encode(array(
+				'success'=>false,
+				'message'=>'Gagal menambah data'
+			));
+		}
+	}
+
+	public function create_sub_kategori(){
+		header('Content-type:application/json');
+
+		$id_kat 	= $this->input->post('kategori');
+		$nama 		= $this->input->post('nama_sub_kategori');
+
+		$query = $this->db->insert('consumable_sub_kategori',array(
+			'id_kategori'		=>	$id_kat,
+			'sub_description'	=>	$nama
+		));
+
+		if($query){
+			echo json_encode(array(
+				'success'	=>	true,
+				'message'	=>	'Berhasil menambah data'
+			));
+		}else{
+			echo json_encode(array(
+				'success'	=>	false,
+				'message'	=>	'Gagal menambah data'
 			));
 		}
 	}

@@ -1,12 +1,12 @@
 $('.datatable').DataTable();
 
 class Sparepart{
-	add(){
+	add(type=null){
 		$.confirm({
 			title:'Tambah Barang ( Consumable )',
 			content:function(){
 				var self = this;
-				return $.post(URL+'consumable/v_addSparepart').done((data)=>{
+				return $.post(URL+'consumable/v_add_item').done((data)=>{
 					self.setContent(data);
 				});
 			},
@@ -25,7 +25,7 @@ class Sparepart{
 						let satuan = self.find('#satuan').val();
 
 						$.post(URL+'consumable/submitAdd',{
-							type:'SPAREPART',
+							type:type,
 							barcode:barcode,
 							item_name:nama_barang,
 							id_kategori:kategori,
@@ -72,10 +72,95 @@ class Sparepart{
 	}
 }
 
-var SP = new Sparepart();
+class SubKat{
+	addKategori(){
+		$.confirm({
+			title:`Tambah Kategori`,
+			content:`
+				<form>
+					<div class="form-group">
+					    <input id="nama_kategori" type='text' class="form-control" placeholder="Masukkan Nama Kategori">
+					</div>
+				</form>
+			`,
+			buttons:{
+				submit:{
+					text:'Simpan',
+					btnClass:'btn-primary',
+					action:function(){
+						var self = this;
+						var nama_kategori = self.$content.find('#nama_kategori').val();
 
-function addSparepart(){
-	SP.add();
+						$.post(URL+'consumable/create_kategori',{nama_kategori:nama_kategori}).done((data)=>{
+							alert(data.message);
+							window.location.reload();
+						}).fail((e)=>{
+
+						});
+					}
+				},cancel:{
+					text:'Batal'
+				}
+			}
+		});
+	}
+
+	addSubKategori(){
+		$.confirm({
+			title:`Tambah Sub Kategori`,
+			content:function(){
+				var self = this;
+				return $.get(URL+'consumable/getKategoriConsumable').done((data)=>{
+					var opt = `<option disabled selected>-- Pilih Kategori --</option>`;
+					for(var i = 0; i<data.data.length; i++){
+						opt+=`<option value=`+data.data[i].id+`>`+data.data[i].description+`</option>`;
+					}
+
+					self.setContent(`
+						<form>
+							<div class="form-group">
+								<select class="form-control" id="kategori">
+									`+opt+`
+								</select>
+							</div>
+							<div class="form-group">
+							    <input id="nama_sub_kategori" type='text' class="form-control" placeholder="Masukkan Nama Kategori">
+							</div>
+						</form>
+					`);
+				}).fail((e)=>{
+
+				});
+			},
+			buttons:{
+				submit:{
+					text:'Simpan',
+					btnClass:'btn-primary',
+					action:function(){
+						var self = this;
+						var kategori = self.$content.find('#kategori').val();
+						var nama_sub_kategori = self.$content.find('#nama_sub_kategori').val();
+
+						$.post(URL+'consumable/create_sub_kategori',{kategori:kategori, nama_sub_kategori:nama_sub_kategori}).done((data)=>{
+							alert(data.message);
+							window.location.reload();
+						}).fail((e)=>{
+
+						});
+					}
+				},cancel:{
+					text:'Batal'
+				}
+			}
+		});
+	}
+}
+
+var SP = new Sparepart();
+var SK = new SubKat();
+
+function add_item(type=null){
+	SP.add(type);
 }
 
 function setSub(e){
@@ -87,3 +172,12 @@ function ckBarcode(e){
 		SP.getBarcode(e);
 	},100);
 }
+
+function add_kategori(){
+	SK.addKategori();
+}
+
+function add_sub_kategori(){
+	SK.addSubKategori();
+}
+
