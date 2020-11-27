@@ -558,10 +558,10 @@
                                               <select class="select2 act" id="selKategori" onchange="getSubKat(this)">
                                                   <option disabled selected>-- Pilih Kategori --</option>
                                               </select>
-                                              <select class="select2 act" id="selSubKategori" onchange="getItem(this)">
+                                              <select class="select2 hidden" id="selSubKategori" onchange="getItem(this)">
                                                   <option>-- Pilih Sub Kategori --</option>
                                               </select>
-                                              <select <?php echo nego(); ?> style="width:100%;" class="select2 act" id="item_select" onchange="ch_select($(this).val())">
+                                              <select <?php echo nego(); ?> style="width:100%;" class="select2 hidden" id="item_select" onchange="ch_select($(this).val())">
                                                 <option disabled="disabled" selected="selected">-- Pilih Item --</option>
                                                 <?php if(!array_key_exists('status', $items)){?>
                                                     <?php foreach ($items as $key => $value) { ?>
@@ -920,6 +920,13 @@ input[type=submit] {
   /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important; 
   color: #ffffff; 
+}
+
+#select2-selSubKategori{
+  display: none;
+}
+#select2-item_select{
+  display: none;
 }
 
 

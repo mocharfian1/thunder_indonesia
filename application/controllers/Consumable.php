@@ -63,6 +63,20 @@ class Consumable extends CI_Controller {
 		$this->load->view('view-index',$var);
 	}
 
+	public function consumable_kategori_sub(){
+		$var['title'] 		= 'Kategori & Sub Kategori';
+		$var['page_title'] 	= 'CONSUMABLE';
+		$var['content'] 	= 'consumable/kategori_sub';
+		$var['s_active'] 	= 'consumable-kategori_sub';
+		$var['js'] 			= 'js-consumable';
+		$var['plugin'] 		= 'plugin_1';
+		$var['user'] 		= $_SESSION['user_type'];
+		// $var['mode'] = 'view';
+		
+
+		$this->load->view('view-index',$var);
+	}
+
 	public function v_addSparepart(){
 		$query = $this->db->get_where('consumable_kategori',array(
 			'is_delete'=>0

@@ -49,7 +49,7 @@
   <?php } ?>
 
   <?php if($user == 'Super Admin'||$user=='Kepala Divisi' || $user == 'Admin'||$user=='Admin Gudang'){ ?>
-      <li class="treeview <?php echo $s_active=='consumable' || $s_active=='consumable-sparepart' || $s_active=='consumable-atk' || $s_active=='consumable-lainnya' ? 'active':''; ?>">
+      <li class="treeview <?php echo $s_active=='consumable' || $s_active=='consumable-sparepart' || $s_active=='consumable-atk' || $s_active=='consumable-lainnya' || $s_active=='consumable-kategori_sub' ? 'active':''; ?>">
         <a href="#">
           <i class="fa fa-shopping-bag"></i> <span>Consumable</span>
           <span class="pull-right-container">

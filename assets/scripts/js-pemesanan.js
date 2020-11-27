@@ -29,6 +29,9 @@ var kat;
 var sub_kat;
 
 function getSubKat(e){
+	$('#selSubKategori').removeClass('hidden');
+	$('#selSubKategori').select2();
+	// $('#selSubKategori').fadeIn('fast');
 	kat = $(e).val();
 	$('#selSubKategori').html('<option disabled selected>-- Pilih Sub Kategori --</option>');
 	// var optSub = new Option('-- Pilih Sub Kategori --','',false,false);
@@ -46,6 +49,9 @@ function getSubKat(e){
 }
 
 function getItem(e){
+	$('#item_select').removeClass('hidden');
+	$('#item_select').select2();
+
 	sub_kat = $(e).val();
 	$('#item_select').html('<option disabled selected>-- Pilih Item --</option>');
 
@@ -212,6 +218,8 @@ function enter(event) {
 }
 
 function add_item() {
+	
+
 	if(is_durasi==0){
 		let item_val = $('#item_select').val().split('|');
 
@@ -397,11 +405,18 @@ function add_item() {
 														'',
 														item_durasi[0]
 													]).draw(false);
+
+
 								
 
 								$.each($('#tb_item_pemesanan').find('tbody tr'), function(index, val) {
 									$('#tb_item_pemesanan').find('tbody tr:eq(' + index + ') td:eq(0) p.no_item').html(index + 1);
 								});
+
+								// $('#selSubKategori').select2('destroy');
+								// $('#selSubKategori').addClass('hidden');
+								// $('#item_select').select2('destroy');
+								// $('#item_select').addClass('hidden');
 								//$('#qty').val('1');
 
 							}
@@ -1418,6 +1433,7 @@ function conf_to_prod(x){
 var is_durasi = 0;
 
 function ch_select(x){
+	
 	// $('#btn_add').prop('disabled',true);
 	$('#sel_durasi').hide();
 	$('#load_sel_durasi').show();
