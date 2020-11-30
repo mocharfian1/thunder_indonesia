@@ -12,6 +12,9 @@
         <button type="button" id="addRow" class="btn btn-success" onclick="add_item(`<?= $_GET['type']; ?>`)">
             <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Item
         </button>
+        <button type="button" id="addRow" class="btn btn-warning" onclick="add_item(`<?= $_GET['type']; ?>`)">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Transaksi
+        </button>
         <br>
         <hr style="border-top: 3px double #8c8b8b;">
 
@@ -25,6 +28,8 @@
               <th>Sub Kategori</th>
               <th>Qty</th>
               <th>Satuan</th>
+              <th>Min Stock</th>
+              <th>Max Stock</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +43,8 @@
                   <td><?= $value->sub_description; ?></td>
                   <td><?= $value->qty; ?></td>
                   <td><?= $value->satuan; ?></td>
+                  <td><?= $value->min_stock; ?></td>
+                  <td><?= $value->max_stock; ?></td>
                 </tr>
               <?php $no++; } ?>
             <?php } ?>

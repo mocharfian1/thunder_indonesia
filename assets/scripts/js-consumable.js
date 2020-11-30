@@ -1,6 +1,11 @@
 $('.datatable').DataTable();
 
+var items = [];
+
 class Sparepart{
+	static kat = 0;
+	static sub_kat = 0;
+
 	add(type=null){
 		$.confirm({
 			title:'Tambah Barang ( Consumable )',
@@ -23,6 +28,8 @@ class Sparepart{
 						let sub_kategori = self.find('#sub_kategori').val();
 						let qty = self.find('#qty').val();
 						let satuan = self.find('#satuan').val();
+						let min_stock = self.find('#min_stock').val();
+						let max_stock = self.find('#max_stock').val();
 
 						$.post(URL+'consumable/submitAdd',{
 							type:type,
@@ -31,7 +38,9 @@ class Sparepart{
 							id_kategori:kategori,
 							id_sub_kategori:sub_kategori,
 							qty:qty,
-							satuan:satuan
+							satuan:satuan,
+							min_stock:min_stock,
+							max_stock:max_stock
 						}).done((d)=>{
 
 						}).fail((e)=>{
@@ -47,8 +56,10 @@ class Sparepart{
 	}
 
 	setSub(e){
+		items = [];
 		$('#sub_kategori').html(`<option disabled selected>-- Pilih Sub Kategori --</option>`);
 		var id_kat = $(e).val();
+		this.kat = id_kat;
 
 		$.post(URL+'consumable/getSubKategoriConsumable',{id_kat:id_kat}).done((data)=>{
 
@@ -69,6 +80,39 @@ class Sparepart{
 		}).fail((e)=>{
 
 		});
+	}
+
+	setItem(e){
+
+		$('#item_select').removeClass('hidden');
+		$('#item_select').select2();
+
+		this.sub_kat = $(e).val();
+		var kat = this.kat;
+
+		$('#item_select').html('<option disabled selected>-- Pilih Item --</option>');
+
+		$.post(URL+'/consumable/getItemConsumable',{id_sub:$(e).val(),id_kat:kat}).done((data)=>{
+			
+			var i;
+			for(i=0; i<data.data.length; i++){
+				var value 	= data.data[i].id;
+				var optSub 	= new Option(data.data[i].item_name, value);
+				$('#item_select').append(optSub);
+
+				items.push({
+					id:value,
+					item_name:data.data[i].item_name,
+					barcode:data.data[i].barcode,
+					min_stock:data.data[i].min_stock,
+					max_stock:data.data[i].max_stock
+				});
+			}
+		}).fail((e)=>{
+
+		});
+
+		console.log(items);
 	}
 }
 
@@ -156,6 +200,10 @@ class SubKat{
 	}
 }
 
+class Transaksi{
+	
+}
+
 var SP = new Sparepart();
 var SK = new SubKat();
 
@@ -165,6 +213,10 @@ function add_item(type=null){
 
 function setSub(e){
 	SP.setSub(e);
+}
+
+function setItem(e=null){
+	SP.setItem(e);
 }
 
 function ckBarcode(e){

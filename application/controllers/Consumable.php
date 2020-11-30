@@ -21,6 +21,32 @@ class Consumable extends CI_Controller {
 		$this->load->view('view-index',$var);
 	}
 
+	public function consumable_transaksi(){
+		$var['title'] 		= 'TRANSAKSI';
+		$var['page_title'] 	= 'CONSUMABLE';
+		$var['content'] 	= 'consumable/transaksi';
+		$var['s_active'] 	= 'consumable-transaksi';
+		$var['js'] 			= 'js-consumable';
+		$var['plugin'] 		= 'plugin_1';
+		$var['user'] 		= $_SESSION['user_type'];
+
+
+		$query = $this->db->get_where('consumable_kategori',array(
+			'is_delete'=>0
+		));
+
+		$var['kategori'] = '';
+
+		if($query->num_rows()>0){
+			$var['kategori'] = $query->result();
+		}else{
+			$var['kategori'] = array();
+		}
+		
+
+		$this->load->view('view-index',$var);
+	}
+
 	public function consumable_table(){
 		$var['title'] 		= 'Sparepart';
 		$var['page_title'] 	= 'CONSUMABLE';
@@ -150,6 +176,30 @@ class Consumable extends CI_Controller {
 
 		$query = $this->db->get_where('consumable_sub_kategori',array(
 			'id_kategori'=>$id_kat,
+			'is_delete'=>0
+		));
+
+		if($query->num_rows()>0){
+			echo json_encode(array(
+				'success'=>true,
+				'data'=>$query->result()
+			));
+		}else{
+			echo json_encode(array(
+				'success'=>false,
+				'data'=>null
+			));
+		}
+	}
+
+	public function getItemConsumable(){
+		header('Content-type:application/json');
+		$id_kat = $this->input->post('id_kat');
+		$id_sub = $this->input->post('id_sub');
+
+		$query = $this->db->get_where('consumable_item',array(
+			'id_kategori'=>$id_kat,
+			'id_sub_kategori'=>$id_sub,
 			'is_delete'=>0
 		));
 
