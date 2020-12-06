@@ -7,6 +7,7 @@ class Import extends CI_Controller {
 	}
 
 	public function index(){
+		echo phpinfo();
 		require(__DIR__ . '/../third_party/excel_reader/php-excel-reader/excel_reader2.php');
 		require(__DIR__ . '/../third_party/excel_reader/SpreadsheetReader.php');
 
