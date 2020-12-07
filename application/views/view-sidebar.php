@@ -31,7 +31,7 @@
   
 
   <?php if($user == 'Super Admin'||$user=='Kepala Divisi' || $user == 'Admin'||$user=='Admin Gudang'){ ?>
-      <li class="treeview <?php echo $s_active=='kategori' || $s_active=='sub_kategori' || $s_active=='item' || $s_active=='paket_item' || $s_active=='barang_hilang' ? 'active':''; ?>">
+      <li class="treeview <?php echo $s_active=='kategori' || $s_active=='sub_kategori' || $s_active=='item' || $s_active=='paket_item' || $s_active=='barang_hilang' || $s_active=='import_item' ? 'active':''; ?>">
         <a href="#">
           <i class="fa fa-shopping-bag"></i> <span>Produk</span>
           <span class="pull-right-container">
@@ -44,6 +44,7 @@
           <li class="<?php echo $s_active=='item'? 'active':''; ?>"><a href="<?php echo base_url('produk/item/view'); ?>"><i class="fa fa-circle-o"></i> Item</a></li>
           <li class="<?php echo $s_active=='paket_item'? 'active':''; ?>"><a href="<?php echo base_url('produk/paket_item/view'); ?>"><i class="fa fa-circle-o"></i>Paket Item</a></li>
           <li class="<?php echo $s_active=='barang_hilang'? 'active':''; ?>"><a href="<?php echo base_url('produk/barang_hilang/view'); ?>"><i class="fa fa-circle-o"></i>Barang Hilang</a></li>
+          <li class="<?php echo $s_active=='import_item'? 'active':''; ?>"><a href="<?php echo base_url('import/item'); ?>"><i class="fa fa-circle-o"></i>Import Barang</a></li>
         </ul>
       </li>
   <?php } ?>
