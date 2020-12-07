@@ -1,70 +1,64 @@
 $('#tb_item').DataTable();
 
+
 function opForm(){
 	$.confirm({
 		title:'Upload File',
 		content:`
-			<form>
+			<form id="uploadXLS" enctype="multipart/form-data" method="post">
 				<div class="form-group">
 					<label for="file-import">Pilih FIle</label>
 					<input class="form-control" id="file-import" type="file" accept=".xls,.xlsx"/>
 				</div>
 			</form>
-		`
+		`,
+        buttons:{
+            submit:{
+                text:'Submit',
+                btnClass:'btn-success',
+                action:()=>{
+                    var self = this;
+
+                    var fd = new FormData();
+                    var files = $('#file-import')[0].files;
+                    fd.append('file_input',files[0]);
+
+                    $.ajax({
+                        url: '/import/upload',
+                        type: 'post',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function(d){
+
+                            $.confirm({
+                                title:'LIST ITEM IMPORT',
+                                columnClass:'col-12',
+                                content:d,
+                                buttons:{
+                                    submit:{
+                                        text:'Proses',
+                                        btnClass:'btn-primary'
+                                    },
+                                    cancel:{
+                                        text:'Cancel'
+                                    }
+                                }
+                            });
+                            // if(response != 0){
+                            //     $("#img").attr("src",response); 
+                            //     $(".preview img").show(); // Display image element
+                            // }else{
+                            //     alert('file not uploaded');
+                            // }
+                        },
+                    });
+                }
+            },
+            cancel:{
+                text:'Cancel',
+                btnClass:'btn-default'
+            }
+        }
 	});
 }
-
-
-$(document).ready(function () {
-    $('#submitButton').click(function () {
-    	    $('#uploadForm').ajaxForm({
-    	        target: '#outputImage',
-    	        url: 'uploadFile.php',
-    	        beforeSubmit: function () {
-    	        	  $("#outputImage").hide();
-    	        	   if($("#uploadImage").val() == "") {
-    	        		   $("#outputImage").show();
-    	        		   $("#outputImage").html("<div class='error'>Choose a file to upload.</div>");
-                    return false; 
-                }
-    	            $("#progressDivId").css("display", "block");
-    	            var percentValue = '0%';
-
-    	            $('#progressBar').width(percentValue);
-    	            $('#percent').html(percentValue);
-    	        },
-    	        uploadProgress: function (event, position, total, percentComplete) {
-
-    	            var percentValue = percentComplete + '%';
-    	            $("#progressBar").animate({
-    	                width: '' + percentValue + ''
-    	            }, {
-    	                duration: 5000,
-    	                easing: "linear",
-    	                step: function (x) {
-                        percentText = Math.round(x * 100 / percentComplete);
-    	                    $("#percent").text(percentText + "%");
-                        if(percentText == "100") {
-                        	   $("#outputImage").show();
-                        }
-    	                }
-    	            });
-    	        },
-    	        error: function (response, status, e) {
-    	            alert('Oops something went.');
-    	        },
-    	        
-    	        complete: function (xhr) {
-    	            if (xhr.responseText && xhr.responseText != "error")
-    	            {
-    	            	  $("#outputImage").html(xhr.responseText);
-    	            }
-    	            else{  
-    	               	$("#outputImage").show();
-        	            	$("#outputImage").html("<div class='error'>Problem in uploading file.</div>");
-        	            	$("#progressBar").stop();
-    	            }
-    	        }
-    	    });
-    });
-});

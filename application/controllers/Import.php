@@ -7,10 +7,8 @@ class Import extends CI_Controller {
 	}
 
 	public function index(){
-<<<<<<< HEAD
 		// echo phpinfo();
 		header('Content-type: application/json');
-=======
 		
 		
 	}
@@ -30,7 +28,6 @@ class Import extends CI_Controller {
 	}
 
 	public function submit_upload(){
->>>>>>> main
 		require(__DIR__ . '/../third_party/excel_reader/php-excel-reader/excel_reader2.php');
 		require(__DIR__ . '/../third_party/excel_reader/SpreadsheetReader.php');
 
@@ -46,27 +43,6 @@ class Import extends CI_Controller {
 			}
 
 			if($start==1 && empty($Row[0])){
-				// $query = $this->db->get_where('pos_item',array(
-				// 	'barcode'=>$Row[1],
-				// 	'id_kategori'=>$Row[4],
-				// 	'id_sub_kategori'=>$Row[5]
-				// ));
-
-				// if($query->num_rows()>0){
-				// 	$update = $this->db
-				// 					->where('barcode',$Row[1])
-				// 					->where('id_kategori',$Row[4])
-				// 					->where('id_sub_kategori',$Row[5])
-				// 					->update('pos_item',array('qty'=>$query->row()->qty+$Row[3]));
-
-				// 	if($update){
-				// 		echo "Success";
-				// 	}else{
-				// 		echo "Gagal";
-				// 	}
-				// }else{
-				// 	echo "Item tidak ditemukan";
-				// }
 				$kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[1]));
 				$sub_kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[1]));
 
@@ -100,34 +76,81 @@ class Import extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function item(){
-		$var['title'] = 'IMPORT BARANG';
-		$var['page_title'] = 'IMPORT BARANG';
-		$var['content']='import/story';
-		$var['s_active']='import_item';
-		$var['js'] = 'js-import';
-		$var['plugin'] = 'plugin_1';
-		$var['user'] = $_SESSION['user_type'];
-		// $var['mode'] = 'view';
-		
-
-		$this->load->view('view-index',$var);
-	}
 
 	public function upload(){
-		if (isset($_POST['btnSubmit'])) {
-		    $uploadfile = $_FILES["uploadImage"]["tmp_name"];
-		    $folderPath = "uploads/";
+		// header('Content-type: application/json');
+		
+		if ($_FILES){
+		    $tmp = $_FILES['file_input']['tmp_name'];
+		    $type = $_FILES['file_input']['type'];
+		    $size = $_FILES['file_input']['size'];
+		    $filename = $_FILES['file_input']['name'];
+		    $ext = pathinfo($filename, PATHINFO_EXTENSION);
 		    
-		    if (! is_writable($folderPath) || ! is_dir($folderPath)) {
-		        echo "error";
-		        exit();
-		    }
-		    if (move_uploaded_file($_FILES["uploadImage"]["tmp_name"], $folderPath . $_FILES["uploadImage"]["name"])) {
-		        echo '<img src="' . $folderPath . "" . $_FILES["uploadImage"]["name"] . '">';
-		        exit();
-		    }
+		    if (move_uploaded_file($tmp, $_SERVER['DOCUMENT_ROOT'].'/assets/import_excel/'.time().'_'.date('d-m-Y').'.'.$ext))
+		        $status = 1;
+		    else
+		        $status = 2;
+		 
+		    $hasil = array(
+		        'status' => $status,
+		        'filename' => $filename,
+		        'type' => $type,
+		        'size' => $size,
+		    );
+
+		    // echo json_encode($hasil);
 		}
+
+		require(__DIR__ . '/../third_party/excel_reader/php-excel-reader/excel_reader2.php');
+		require(__DIR__ . '/../third_party/excel_reader/SpreadsheetReader.php');
+
+		$Reader = new SpreadsheetReader($_SERVER['DOCUMENT_ROOT'].'/assets/import_excel/'.time().'_'.date('d-m-Y').'.'.$ext);
+		$Sheets = $Reader->Sheets();
+
+		$data = [];
+		$start = 0;
+		foreach ($Reader as $Row)
+		{
+			if($Row[0]=='end'){
+				$start = 0;
+			}
+
+			if($start==1 && empty($Row[0])){
+				$kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[4]));
+				$sub_kategori = $this->db->get_where('pos_sub_kategori',array('id'=>$Row[5]));
+
+				
+				$nm_kategori = '';
+				if($kategori->num_rows()>0){
+					$nm_kategori = $kategori->row()->description;
+				}
+
+				$nm_sub_kategori = '';
+				if($sub_kategori->num_rows()>0){
+					$nm_sub_kategori = $sub_kategori->row()->sub_description;
+				}
+
+				array_push($data,array(
+					'barcode'=>$Row[1],
+					'nama_item'=>$Row[2],
+					'qty'=>$Row[3],
+					'kategori'=>$nm_kategori,
+					'sub_kategori'=>$nm_sub_kategori,
+					'harga_beli'=>$Row[6],
+					'harga_jual'=>$Row[7],
+					'durasi'=>$Row[8]
+				));
+			}
+
+			if($Row[0]=='start'){
+				$start = 1;
+			}
+		}
+
+		$var['data'] = $data;
+
+		$this->load->view('import/list_temp',$var);
 	}
 }
 

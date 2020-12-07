@@ -10,9 +10,9 @@
   .color-themes{
       background-color: <?php echo !empty($_SESSION['color1']) ? '#'.$_SESSION['color1']:'#3c8dbc';  ?>;
   }
-  table.table thead tr th{
+  /*table.table thead tr th{
       background-color: <?php echo !empty($_SESSION['color1']) ? '#'.$_SESSION['color1']:'#3c8dbc';  ?>;
-  }
+  }*/
   header nav.navbar.navbar-static-top.color-themes{
       background-color: <?php echo !empty($_SESSION['color1']) ? '#'.$_SESSION['color1']:'#3c8dbc';  ?>;
   }
