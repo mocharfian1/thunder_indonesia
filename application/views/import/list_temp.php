@@ -4,13 +4,12 @@
             <tr>
                 <th>No.</th>
                 <th>Barcode</th>
-                <th>Nama Barang</th>
-                <th>Qty</th>
                 <th>Kategori</th>
                 <th>Sub Kategori</th>
-                <th>Harga Beli</th>
-                <th>Harga Jual</th>
-                <th>Pilih&nbsp;<input type="checkbox" name="ck"  onclick="trCheck(this)"></th>
+                <th>Nama Barang</th>
+                <th>Qty</th>
+                <th>Sudah Ada</th>
+                <th>Pilih&nbsp;Semua&nbsp;<input type="checkbox" name="ck"  onclick="trCheck(this)"></th>
             </tr>
         </thead>
         <tbody>
@@ -18,12 +17,11 @@
             	<tr>
             		<td></td>
             		<td><?= $value['barcode']; ?></td>
+                    <td><?= $value['kategori']; ?></td>
+                    <td><?= $value['sub_kategori']; ?></td>
             		<td><?= $value['nama_item']; ?></td>
             		<td><?= $value['qty']; ?></td>
-            		<td><?= $value['kategori']; ?></td>
-            		<td><?= $value['sub_kategori']; ?></td>
-            		<td><?= $value['harga_beli']; ?></td>
-            		<td><?= $value['harga_jual']; ?></td>
+                    <th><input class="duplicate" type="checkbox" <?= $value['duplicate']==1?'checked':''; ?> readonly value="okokokokoko" /></th>
                     <td><input type="checkbox" class="pilih" ></td>
             	</tr>
             <?php } ?>
@@ -33,9 +31,20 @@
 
 <script>
     $('.tb-init').DataTable({
-        "columnDefs": [ {
-        "targets": 8,
-        "orderable": false
-        } ]
+        "columnDefs": [ 
+                        {
+                            "targets": 6,
+                            "orderable": false
+                        },{
+                            "targets": 7,
+                            "orderable": false
+                        } 
+                    ]
     });
 </script>
+
+<style type="text/css">
+    input.duplicate[type="checkbox"][readonly] {
+        pointer-events: none;
+    }
+</style>

@@ -19,6 +19,7 @@
         <button type="button" id="addRow" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-item"><span class="glyphicon glyphicon-plus"></span>
           Tambah Item
         </button>
+        <button class="btn btn-primary" onclick="opForm()"><i class="glyphicon glyphicon-file"></i>&nbsp;Upload Excel</button>
         <br><br>            
         <table id="tblItem" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%" style="font-size: 12px;">
           <thead>

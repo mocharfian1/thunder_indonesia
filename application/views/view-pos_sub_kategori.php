@@ -16,6 +16,8 @@
                 <thead>
                 <tr>
                   <th class="" style="background-color: #4F81BD; color: white; width: 15px">NO.</th>
+                  <th class="" style="background-color: #4F81BD; color: white; width: 15px">ID KATEGORI</th>
+                  <th class="" style="background-color: #4F81BD; color: white; width: 15px">ID SUB KATEGORI</th>
                   <th class="" style="background-color: #4F81BD; color: white; width: 30px">KATEGORI</th>
                   <th class="" style="background-color: #4F81BD; color: white; width: 30px">KODE</th>
                   <th class="" style="background-color: #4F81BD; color: white; width: 30px">NAMA SUB</th>
@@ -32,6 +34,8 @@
                       foreach ($tb_sub_kategori as $tb) {
                         echo '<tr>
                               <td>'.$no.'</td>
+                              <td>'.$tb->id_kat.'</td>
+                              <td>'.$tb->id.'</td>
                               <td>'.$tb->deskripsi_kategori.'</td>
                               <td>'.$tb->sub_kategori_code.'</td>
                               <td>'.$tb->sub_description.'</td>

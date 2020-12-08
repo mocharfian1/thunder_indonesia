@@ -55,12 +55,6 @@ function opForm(){
                                     }
                                 }
                             });
-                            // if(response != 0){
-                            //     $("#img").attr("src",response); 
-                            //     $(".preview img").show(); // Display image element
-                            // }else{
-                            //     alert('file not uploaded');
-                            // }
                         },
                     });
                 }

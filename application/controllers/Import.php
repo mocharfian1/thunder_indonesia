@@ -35,42 +35,28 @@ class Import extends CI_Controller {
 		$Sheets = $Reader -> Sheets();
 
 		$data = [];
-		$start = 0;
 		foreach ($Reader as $Row)
 		{
-			if($Row[0]=='end'){
-				$start = 0;
+			$kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[0]));
+			$sub_kategori = $this->db->get_where('pos_sub_kategori',array('id'=>$Row[1]));
+
+			
+			$nm_kategori = '';
+			if($kategori->num_rows()>0){
+				$nm_kategori = $kategori->row()->description;
 			}
 
-			if($start==1 && empty($Row[0])){
-				$kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[1]));
-				$sub_kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[1]));
-
-				
-				$nm_kategori = '';
-				if($kategori->num_rows()>0){
-					$nm_kategori = $kategori->row()->description;
-				}
-
-				$nm_sub_kategori = '';
-				if($sub_kategori->num_rows()>0){
-					$nm_sub_kategori = $sub_kategori->row()->sub_description;
-				}
-
-				array_push($data,array(
-					'barcode'=>$Row[1],
-					'nama_item'=>$Row[2],
-					'kategori'=>$nm_kategori,
-					'sub_kategori'=>$nm_sub_kategori,
-					'harga_beli'=>$Row[6],
-					'harga_jual'=>$Row[7],
-					'durasi'=>$Row[8]
-				));
+			$nm_sub_kategori = '';
+			if($sub_kategori->num_rows()>0){
+				$nm_sub_kategori = $sub_kategori->row()->sub_description;
 			}
 
-			if($Row[0]=='start'){
-				$start = 1;
-			}
+			array_push($data,array(
+				'barcode'=>$Row[2],
+				'nama_item'=>$Row[2],
+				'kategori'=>$nm_kategori,
+				'sub_kategori'=>$nm_sub_kategori
+			));
 		}
 
 		echo json_encode($data);
@@ -108,49 +94,109 @@ class Import extends CI_Controller {
 		$Reader = new SpreadsheetReader($_SERVER['DOCUMENT_ROOT'].'/assets/import_excel/'.time().'_'.date('d-m-Y').'.'.$ext);
 		$Sheets = $Reader->Sheets();
 
+		$insert = $this->db->insert('history_import',array(
+				'id'=>''
+			));
+
+		$id_history = $this->db->insert_id();
+
 		$data = [];
-		$start = 0;
-		foreach ($Reader as $Row)
-		{
-			if($Row[0]=='end'){
-				$start = 0;
+		$dataToDB = [];
+		
+		foreach ($Reader as $Row){
+
+			$kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[0]));
+			$sub_kategori = $this->db->get_where('pos_sub_kategori',array('id'=>$Row[1]));
+			$is_avail = $this->db->get_where('pos_item',array('barcode'=>$Row[2],'is_delete'=>0));
+			
+			$nm_kategori = '';
+			if($kategori->num_rows()>0){
+				$nm_kategori = $kategori->row()->description;
 			}
 
-			if($start==1 && empty($Row[0])){
-				$kategori = $this->db->get_where('pos_kategori',array('id'=>$Row[4]));
-				$sub_kategori = $this->db->get_where('pos_sub_kategori',array('id'=>$Row[5]));
-
-				
-				$nm_kategori = '';
-				if($kategori->num_rows()>0){
-					$nm_kategori = $kategori->row()->description;
-				}
-
-				$nm_sub_kategori = '';
-				if($sub_kategori->num_rows()>0){
-					$nm_sub_kategori = $sub_kategori->row()->sub_description;
-				}
-
-				array_push($data,array(
-					'barcode'=>$Row[1],
-					'nama_item'=>$Row[2],
-					'qty'=>$Row[3],
-					'kategori'=>$nm_kategori,
-					'sub_kategori'=>$nm_sub_kategori,
-					'harga_beli'=>$Row[6],
-					'harga_jual'=>$Row[7],
-					'durasi'=>$Row[8]
-				));
+			$nm_sub_kategori = '';
+			if($sub_kategori->num_rows()>0){
+				$nm_sub_kategori = $sub_kategori->row()->sub_description;
 			}
 
-			if($Row[0]=='start'){
-				$start = 1;
+			$ck_avail = 0;
+			if($is_avail->num_rows()>0){
+				$ck_avail = 1;
 			}
+
+			$tmp = array(
+				'barcode'=>$Row[2],
+				'nama_item'=>$Row[3],
+				'merek'=>$Row[4],
+				'qty'=>$Row[5],
+				'kategori'=>$nm_kategori,
+				'sub_kategori'=>$nm_sub_kategori,
+				'duplicate'=>$ck_avail
+			);
+
+			$tmpToDB = array(
+				'id_import'=>$id_history,
+				'barcode'=>$Row[2],
+				'nama_item'=>$Row[3],
+				'merek'=>$Row[4],
+				'qty'=>$Row[5],
+				'id_kat'=>$Row[0],
+				'id_sub_kat'=>$Row[1]
+			);
+
+			array_push($data,$tmp);
+			array_push($dataToDB,$tmpToDB);
+			
 		}
 
+		unset($data[0]);
+		unset($dataToDB[0]);
+
+		$this->db->insert_batch('history_item_import',$dataToDB);
 		$var['data'] = $data;
 
 		$this->load->view('import/list_temp',$var);
+	}
+
+
+	function submit_import(){
+		$id = $this->input->post('id');
+
+		$import = $this->db->get_where('history_item_import',array(
+			'id_import'=>$id,
+			'imported'=>0
+		));
+
+		if($import->num_rows()>0){
+			$data = [];
+
+			foreach ($import->result() as $key => $value) {
+				array_push($data, array(
+					'jenis_item'=>'ITEM',
+					'is_external'=>0,
+					'pos_type'=>'KANTOR',
+					'barcode'=>$value->barcode,
+					'id_sub_kategori'=>$value->id_sub_kat,
+					'id_kategori'=>$value->id_kat,
+					'item_name'=>$value->nama_item,
+					'qty'=>$value->qty
+				));
+			}
+
+			$query = $this->db->insert_batch('pos_item',$data);
+
+			if($query){
+				echo json_encode(array(
+					'success'=>true,
+					'message'=>'Sukses import data barang.'
+				));
+			}else{
+				echo json_encode(array(
+					'success'=>false,
+					'message'=>'Gagal import data barang.'
+				));
+			}
+		}
 	}
 }
 

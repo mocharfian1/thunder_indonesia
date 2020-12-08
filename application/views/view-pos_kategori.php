@@ -21,6 +21,7 @@
                 <thead>
                 <tr>
                   <th class="" style="background-color: #4F81BD; color: white; width: 15px">NO.</th>
+                  <th class="" style="background-color: #4F81BD; color: white; width: 30px">ID</th>
                   <th class="" style="background-color: #4F81BD; color: white; width: 30px">KODE</th>
                   <th class="" style="background-color: #4F81BD; color: white; width: 30px">NAMA KATEGORI</th>
                   <th class="" style="background-color: #4F81BD; color: white; width: 100px">UPDATE BY</th>
@@ -36,6 +37,7 @@
                       foreach ($tb_kategori as $tb) {
                         echo '<tr>
                               <td>'.$no.'</td>
+                              <td>'.$tb->id.'</td>
                               <td>'.$tb->code.'</td>
                               <td>'.$tb->description.'</td>
                               <td>'.$tb->update_by_username.'</td>
