@@ -1,6 +1,16 @@
 $('#tb_item').DataTable();
 
 
+function trCheck(e){
+    // alert('');
+    if($(e).is(':checked')){
+        $('.pilih').prop('checked',true);
+    }else{
+        $('.pilih').prop('checked',false);
+    }
+    
+}
+
 function opForm(){
 	$.confirm({
 		title:'Upload File',

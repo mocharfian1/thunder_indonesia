@@ -10,6 +10,7 @@
                 <th>Sub Kategori</th>
                 <th>Harga Beli</th>
                 <th>Harga Jual</th>
+                <th>Pilih&nbsp;<input type="checkbox" name="ck"  onclick="trCheck(this)"></th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
             		<td><?= $value['sub_kategori']; ?></td>
             		<td><?= $value['harga_beli']; ?></td>
             		<td><?= $value['harga_jual']; ?></td>
+                    <td><input type="checkbox" class="pilih" ></td>
             	</tr>
             <?php } ?>
         </tbody>
@@ -30,5 +32,10 @@
 </div>
 
 <script>
-    $('.tb-init').DataTable();
+    $('.tb-init').DataTable({
+        "columnDefs": [ {
+        "targets": 8,
+        "orderable": false
+        } ]
+    });
 </script>
