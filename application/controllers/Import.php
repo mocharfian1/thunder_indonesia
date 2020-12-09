@@ -99,6 +99,7 @@ class Import extends CI_Controller {
 			));
 
 		$id_history = $this->db->insert_id();
+		$var['id_history'] = $id_history;
 
 		$data = [];
 		$dataToDB = [];
@@ -154,6 +155,7 @@ class Import extends CI_Controller {
 
 		$this->db->insert_batch('history_item_import',$dataToDB);
 		$var['data'] = $data;
+		$var['dataToDB'] = $dataToDB;
 
 		$this->load->view('import/list_temp',$var);
 	}
@@ -186,10 +188,19 @@ class Import extends CI_Controller {
 			$query = $this->db->insert_batch('pos_item',$data);
 
 			if($query){
-				echo json_encode(array(
-					'success'=>true,
-					'message'=>'Sukses import data barang.'
-				));
+				$update = $this->db->where('id_import',$id)->where('imported',0)->update('history_item_import',array('imported'=>1));
+
+				if($update){
+					echo json_encode(array(
+						'success'=>true,
+						'message'=>'Sukses import data barang.'
+					));
+				}else{
+					echo json_encode(array(
+						'success'=>false,
+						'message'=>'Gagal import data barang.'
+					));
+				}
 			}else{
 				echo json_encode(array(
 					'success'=>false,
