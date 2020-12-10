@@ -698,7 +698,11 @@ function opForm(){
                                             var id = $(d).find('input#id_import').val();
 
                                             $.post(URL+'import/submit_import',{id:id}).done((data_import)=>{
-                                                alert(data_import);
+                                                $.alert({
+                                                    title:'Alert',
+                                                    content:data_import.message,
+                                                    columnClass:'col-md-8 col-md-offset-2'
+                                                });
                                             }).fail((e)=>{
                                                 
                                             });
