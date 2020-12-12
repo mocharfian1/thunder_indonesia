@@ -99,6 +99,7 @@ class Import extends CI_Controller {
 			));
 
 		$id_history = $this->db->insert_id();
+		$var['id_history'] = $id_history;
 
 		$data = [];
 		$dataToDB = [];
@@ -154,13 +155,14 @@ class Import extends CI_Controller {
 
 		$this->db->insert_batch('history_item_import',$dataToDB);
 		$var['data'] = $data;
-		$var['id_import'] = $id_history;
+		$var['dataToDB'] = $dataToDB;
 
 		$this->load->view('import/list_temp',$var);
 	}
 
 
 	function submit_import(){
+		header('Content-type: application/json');
 		$id = $this->input->post('id');
 
 		$import = $this->db->get_where('history_item_import',array(
@@ -168,33 +170,63 @@ class Import extends CI_Controller {
 			'imported'=>0
 		));
 
+		$message_ext = '';
+
 		if($import->num_rows()>0){
 			$data = [];
 
 			foreach ($import->result() as $key => $value) {
-				array_push($data, array(
-					'jenis_item'=>'ITEM',
-					'is_external'=>0,
-					'pos_type'=>'KANTOR',
+				$ck_barang = $this->db->get_where('pos_item',array(
 					'barcode'=>$value->barcode,
-					'id_sub_kategori'=>$value->id_sub_kat,
-					'id_kategori'=>$value->id_kat,
-					'item_name'=>$value->nama_item,
-					'qty'=>$value->qty
+					'is_delete'=>0
 				));
+
+				if($ck_barang->num_rows()>0){
+					$message_ext .= '('.$value->barcode.') '.$value->nama_item.' => Gagal Diimport (Barang sudah ada)'."<br>";
+				}else{
+					array_push($data, array(
+						'jenis_item'=>'ITEM',
+						'is_external'=>0,
+						'pos_type'=>'KANTOR',
+						'barcode'=>$value->barcode,
+						'id_sub_kategori'=>$value->id_sub_kat,
+						'id_kategori'=>$value->id_kat,
+						'item_name'=>$value->nama_item,
+						'qty'=>$value->qty,
+						'update_by'=>$_SESSION['id_user'],
+						'insert_by'=>$_SESSION['id_user'],
+						'status'=>'Active'
+					));
+				}
 			}
 
-			$query = $this->db->insert_batch('pos_item',$data);
+			if(count($data)>0){
+				$query = $this->db->insert_batch('pos_item',$data);
 
-			if($query){
-				echo json_encode(array(
-					'success'=>true,
-					'message'=>'Sukses import data barang.'
-				));
+				if($query){
+					$update = $this->db->where('id_import',$id)->where('imported',0)->update('history_item_import',array('imported'=>1));
+
+					if($update){
+						echo json_encode(array(
+							'success'=>true,
+							'message'=>'Sukses import data barang.<br>'.$message_ext
+						));
+					}else{
+						echo json_encode(array(
+							'success'=>false,
+							'message'=>'Gagal import data barang.'
+						));
+					}
+				}else{
+					echo json_encode(array(
+						'success'=>false,
+						'message'=>'Gagal import data barang.'
+					));
+				}
 			}else{
 				echo json_encode(array(
 					'success'=>false,
-					'message'=>'Gagal import data barang.'
+					'message'=>'Tidak ada barang yang diimport.'
 				));
 			}
 		}

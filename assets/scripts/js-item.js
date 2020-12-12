@@ -695,11 +695,17 @@ function opForm(){
                                         text:'Proses',
                                         btnClass:'btn-primary',
                                         action:()=>{
-                                            var self = this;
+                                            var id = $(d).find('input#id_import').val();
 
-                                            // var id_import = ss.content.find('#id_import').val();
-                                            console.log($(d).find('input').val());
-                                            // $.post(URL+'import/submit_import').done().fail();
+                                            $.post(URL+'import/submit_import',{id:id}).done((data_import)=>{
+                                                $.alert({
+                                                    title:'Alert',
+                                                    content:data_import.message,
+                                                    columnClass:'col-md-8 col-md-offset-2'
+                                                });
+                                            }).fail((e)=>{
+                                                
+                                            });
                                         }
                                     },
                                     cancel:{
