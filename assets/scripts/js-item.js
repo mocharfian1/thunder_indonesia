@@ -87,8 +87,8 @@ function edit(el, id) {
     md.find('#kat_id').val(dt[3]);
     setSubFromEdit(md.find('#kat_id').prop('selectedIndex'), dt[2]);
     md.find('#it_qty').val(dt[4]);//.attr('disabled',true);
-    md.find('#it_sat').val(dt[5]).attr('disabled',true);
-    md.find('#it_sat_des').val(dt[6]).attr('disabled',true);
+    md.find('#it_sat').val(dt[5]).attr('disabled',false);
+    md.find('#it_sat_des').val(dt[6]).attr('disabled',false);
     md.find('#it_harga_beli').val(dt[7]);
     md.find('#it_harga_jual').val(dt[8]);
     md.find('#it_lost_remark').val(dt[9]);
@@ -301,6 +301,8 @@ $(document).ready(function() {
                 }
             }
         });
+
+
 
         
         // var cost_percentage = $('#it_cost_percentage').val();

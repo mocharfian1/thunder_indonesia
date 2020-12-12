@@ -30,6 +30,7 @@
               <th>Satuan</th>
               <th>Min Stock</th>
               <th>Max Stock</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +46,14 @@
                   <td><?= $value->satuan; ?></td>
                   <td><?= $value->min_stock; ?></td>
                   <td><?= $value->max_stock; ?></td>
+                  <td>
+                    <button class="btn btn-warning btn-xs">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-xs" onclick="SK.delItem(<?= $value->id; ?>)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
                 </tr>
               <?php $no++; } ?>
             <?php } ?>

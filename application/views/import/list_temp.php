@@ -30,17 +30,14 @@
         </tbody>
     </table>
     <script>
-        $('.tb-init').DataTable({
-            "columnDefs": [ 
-                            {
-                                "targets": 6,
-                                "orderable": false
-                            },{
-                                "targets": 7,
-                                "orderable": false
-                            } 
-                        ]
-        });
+        // $('.tb-init').DataTable({
+        //     "columnDefs": [ 
+        //                     {
+        //                         "targets": 6,
+        //                         "orderable": false
+        //                     }
+        //                 ]
+        // });
     </script>
 
     <style type="text/css">
