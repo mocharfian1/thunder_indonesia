@@ -303,11 +303,79 @@ class SubKat {
 }
 
 class Transaksi {
-
+	importItem(){
+		$.confirm({
+			title:'Upload File',
+			content:`
+				<form id="uploadXLS" enctype="multipart/form-data" method="post">
+					<div class="form-group">
+						<label for="file-import">Pilih FIle</label>
+						<input class="form-control" id="file-import" type="file" accept=".xls,.xlsx"/>
+					</div>
+				</form>
+			`,
+			buttons:{
+				submit:{
+					text:'Submit',
+					btnClass:'btn-success',
+					action:()=>{
+						var self = this;
+	
+						var fd = new FormData();
+						var files = $('#file-import')[0].files;
+						fd.append('file_input',files[0]);
+	
+						$.ajax({
+							url: '/import/upload_consumable?jenis='+jenis,
+							type: 'post',
+							data: fd,
+							contentType: false,
+							processData: false,
+							success: function(d){
+	
+								$.confirm({
+									title:'LIST ITEM IMPORT',
+									columnClass:'col-12',
+									content:d,
+									buttons:{
+										submit:{
+											text:'Proses',
+											btnClass:'btn-primary',
+											action:()=>{
+												var id = $(d).find('input#id_import').val();
+	
+												$.post(URL+'import/submit_import_consumable',{id:id}).done((data_import)=>{
+													$.alert({
+														title:'Alert',
+														content:data_import.message,
+														columnClass:'col-md-8 col-md-offset-2'
+													});
+												}).fail((e)=>{
+													
+												});
+											}
+										},
+										cancel:{
+											text:'Cancel'
+										}
+									}
+								});
+							},
+						});
+					}
+				},
+				cancel:{
+					text:'Cancel',
+					btnClass:'btn-default'
+				}
+			}
+		});
+	}
 }
 
 var SP = new Sparepart();
 var SK = new SubKat();
+var TR = new Transaksi();
 
 function add_item(type = null) {
 	SP.add(type);

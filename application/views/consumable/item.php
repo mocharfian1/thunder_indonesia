@@ -12,9 +12,16 @@
         <button type="button" id="addRow" class="btn btn-success" onclick="add_item(`<?= $_GET['type']; ?>`)">
             <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Item
         </button>
-        <button type="button" id="addRow" class="btn btn-warning" onclick="add_item(`<?= $_GET['type']; ?>`)">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;Transaksi
-        </button>
+
+        <a href="/consumable/consumable_transaksi">
+          <button type="button" id="addRow" class="btn btn-primary">
+              <span class="glyphicon glyphicon-plus"></span>&nbsp;Transaksi
+          </button>
+        </a>
+
+        <button type="button" class="btn btn-warning" onclick="TR.importItem()">
+              <span class="glyphicon glyphicon-plus"></span>&nbsp;Import&nbsp;Item
+          </button>
         <br>
         <hr style="border-top: 3px double #8c8b8b;">
 
@@ -62,3 +69,7 @@
     </div>
   </div>
 </div>
+
+<script>
+  var jenis = '<?= $_GET['type']; ?>';
+</script>

@@ -21,6 +21,7 @@
         <thead>
           <tr>
             <th>No.</th>
+            <th>ID</th>
             <th>Nama Kategori</th>
             <th>Action</th>
           </tr>
@@ -31,6 +32,7 @@
             <?php foreach ($kategori as $key => $value) { ?>
               <tr>
                 <td><?= $no; ?></td>
+                <td><?= $value->id; ?></td>
                 <td><?= $value->description; ?></td>
                 <td>
                   <button onclick="edit(<?= $value->id; ?>)" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>
@@ -67,6 +69,7 @@
         <thead>
           <tr>
             <th>No.</th>
+            <th>ID</th>
             <th>Nama Kategori</th>
             <th>Nama Sub Kategori</th>
             <th>Action</th>
@@ -78,6 +81,7 @@
             <?php foreach ($sub_kategori as $key => $value) { ?>
               <tr>
                 <td><?= $no; ?></td>
+                <td><?= $value->id; ?></td>
                 <td><?= $value->description; ?></td>
                 <td><?= $value->sub_description; ?></td>
                 <td>
