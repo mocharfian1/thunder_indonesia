@@ -693,7 +693,14 @@ function opForm(){
                                 buttons:{
                                     submit:{
                                         text:'Proses',
-                                        btnClass:'btn-primary'
+                                        btnClass:'btn-primary',
+                                        action:()=>{
+                                            var self = this;
+
+                                            // var id_import = ss.content.find('#id_import').val();
+                                            console.log($(d).find('input').val());
+                                            // $.post(URL+'import/submit_import').done().fail();
+                                        }
                                     },
                                     cancel:{
                                         text:'Cancel'

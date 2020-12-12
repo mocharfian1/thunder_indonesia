@@ -1,4 +1,6 @@
+
 <div>
+    <input type="hidden" id="id_import" value="<?= $id_import; ?>">
     <table class="table table-responsive tb-init">
         <thead>
             <tr>
@@ -21,30 +23,30 @@
                     <td><?= $value['sub_kategori']; ?></td>
             		<td><?= $value['nama_item']; ?></td>
             		<td><?= $value['qty']; ?></td>
-                    <th><input class="duplicate" type="checkbox" <?= $value['duplicate']==1?'checked':''; ?> readonly value="okokokokoko" /></th>
+                    <th><input class="duplicate" type="checkbox" <?= $value['duplicate']==1?'checked':''; ?> readonly /></th>
                     <td><input type="checkbox" class="pilih" ></td>
             	</tr>
             <?php } ?>
         </tbody>
     </table>
+    <script>
+        $('.tb-init').DataTable({
+            "columnDefs": [ 
+                            {
+                                "targets": 6,
+                                "orderable": false
+                            },{
+                                "targets": 7,
+                                "orderable": false
+                            } 
+                        ]
+        });
+    </script>
+
+    <style type="text/css">
+        input.duplicate[type="checkbox"][readonly] {
+            pointer-events: none;
+        }
+    </style>
 </div>
 
-<script>
-    $('.tb-init').DataTable({
-        "columnDefs": [ 
-                        {
-                            "targets": 6,
-                            "orderable": false
-                        },{
-                            "targets": 7,
-                            "orderable": false
-                        } 
-                    ]
-    });
-</script>
-
-<style type="text/css">
-    input.duplicate[type="checkbox"][readonly] {
-        pointer-events: none;
-    }
-</style>

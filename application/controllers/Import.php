@@ -154,6 +154,7 @@ class Import extends CI_Controller {
 
 		$this->db->insert_batch('history_item_import',$dataToDB);
 		$var['data'] = $data;
+		$var['id_import'] = $id_history;
 
 		$this->load->view('import/list_temp',$var);
 	}
