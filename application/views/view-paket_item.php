@@ -2,6 +2,12 @@
     var URL = '<?php echo base_url(); ?>';
   </script>
 
+  <style type="text/css">
+    table#tb_paket thead tr th{
+      background-color: #2699ff;
+    }
+  </style>
+
   <div class="row">
     <div class="col-md-12 ">
       <div id="table-wrapper">
@@ -23,15 +29,15 @@
               <table id="tb_paket" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                  <th class="" style=" color: white;">NO.</th>
-                  <th class="" style=" color: white;">NAMA PAKET</th>
-                  <th class="" style=" color: white;">DESKRIPSI PAKET</th>
-                  <th class="" style=" color: white;">JUMLAH ITEM</th>
-                  <th class="" style=" color: white;">HARGA PAKET</th>
-                  <th class="" style=" color: white;">TANGGAL PEMBUATAN</th>
-                  <th class="" style=" color: white;">UPDATE BY</th>
-                  <th class="" style=" color: white;">UPDATE DATE</th>
-                  <th class="" style=" color: white;">ACTION</th>
+                  <th>NO.</th>
+                  <th>NAMA PAKET</th>
+                  <th>DESKRIPSI PAKET</th>
+                  <th>JUMLAH ITEM</th>
+                  <th>HARGA PAKET</th>
+                  <th>TANGGAL PEMBUATAN</th>
+                  <th>UPDATE BY</th>
+                  <th>UPDATE DATE</th>
+                  <th>ACTION</th>
                 </tr>
                 </thead>
                   <?php if(!empty($tb_paket)){ ?>

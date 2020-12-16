@@ -32,13 +32,13 @@
             <th class="" style="background-color: #4F81BD; color: white; ">MEREK</th>
             <th class="" style="background-color: #4F81BD; color: white; ">QTY</th>
             <th class="" style="background-color: #4F81BD; color: white; ">LOKASI</th>
-            <th class="" style="background-color: #4F81BD; color: white; ">LOST REMARK</th>
+            <!-- <th class="" style="background-color: #4F81BD; color: white; ">LOST REMARK</th>
             <th class="" style="background-color: #4F81BD; color: white; ">FRAGILE</th>
             <th class="" style="background-color: #4F81BD; color: white; ">STATUS</th>
             <th class="" style="background-color: #4F81BD; color: white; ">HARGA BELI</th>
             <th class="" style="background-color: #4F81BD; color: white; ">HARGA JUAL</th>
             <th class="" style="background-color: #4F81BD; color: white; ">UPDATE BY</th>
-            <th class="" style="background-color: #4F81BD; color: white; ">UPDATE DATE</th>
+            <th class="" style="background-color: #4F81BD; color: white; ">UPDATE DATE</th> -->
             <th class="" style="background-color: #4F81BD; color: white; ">ACTION.</th>
           </tr>
           </thead>
@@ -69,13 +69,13 @@
                         <td></td>
                         <td  title="'. $tb->deskripsi_satuan .'">'.$tb->qty . ' ' . $tb->satuan .'</td>
                         <td><button class="btn btn-xs bg-blue" title="Lokasi Penyimpanan" onclick="$.alert({title:\'LOKASI\',content:'.$lokasi.'})"><span class="glyphicon glyphicon-folder-open"></span></button></td>
-                        <td>'.$tb->lost_remark.'</td>
+                        <!-- <td>'.$tb->lost_remark.'</td>
                         <td>'.$tb->fragile.'</td>
                         <td>'.$tb->status.'</td>
                         <td>'.number_format($tb->harga_beli,0,",",".").'</td>
                         <td>'.number_format($tb->harga_jual,0,",",".").'</td>
                         <td>'.$tb->update_by_username.'</td>
-                        <td>'.date('F d', strtotime($tb->update_date)).', '.date('Y H.i A', strtotime($tb->update_date)).'</td>
+                        <td>'.date('F d', strtotime($tb->update_date)).', '.date('Y H.i A', strtotime($tb->update_date)).'</td>-->
                         <td><center>
                           <button data-toggle="tooltip" title="Edit Item" class="btn btn-warning btn-xs" onclick="edit($(this),'. $tb->ID_ITEM .')" value="'
                           .$tb->barcode.'|'
