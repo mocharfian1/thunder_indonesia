@@ -1,4 +1,4 @@
-<?php if ($is_consumable == 'CONSUMABLE') { ?>
+<?php if (!empty($is_consumable) && $is_consumable == 'CONSUMABLE') { ?>
 
     <div>
         <input type="hidden" id="id_import" value=<?= $id_history; ?> />
