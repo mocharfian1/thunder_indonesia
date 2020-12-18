@@ -299,6 +299,7 @@ class Import extends CI_Controller
 						'id_kategori' => $value->id_kat,
 						'item_name' => $value->nama_item,
 						'qty' => $value->qty,
+						'merek' => $value->merek,
 						'update_by' => $_SESSION['id_user'],
 						'insert_by' => $_SESSION['id_user'],
 						'status' => 'Active'
