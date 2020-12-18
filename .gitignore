@@ -6,6 +6,7 @@ INVOICE.pdf
 application/config/database.php
 
 application/config/
+pma/
 
 *.pdf
 *.xlsx
