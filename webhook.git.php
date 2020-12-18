@@ -1,6 +1,6 @@
 <?php
 	
-	echo shell_exec( 'git pull' );
+	echo exec( 'git pull' );
 	echo "OKE";
 
 ?>
