@@ -1,11 +1,11 @@
 <?php
 	
-	$out = array();
-	exec("cd .. && ls", $out);
-	foreach($out as $line) {
-	    echo $line;
-	}
+	// $out = array();
+	echo shell_exec("cd .. && ls");
+	// foreach($out as $line) {
+	//     echo $line;
+	// }
 
-	echo "OKEOKE";
+	// echo "OKEOKE";
 
 ?>
