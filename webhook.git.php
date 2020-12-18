@@ -1,7 +1,7 @@
 <?php
 	
 	$out = array();
-	exec("ls", $out);
+	exec("cd .. && ls", $out);
 	foreach($out as $line) {
 	    echo $line;
 	}
