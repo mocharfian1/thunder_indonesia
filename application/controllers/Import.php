@@ -229,10 +229,9 @@ class Import extends CI_Controller
 			$tmp = array(
 				'barcode' => $Row[2],
 				'nama_item' => $Row[3],
-				'merek' => $Row[4],
-				'qty' => $Row[5],
-				'min_stock' => $Row[6],
-				'max_stock' => $Row[7],
+				'qty' => $Row[4],
+				'min_stock' => $Row[5],
+				'max_stock' => $Row[6],
 				'kategori' => $nm_kategori,
 				'sub_kategori' => $nm_sub_kategori,
 				'duplicate' => $ck_avail
@@ -243,10 +242,9 @@ class Import extends CI_Controller
 				'jenis'=>$jenis,
 				'barcode' => $Row[2],
 				'nama_item' => $Row[3],
-				'merek' => $Row[4],
-				'qty' => $Row[5],
-				'min_stock' => $Row[6],
-				'max_stock' => $Row[7],
+				'qty' => $Row[4],
+				'min_stock' => $Row[5],
+				'max_stock' => $Row[6],
 				'id_kat' => $Row[0],
 				'id_sub_kat' => $Row[1]
 			);
