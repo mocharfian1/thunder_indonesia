@@ -104,6 +104,6 @@ class __TwigTemplate_04e70e3e3918a0debc4b5f7ce472baf21e595dc14a084c8a3ec36279bf2
 
     public function getSourceContext()
     {
-        return new Source("", "footer.twig", "/home/mocharfian/Documents/STATISTIK/db_admin/templates/footer.twig");
+        return new Source("", "footer.twig", "/home/moch/Documents/PROJECT/thunder_git/pma/templates/footer.twig");
     }
 }

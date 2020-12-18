@@ -126,6 +126,6 @@ class __TwigTemplate_1a5e5cfc8c71578cd2372c792abe667b1e1e353e1d82f9bdc78e8fba9c3
 
     public function getSourceContext()
     {
-        return new Source("", "select_lang.twig", "/home/mocharfian/Documents/STATISTIK/db_admin/templates/select_lang.twig");
+        return new Source("", "select_lang.twig", "/home/moch/Documents/PROJECT/thunder_git/pma/templates/select_lang.twig");
     }
 }

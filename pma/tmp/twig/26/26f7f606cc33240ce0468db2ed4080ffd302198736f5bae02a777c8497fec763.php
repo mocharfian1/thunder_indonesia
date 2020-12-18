@@ -125,6 +125,6 @@ class __TwigTemplate_8836ae67ed517f02ac5802e701e82b979617a83a90e21a81f869da297f6
 
     public function getSourceContext()
     {
-        return new Source("", "scripts.twig", "/home/mocharfian/Documents/STATISTIK/db_admin/templates/scripts.twig");
+        return new Source("", "scripts.twig", "/home/moch/Documents/PROJECT/thunder_git/pma/templates/scripts.twig");
     }
 }

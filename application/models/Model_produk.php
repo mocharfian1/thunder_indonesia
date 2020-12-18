@@ -233,6 +233,7 @@ class Model_produk extends CI_Model {
 									            u.username as update_by_username, 
 									            i.barcode,
 									            i.qty,
+									            i.merek,
 									            i.satuan,
 									            i.deskripsi_satuan,
 									            i.harga_beli,

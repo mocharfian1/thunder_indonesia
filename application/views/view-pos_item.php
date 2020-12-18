@@ -66,7 +66,7 @@
                         <td>'.$tb->kategori_item.'</td>
                         <td>'.$tb->jenis_item.'</td>
                         <td style="font-weight:bold;">'.$tb->nama_item.'</td>
-                        <td></td>
+                        <td>'.$tb->merek.'</td>
                         <td  title="'. $tb->deskripsi_satuan .'">'.$tb->qty . ' ' . $tb->satuan .'</td>
                         <td><button class="btn btn-xs bg-blue" title="Lokasi Penyimpanan" onclick="$.alert({title:\'LOKASI\',content:'.$lokasi.'})"><span class="glyphicon glyphicon-folder-open"></span></button></td>
                         <!-- <td>'.$tb->lost_remark.'</td>
