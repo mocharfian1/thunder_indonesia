@@ -217,8 +217,7 @@ function enter(event) {
 	}
 }
 
-function add_item() {
-	
+function add_item() {	
 
 	if(is_durasi==0){
 		let item_val = $('#item_select').val().split('|');

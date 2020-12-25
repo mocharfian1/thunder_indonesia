@@ -487,7 +487,7 @@
                                     <?php if($mode=='edit'){ ?>
                                         <input type="hidden" class="id_pemesanan" value="<?php echo $id; ?>">
                                     <?php }?>
-                                    <table id="tb_item_pemesanan" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+                                    <table id="tb_item_pemesanan" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%" style="font-size: 10pt;">
                                         <thead>
                                           <tr style="background-color: #4F81BD; color: white;">
                                             <th>No</th>
@@ -495,11 +495,11 @@
                                             <th>Nama Barang</th>
                                             <th>Jenis</th>
                                             <th>Stock</th>
-                                            <th>Jumlah</th>
+                                            <th>Jml</th>
                                             <th>Harga</th>
                                             <th>Total</th>
                                             <th>Disc(%)</th>
-                                            <th>Extra Charge(%)</th>
+                                            <th>Ex Charge(%)</th>
                                             <th>Durasi</th>
                                             <th>Nett</th>
                                             <th class="all">Action</th>
@@ -555,6 +555,7 @@
                                             </th>
 
                                             <td colspan="2">
+                                              <label>Pilih Barang</label>
                                               <select class="select2 act" id="selKategori" onchange="getSubKat(this)">
                                                   <option disabled selected>-- Pilih Kategori --</option>
                                               </select>
@@ -578,35 +579,31 @@
                                                 <?php } ?>
                                               </select>
                                             </td>
-                                            <td>
-                                              <!--   <button class="btn btn-success form-control btn-xs" onclick="make_new_item(event)">Item tidak ada?</button> -->
-                                              </td>
-                                            <td></td>
-                                            <td width="100px">
-                                                <input style="width: 70px;" <?php echo nego(); ?> onkeydown="enter(event)" type="number" min="1" class="form-control" id="qty" req-add-item placeholder="Qty">
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td >
-                                                <input <?php echo nego(); ?> type="number" min="1" max="100" class="form-control" id="disc" placeholder="Disc" value="0" style="width: 75px;">
-                                            </td>
-                                            <td>
-                                                <select <?php echo nego(); ?> id="extra" class="form-control">
-                                                  <option value="0" selected="selected">0 % - Default</option>
-                                                  <?php if(!empty($extra)){?>
-                                                    <?php foreach ($extra as $key => $value) { ?>
-                                                        <option value="<?php echo $value->charge; ?>"><?php echo $value->charge . '% - ' . $value->code; ?></option>
+                                            <td width="100px" colspan="9">
+                                                <div class="form-group">
+                                                  <label for="f_qty">Qty</label><br>
+                                                  <input style="width: 70px;" <?php echo nego(); ?> onkeydown="enter(event)" type="number" min="1" class="form-control" id="qty" req-add-item placeholder="Qty">
+                                                </div>
+                                                <div class="form-group">
+                                                  <label>Disc (%)</label><br>
+                                                  <input <?php echo nego(); ?> type="number" min="1" max="100" class="form-control" id="disc" placeholder="Disc" value="0" style="width: 75px;">
+                                                </div>
+                                                <div class="form-group">
+                                                  <label>Extra Charge (%)</label><br>
+                                                  <select <?php echo nego(); ?> id="extra" class="form-control">
+                                                    <option value="0" selected="selected">0 % - Default</option>
+                                                    <?php if(!empty($extra)){?>
+                                                      <?php foreach ($extra as $key => $value) { ?>
+                                                          <option value="<?php echo $value->charge; ?>"><?php echo $value->charge . '% - ' . $value->code; ?></option>
+                                                      <?php } ?>
                                                     <?php } ?>
-                                                  <?php } ?>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <span id="load_sel_durasi" class="fa fa-spinner fa-spin" style="font-size: 20px; display: none;"></span>
-                                                <select style="width:100%;" <?php echo nego(); ?> class="form-control" id="sel_durasi" ></select>
-                                            </td>
-                                            <td>
-                                                
-                                            </td>
+                                                  </select>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label>Durasi</label><br>
+                                                  <span id="load_sel_durasi" class="fa fa-spinner fa-spin" style="font-size: 20px; display: none;"></span>
+                                                  <select style="width:100%;" <?php echo nego(); ?> class="form-control" id="sel_durasi" ></select>
+                                                </div>
                                             <td class="all">
                                                 <button disabled="disabled" <?php echo nego(); ?> id="btn_add" onclick="add_item(); " type="button" class="btn btn-success btn-sm col-xs-12" data-toggle="tooltip" title="Add Item"><span class="glyphicon glyphicon-plus"></span></button>
                                             </td>
@@ -927,6 +924,12 @@ input[type=submit] {
 }
 #select2-item_select{
   display: none;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 

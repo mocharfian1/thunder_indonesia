@@ -74,7 +74,7 @@
 </head>
 
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
   <div class="wrapper">
     <header class="main-header">
       <a href="#" class="beta logo color-themes-dark">
