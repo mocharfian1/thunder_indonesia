@@ -159,7 +159,7 @@
             <?php if($this->input->get('no_transaksi')==''){ ?>
               <button class="btn btn-success btn-block" onclick="TR.submitTransaction()">Submit</button>
             <?php }else{ ?>
-              <button class="btn btn-warning btn-block" onclick="TR.submitUpdateTransaction('<?= $this->input->get('no_transaksi'); ?>')">Update</button>
+              <button class="btn btn-warning btn-block" onclick="TR.submitTransaction()">Update</button>
             <?php } ?>
           </div>
         </div>

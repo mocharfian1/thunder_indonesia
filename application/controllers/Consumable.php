@@ -31,6 +31,29 @@ class Consumable extends CI_Controller
 		}
 	}
 
+	function resultJSON_SIMPAN($n = null)
+	{
+		header('Content-type: application/json');
+		if ($n == 1) {
+			echo json_encode(array(
+				'success' => true,
+				'message' => 'Berhasil menyimpan data'
+			));
+		} else {
+			if ($n == 0) {
+				echo json_encode(array(
+					'success' => false,
+					'message' => 'Gagal menyimpan data'
+				));
+			} else {
+				echo json_encode(array(
+					'success' => false,
+					'message' => 'Gagal menyimpan data'
+				));
+			}
+		}
+	}
+
 	function resultJSON_del($n = null)
 	{
 		header('Content-type: application/json');
@@ -493,15 +516,13 @@ class Consumable extends CI_Controller
 	}
 
 	public function submitTransaction(){
-
+		header('Content-type:application/json');
 		$_D = $this->db;
 
 		$inp = $this->input;
-		$no_transaksi = 'CNS-'.time();
+		$no_transaksi = !empty($inp->post('no_transaksi'))?$inp->post('no_transaksi'):'CNS-'.time();
 
-		$ins_consumable_transaksi = array(
-			'no_transaksi'=>$no_transaksi
-		);
+		
 
 		$ins_consumable_item = array();
 
@@ -515,15 +536,31 @@ class Consumable extends CI_Controller
 		}
 
 
+		if(empty($inp->post('no_transaksi'))){
+			$ins_consumable_transaksi = array(
+				'no_transaksi'=>$no_transaksi
+			);
 
-
-		$insert_transaction = $_D->insert('consumable_transaksi',$ins_consumable_transaksi);
+			$insert_transaction = $_D->insert('consumable_transaksi',$ins_consumable_transaksi);
+		}else{
+			$insert_transaction = true;
+			$update = $this->db->
+				where('no_transaksi',$no_transaksi)->
+				where('is_delete',0)->
+				update('consumable_transaksi_item',
+					array(
+						'is_delete'=>1,
+					)
+				);
+		}
 		
 
 		$insert = $_D->insert_batch('consumable_transaksi_item',$ins_consumable_item);
 
 		if($insert && $insert_transaction){
-			echo "SUKSES";
+			$this->resultJSON_SIMPAN(1);
+		}else{
+			$this->resultJSON_SIMPAN(0);
 		}
 	}
 
@@ -553,6 +590,17 @@ class Consumable extends CI_Controller
 		$ins_consumable_item = array();
 
 		$no_transaksi = $this->input->post('no_transaksi');
+
+		for ($i=0; $i < count($this->input->post('dataDelete')); $i++) { 
+			$update = $this->db->
+				where('id_consumable_item',$this->input->post('dataDelete')[$i])->
+				where('no_transaksi',$no_transaksi)->
+				update('consumable_transaksi_item',
+					array(
+						'is_delete'=>1,
+					)
+				);
+		}
 
 		for ($i=0; $i < count($this->input->post('data')); $i++) { 
 			$from_local = $this->input->post('data')[$i];

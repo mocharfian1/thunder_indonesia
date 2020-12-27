@@ -377,6 +377,7 @@ class SubKat {
 
 var id_ITEM = 0;
 var itemsInTable = [];
+var itemsDelete = [];
 
 // function setValue(x = null){
 // 	id_ITEM = x;
@@ -505,15 +506,36 @@ class Transaksi {
 	}
 
 	submitTransaction(){
-		for (var i = 0; i < itemsInTable.length; i++) {
-			delete itemsInTable[i].action;
-		}
-		
-		$.post(URL+'consumable/submitTransaction',{data:itemsInTable}).done((data)=>{
+		$.confirm({
+			title:'',
+			content:no_transaksi==''?'Submit?':'Anda yakin ingin menyimpan perubahan ini?',
+			buttons:{
+				submit:{
+					text:'Ya',
+					btnClass:'btn-success',
+					action:function(){
+						for (var i = 0; i < itemsInTable.length; i++) {
+							delete itemsInTable[i].action;
+						}
+						
+						$.post(URL+'consumable/submitTransaction',{no_transaksi:no_transaksi,data:itemsInTable}).done((data)=>{
+							// alert(data.success);
+							if(data.success === true){
+								$.dialog(data.message);
+								window.location.href = URL+'consumable/list_transaksi';
+							}else{
+								$.dialog(data.message);
+							}
+						}).fail((e)=>{
 
-		}).fail((e)=>{
-
+						});
+					}
+				},cancel:{
+					text:'Batal'
+				}
+			}
 		});
+		
 	}
 
 	submitUpdateTransaction(){
@@ -521,7 +543,7 @@ class Transaksi {
 			delete itemsInTable[i].action;
 		}
 		
-		$.post(URL+'consumable/submitUpdateTransaction',{no_transaksi:no_transaksi,data:itemsInTable}).done((data)=>{
+		$.post(URL+'consumable/submitUpdateTransaction',{no_transaksi:no_transaksi,data:itemsInTable,dataDelete:itemsDelete}).done((data)=>{
 
 		}).fail((e)=>{
 
@@ -537,18 +559,24 @@ class Transaksi {
 	}
 
 	delItem(x=null,server=null){
+		var indexItem = itemsInTable.findIndex(({id}) => id == x);
 		// alert();
 		itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
-		if(server==1){
-			$.post(URL+'consumable/delItemTransaction',{no_transaksi:no_transaksi,id:x}).done((data)=>{
-				itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
-			}).fail((e)=>{
+		// if(server==1){
+		// 	$.post(URL+'consumable/delItemTransaction',{no_transaksi:no_transaksi,id:x}).done((data)=>{
+		// 		itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
+		// 	}).fail((e)=>{
 
-			});
-		}else{
-			itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
-		}
-		// console.log(itemsInTable);
+		// 	});
+
+		// 	// itemsDelete.push(parseInt(itemsInTable[indexItem].id));
+		// 	itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
+		// }else{
+		// 	itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
+		// }
+
+		
+		// console.log(itemsDelete);
 		datatable.clear();
 		datatable.rows.add(itemsInTable);
 		datatable.draw();
