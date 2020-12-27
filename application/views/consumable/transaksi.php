@@ -1,13 +1,16 @@
+<script type="text/javascript">
+  var no_transaksi = '<?= $no_transaksi; ?>';
+</script>
 <div class="row">
   <div class="col-md-12">
     <div id="table-wrapper">
         <div class="row">
           <div class="col-md-12">
-            <div class="row">
+            <label>Date : 11 Feb 2020</label>&nbsp;|&nbsp;
+            <label>No. Pemesanan : 0012345856</label>
+            <!-- <div class="row">
               <div class="col-md-8">
                 <div class="box box-warning">
-                  
-                  <!-- /.box-header -->
                   <div class="box-body">
                     <div class="row">
                       <div class="col-md-4">
@@ -28,11 +31,9 @@
                       </div>
                     </div>
                   </div>
-                  <!-- /.box-body -->
                 </div>
               </div>
               <div class="col-md-4">
-                  <!-- small box -->
                   <div class="small-box bg-aqua">
                     <div class="inner">
                       <h3 style="text-align: right">1</h3>
@@ -45,7 +46,7 @@
                     </a>
                   </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -57,7 +58,6 @@
               <div class="box-body">
                   <div class="row">
                     <div class="col-md-2">
-                      <form>
                         <div class="form-group">
                           <label for="barcode">Kategori</label>
                           <select class="form-control" id="kategori" onchange="setSub(this)">
@@ -70,10 +70,8 @@
                           </select>
                           <!-- <small class="form-text text-muted">Barcode otomatis mendeteksi jika ada kesamaan.</small> -->
                         </div>
-                      </form>
                     </div>
                     <div class="col-md-2">
-                      <form>
                         <div class="form-group">
                           <label for="barcode">Sub Kategori</label>
                           <select class="form-control" id="sub_kategori" onchange="setItem(this)">
@@ -81,36 +79,29 @@
                           </select>
                           <!-- <small class="form-text text-muted">Barcode otomatis mendeteksi jika ada kesamaan.</small> -->
                         </div>
-                      </form>
                     </div>
                     <div class="col-md-4">
-                      <form>
                         <div class="form-group">
                           <label for="barcode">Barang</label>
-                          <select class="form-control" id="item_select" onchange="">
+                          <select class="form-control" id="item_select" onchange="id_ITEM = $(this).val()">
                             <option disabled selected>-- Pilih Barang --</option>
                           </select>
                           <!-- <small class="form-text text-muted">Barcode otomatis mendeteksi jika ada kesamaan.</small> -->
                         </div>
-                      </form>
                     </div>
                     <div class="col-md-2">
-                      <form>
                         <div class="form-group">
                           <label for="barcode">Qty</label>
-                          <input type="number" class="form-control" id="nama_barang" placeholder="Qty">
+                          <input type="number" class="form-control" id="qty_barang" placeholder="Qty">
                         </div>
-                      </form>
                     </div>
                     <div class="col-md-2">
-                      <form>
                         <div class="form-group">
                           <label for="barcode">Action</label>
-                          <button class="btn btn-success form-control">
+                          <button class="btn btn-success form-control" onclick="TR.addItemTransaksi()">
                             <i class="fa fa-plus"></i>
                           </button>
                         </div>
-                      </form>
                     </div>
                   </div>
               </div>
@@ -122,8 +113,8 @@
 
         <div class="row">
           <div class="col-md-12">
-            <table class="table table-responsive table-striped table-hover">
-              <thead>
+            <table class="table table-responsive table-striped table-hover datatable">
+              <!-- <thead>
                 <tr>
                   <th>No.</th>
                   <th>Nama Barang</th>
@@ -157,8 +148,19 @@
                   <th>50.000</th>
                   <th></th>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <?php if($this->input->get('no_transaksi')==''){ ?>
+              <button class="btn btn-success btn-block" onclick="TR.submitTransaction()">Submit</button>
+            <?php }else{ ?>
+              <button class="btn btn-warning btn-block" onclick="TR.submitUpdateTransaction('<?= $this->input->get('no_transaksi'); ?>')">Update</button>
+            <?php } ?>
           </div>
         </div>
     </div>
@@ -173,5 +175,10 @@
 tr td:last-child {
     width: 1%;
     white-space: nowrap;
+}
+
+table thead tr {
+  background-color: #3c8dbc;
+  color: white;
 }
 </style>

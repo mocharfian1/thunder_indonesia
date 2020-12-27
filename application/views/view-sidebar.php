@@ -58,7 +58,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="<?php echo $s_active=='consumable-transaksi'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_transaksi'); ?>"><i class="fa fa-circle-o"></i><b> TRANSAKSI</b></a></li>
+          <li class="<?php echo $s_active=='consumable-transaksi'? 'active':''; ?>"><a href="<?php echo base_url('consumable/list_transaksi'); ?>"><i class="fa fa-circle-o"></i><b> TRANSAKSI</b></a></li>
           <li class="<?php echo $s_active=='consumable-SPAREPART'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_table?type=SPAREPART'); ?>"><i class="fa fa-circle-o"></i> Sparepart</a></li>
           <li class="<?php echo $s_active=='consumable-ATK'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_table?type=ATK'); ?>"><i class="fa fa-circle-o"></i> ATK</a></li>
           <li class="<?php echo $s_active=='consumable-PENDUKUNG'? 'active':''; ?>"><a href="<?php echo base_url('consumable/consumable_table?type=PENDUKUNG'); ?>"><i class="fa fa-circle-o"></i> Barang Pendukung</a></li>

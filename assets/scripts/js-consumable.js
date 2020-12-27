@@ -1,4 +1,77 @@
-$('.datatable').DataTable();
+var itemsInTable = [];
+
+function setBtnDelItem(id=null,server=null){
+	return `<button class='btn btn-danger btn-xs' onclick="TR.delItem(`+id+`,`+server+`)"><span class="fa fa-trash"></span></button>`;
+}
+// var aDemoItems = [
+//     {
+//         "no":1,
+//         "nama_barang":"LanTest101",
+//         "qty":"x1",
+//         "total":"yLanTest101",
+//         "action":btn
+//     },
+//     {
+//         "no":1,
+//         "nama_barang":"LanTest101",
+//         "qty":"x1",
+//         "total":"yLanTest101",
+//         "action":btn
+//     },
+//     {
+//         "no":1,
+//         "nama_barang":"LanTest101",
+//         "qty":"x1",
+//         "total":"yLanTest101",
+//         "action":btn
+//     }
+// ];
+var tb_list_transaction = $('.tb_list_transaction').DataTable();
+var datatable = $('.datatable').DataTable({
+	"language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+    "data" : [],
+    "columns" : [
+        { "title":"No.","data":"no" },
+        { "title":"Barcode","data" : "barcode" },
+        { "title":"Kategori","data" : "kategori" },
+        { "title":"Sub Kategori","data" : "sub_kategori" },
+        { "title":"Nama Barang","data" : "nama_barang" },
+        { "title":"Qty","data" : "qty" },
+        { "title":"Action","data" : "action" }
+    ],"initComplete": function(settings, json) {
+	    if(no_transaksi!=''){
+	    	$.post(URL + '/consumable/getEditItemConsumable', { no_transaksi:no_transaksi }).done((data) => {
+	    		var d = data.result;
+	    		// var insertTable = [];
+
+				for (var i = 0; i < data.result.length; i++) {
+					
+					itemsInTable.push({
+						no : i+1,
+						id : d[i].id,
+						barcode : d[i].barcode,
+						nama_barang : d[i].item_name,
+						kategori : d[i].nm_kat,
+						sub_kategori : d[i].nm_sub_kat,
+						qty : parseInt(d[i].qty),
+						server : 1,
+						action : setBtnDelItem(d[i].id,1)
+					});
+				}
+				// console.log(insertTable);
+
+	    		datatable.clear();
+				datatable.rows.add(itemsInTable);
+				datatable.draw();
+				// $('div.loading').remove();
+			}).fail((e) => {
+
+			});
+	    }
+  	}
+});
 
 var items = [];
 
@@ -117,7 +190,7 @@ class Sparepart {
 
 		});
 
-		console.log(items);
+		// console.log(items);
 	}
 }
 
@@ -302,6 +375,13 @@ class SubKat {
 	}
 }
 
+var id_ITEM = 0;
+var itemsInTable = [];
+
+// function setValue(x = null){
+// 	id_ITEM = x;
+// }
+
 class Transaksi {
 	importItem(){
 		$.confirm({
@@ -370,6 +450,108 @@ class Transaksi {
 				}
 			}
 		});
+	}
+
+	addItemTransaksi(){
+		var id_brg = $('#item_select').val();
+		var qty_barang = $('#qty_barang').val();
+
+		$.post(URL+'consumable/getItemById',{id:id_brg,qty:qty_barang}).done((data)=>{
+			var d = data.result;
+			var d_ITEMS = itemsInTable.findIndex(({barcode}) => barcode == data.result.barcode);
+			// console.log(d_ITEMS);
+			if(d_ITEMS < 0){
+				// alert('OKE');
+
+				var insertTable = {
+					id : d.id,
+					barcode : d.barcode,
+					nama_barang : d.item_name,
+					kategori : d.nm_kat,
+					sub_kategori : d.nm_sub_kat,
+					qty : parseInt(qty_barang),
+					action : setBtnDelItem(d.id)
+				}
+
+				// itemsInTable[d_ITEMS]
+				itemsInTable.push(insertTable);
+			}else{
+				var qtyItem = itemsInTable[d_ITEMS].qty;
+				var updateTable = {
+					id : d.id,
+					barcode : d.barcode,
+					nama_barang : d.item_name,
+					kategori : d.nm_kat,
+					sub_kategori : d.nm_sub_kat,
+					qty : parseInt(qty_barang) + parseInt(qtyItem),
+					action : setBtnDelItem(d.id)
+				}
+
+				itemsInTable[d_ITEMS] = updateTable;
+			}
+
+			for (var i = 0; i < itemsInTable.length; i++) {
+				itemsInTable[i].no = i+1;
+			}
+
+			datatable.clear();
+			datatable.rows.add(itemsInTable);
+			datatable.draw();
+
+			// console.log(itemsInTable);
+		}).fail((e)=>{
+
+		});
+	}
+
+	submitTransaction(){
+		for (var i = 0; i < itemsInTable.length; i++) {
+			delete itemsInTable[i].action;
+		}
+		
+		$.post(URL+'consumable/submitTransaction',{data:itemsInTable}).done((data)=>{
+
+		}).fail((e)=>{
+
+		});
+	}
+
+	submitUpdateTransaction(){
+		for (var i = 0; i < itemsInTable.length; i++) {
+			delete itemsInTable[i].action;
+		}
+		
+		$.post(URL+'consumable/submitUpdateTransaction',{no_transaksi:no_transaksi,data:itemsInTable}).done((data)=>{
+
+		}).fail((e)=>{
+
+		});
+	}
+
+	rubahTransaksi(x = null){
+		window.location.href = '/consumable/consumable_transaksi?no_transaksi='+x;
+	}
+
+	hapusTransaksi(x = null){
+
+	}
+
+	delItem(x=null,server=null){
+		// alert();
+		itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
+		if(server==1){
+			$.post(URL+'consumable/delItemTransaction',{no_transaksi:no_transaksi,id:x}).done((data)=>{
+				itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
+			}).fail((e)=>{
+
+			});
+		}else{
+			itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
+		}
+		// console.log(itemsInTable);
+		datatable.clear();
+		datatable.rows.add(itemsInTable);
+		datatable.draw();
 	}
 }
 
