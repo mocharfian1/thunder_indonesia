@@ -1182,6 +1182,16 @@ class Transaksi extends CI_Controller {
 	}	
 
 	public function cetak_surat_jalan($id=null){
+		$logo = $this->db->get_where('images',array('name'=>'LOGO'));
+		if($logo->num_rows()>0){
+			$var['logo'] = $logo->row()->url;
+		}else{
+			$var['logo'] = '';
+		}
+
+		
+
+
 		$this->load->library('m_pdf');
 
 		$this->load->model('model_transaksi');
@@ -1207,14 +1217,18 @@ class Transaksi extends CI_Controller {
         $pdfFilePath = "Production.pdf";
 
         $pdf = $this->m_pdf->load();
-       	// $mpdf = new Mpdf(['format' => 'Legal']);
+       	
 
         $pdf->AddPage('P','','','','','','','','',20,20);
         
         
-        $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
+        $pdf->WriteHTML($this->load->view('view-oke',$var,TRUE));
+        // $pdf->WriteHTML('OKE');
 
         $pdf->Output($pdfFilePath, "D");
+
+        // $this->load->view('view-oke',$var);
+
 
 
 

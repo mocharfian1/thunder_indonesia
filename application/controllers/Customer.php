@@ -8,6 +8,20 @@ class customer extends CI_Controller {
 	}
 
 	public function index(){
+		
+		require_once(APPPATH."/third_party/dompdf/autoload.inc.php");
+
+		// $html = $this->load->view('view-oke',[],TRUE);
+
+		// $dompdf = new DOMPDF();
+		// $dompdf->load_html($html);
+		// $dompdf->render();
+		// $dompdf->stream('laporan_aa.pdf');
+		// use Dompdf\Dompdf;
+		// use Dompdf\Options;
+
+		$dompdf = new Dompdf();
+
 
 	}
 	public function view(){

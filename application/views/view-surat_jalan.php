@@ -79,45 +79,47 @@
   </thead>
   <tbody>
     <?php $no_kat=1; ?>
-    <?php foreach ($kat as $key => $value) { ?>
-        <tr>
-          <td class="b t" ><?= $no_kat; ?></td>
-          <td class="b" ></td>
-          <td class="b" ></b></td>
-          <td class="b" style="background-color: <?= empty($value->nama_kategori)?'green':'blue'; ?>; color: white;"><b><?= empty($value->nama_kategori)?'TANPA KATEGORI':$value->nama_kategori; ?></td>
-          <td class="b" ></td>
-          <td class="b r">Rp </td>
-          <td class="b l" style="text-align: right;"><?= $total[$value->id]; ?></td>
-        </tr>
-        <?php $total_biaya_prod+=$total[$value->id]; ?>
-        <?php foreach ($r as $k => $v) { ?>
-          <?php if($v->id_kat==$value->id){ ?>
-            <tr>
-              <td class="b"></td>
-              <td class="b t"><?= $v->qty; ?></td>
-              <td class="b t"><?= $v->satuan; ?></td>
-              <td class="b"><?= $v->item_name; ?></td>
-              <td class="b"></td>
-              <td class="b r"></td>
-              <td class="b l"></td>
-            </tr>
-            <?php if($v->jenis_item=='PAKET'){ ?>
-              <?php foreach ($v->isi_paket as $kp => $vp) { ?>
-                <tr>
-                  <td class="b"></td>
-                  <td class="b t"></td>
-                  <td class="b t"></td>
-                  <td class="b">---- <?= $vp->item_name; ?> <b>[<?= $vp->item_qty; ?> <?= $vp->satuan; ?>]</b></td>
-                  <td class="b"></td>
-                  <td class="b r"></td>
-                  <td class="b l"></td>
-                </tr>
+    <?php if(!empty($kat)){ ?>
+      <?php foreach ($kat as $key => $value) { ?>
+          <tr>
+            <td class="b t" ><?= $no_kat; ?></td>
+            <td class="b" ></td>
+            <td class="b" ></b></td>
+            <td class="b" style="background-color: <?= empty($value->nama_kategori)?'green':'blue'; ?>; color: white;"><b><?= empty($value->nama_kategori)?'TANPA KATEGORI':$value->nama_kategori; ?></td>
+            <td class="b" ></td>
+            <td class="b r">Rp </td>
+            <td class="b l" style="text-align: right;"><?= $total[$value->id]; ?></td>
+          </tr>
+          <?php $total_biaya_prod+=$total[$value->id]; ?>
+          <?php foreach ($r as $k => $v) { ?>
+            <?php if($v->id_kat==$value->id){ ?>
+              <tr>
+                <td class="b"></td>
+                <td class="b t"><?= $v->qty; ?></td>
+                <td class="b t"><?= $v->satuan; ?></td>
+                <td class="b"><?= $v->item_name; ?></td>
+                <td class="b"></td>
+                <td class="b r"></td>
+                <td class="b l"></td>
+              </tr>
+              <?php if($v->jenis_item=='PAKET'){ ?>
+                <?php foreach ($v->isi_paket as $kp => $vp) { ?>
+                  <tr>
+                    <td class="b"></td>
+                    <td class="b t"></td>
+                    <td class="b t"></td>
+                    <td class="b">---- <?= $vp->item_name; ?> <b>[<?= $vp->item_qty; ?> <?= $vp->satuan; ?>]</b></td>
+                    <td class="b"></td>
+                    <td class="b r"></td>
+                    <td class="b l"></td>
+                  </tr>
+                <?php } ?>
+                
               <?php } ?>
-              
             <?php } ?>
           <?php } ?>
-        <?php } ?>
-        <?php $no_kat++; ?>
+          <?php $no_kat++; ?>
+      <?php } ?>
     <?php } ?>
     <tr>
       <td colspan="5" align="right">TOTAL BIAYA PRODUKSI</td>
