@@ -1199,6 +1199,19 @@ class Transaksi extends CI_Controller {
         
 		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
 
+		foreach ($var['kat'] as $key => $value) {
+			$var['total'][$value->id] = 0;
+			foreach ($var['r'] as $k => $v) {
+				if($value->id==$v->id_kat){
+					$var['total'][$value->id]+=$v->total_harga;
+				}
+
+				if($v->jenis_item=='PAKET'){
+					$var['r'][$k]->isi_paket = $this->model_produk->list_item_paket($v->id_item);
+				}
+			}
+		}
+
 		$var['ls_tgl'] = $this->db->get_where('tanggal_acara',array('id_pemesanan'=>$id,'is_delete'=>0))->result();
 
 		$var['ls_tgl_acara'] = [];
