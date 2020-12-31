@@ -1195,8 +1195,9 @@ class Transaksi extends CI_Controller {
 		$this->load->library('m_pdf');
 
 		$this->load->model('model_transaksi');
+		$var['kat'] = $this->model_transaksi->katItemPemesanan($id);
         
-		$var['kat']=$this->model_transaksi->list_item_pemesanan($id);
+		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
 
 		$var['ls_tgl'] = $this->db->get_where('tanggal_acara',array('id_pemesanan'=>$id,'is_delete'=>0))->result();
 
