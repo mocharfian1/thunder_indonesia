@@ -2,7 +2,7 @@
 <table width="100%">
   <thead>
     <tr>
-      <td><img width="150px" src="<?= base_url().'assets/img/logo/logo.jpg'; ?>"></td>
+      <td><img width="150px" src="<?= $logo; ?>"></td>
       <td></td>
       <td style="text-align: right;"><h4>PT. ARCOMEGA DIGITAL PERKASA</h4></td>
     </tr>

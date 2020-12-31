@@ -1196,7 +1196,7 @@ class Transaksi extends CI_Controller {
 
 		$this->load->model('model_transaksi');
         
-		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
+		$var['kat']=$this->model_transaksi->list_item_pemesanan($id);
 
 		$var['ls_tgl'] = $this->db->get_where('tanggal_acara',array('id_pemesanan'=>$id,'is_delete'=>0))->result();
 
@@ -1222,7 +1222,7 @@ class Transaksi extends CI_Controller {
         $pdf->AddPage('P','','','','','','','','',20,20);
         
         
-        $pdf->WriteHTML($this->load->view('view-oke',$var,TRUE));
+        $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
         // $pdf->WriteHTML('OKE');
 
         $pdf->Output($pdfFilePath, "D");
