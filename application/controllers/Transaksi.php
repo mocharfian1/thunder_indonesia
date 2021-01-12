@@ -1181,6 +1181,17 @@ class Transaksi extends CI_Controller {
 
 	}	
 
+	public function testpdf(){
+		$this->load->library('M_pdf');
+		$mpdf = $this->m_pdf->load([
+		   'mode' => 'utf-8',
+		   'format' => 'A4'
+		]);
+
+		$mpdf->WriteHTML("Hello World!");
+		$mpdf->Output();
+	}
+
 	public function cetak_surat_jalan($id=null){
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
