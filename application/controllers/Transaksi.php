@@ -1192,11 +1192,79 @@ class Transaksi extends CI_Controller {
 		$mpdf->Output();
 	}
 
-	public function cetak_surat_jalan($id=null){
-		ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
-		error_reporting(E_ALL);
+	public function cetak_surat_jalan_simple($id=null){
+		// return false;
+		$logo = $this->db->get_where('images',array('name'=>'LOGO'));
+		if($logo->num_rows()>0){
+			$var['logo'] = $logo->row()->url;
+		}else{
+			$var['logo'] = '';
+		}
 
+		
+
+
+		$this->load->library('m_pdf');
+
+		$this->load->model('model_transaksi');
+		$var['kat'] = $this->model_transaksi->katItemPemesanan($id);
+        
+		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
+
+		foreach ($var['kat'] as $key => $value) {
+			$var['total'][$value->id] = 0;
+			foreach ($var['r'] as $k => $v) {
+				if($value->id==$v->id_kat){
+					$var['total'][$value->id]+=$v->total_harga;
+				}
+
+				if($v->jenis_item=='PAKET'){
+					$var['r'][$k]->isi_paket = $this->model_produk->list_item_paket($v->id_item);
+				}
+			}
+		}
+
+		$var['ls_tgl'] = $this->db->get_where('tanggal_acara',array('id_pemesanan'=>$id,'is_delete'=>0))->result();
+
+		$var['ls_tgl_acara'] = [];
+
+		if(!empty($var['ls_tgl'])){
+			foreach ($var['ls_tgl'] as $key => $value) {
+				// echo $value->tanggal_awal;
+				array_push($var['ls_tgl_acara'],array(
+					'tanggal_awal'=>date('d M Y',strtotime($value->tanggal_awal)),
+					'tanggal_akhir'=>date('d M Y',strtotime($value->tanggal_akhir))
+				));
+			}
+		}
+
+        $css = [];
+
+        $pdfFilePath = "Production.pdf";
+
+        $pdf = $this->m_pdf->load();
+       	
+
+        $pdf->AddPage('P','','','','','','','','',20,20);
+        
+        
+        $pdf->WriteHTML($this->load->view('view-surat_jalan_simple',$var,TRUE));
+
+        $pdf->Output($pdfFilePath, "I");
+
+        // $this->load->view('view-surat_jalan_simple',$var);
+
+        // $this->load->view('view-oke',$var);
+
+
+
+
+		// $var['s']='';
+  //       $this->load->view('view-print_penawaran_produksi',$var);
+
+	}
+
+	public function cetak_surat_jalan($id=null){
 		$logo = $this->db->get_where('images',array('name'=>'LOGO'));
 		if($logo->num_rows()>0){
 			$var['logo'] = $logo->row()->url;
