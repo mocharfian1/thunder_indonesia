@@ -1182,6 +1182,10 @@ class Transaksi extends CI_Controller {
 	}	
 
 	public function cetak_surat_jalan($id=null){
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+
 		$logo = $this->db->get_where('images',array('name'=>'LOGO'));
 		if($logo->num_rows()>0){
 			$var['logo'] = $logo->row()->url;
@@ -1236,10 +1240,11 @@ class Transaksi extends CI_Controller {
         $pdf->AddPage('P','','','','','','','','',20,20);
         
         
-        $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
-        // $pdf->WriteHTML('OKE');
+        // $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
 
-        $pdf->Output($pdfFilePath, "D");
+        // $pdf->Output($pdfFilePath, "D");
+
+        $this->load->view('view-surat_jalan',$var);
 
         // $this->load->view('view-oke',$var);
 
