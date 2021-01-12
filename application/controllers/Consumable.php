@@ -649,4 +649,29 @@ class Consumable extends CI_Controller
 			echo "Success";
 		}
 	}
+
+	public function exportNow(){
+		
+		$var['type'] = $this->input->get('type');
+
+		$query = $this->db->query("
+			select 
+				ck.description,cs.sub_description,i.*
+			from
+				consumable_item i
+				join consumable_kategori ck on i.id_kategori=ck.id
+				join consumable_sub_kategori cs on i.id_sub_kategori=cs.id
+			where
+				i.`type`='" . $var['type'] . "'
+				and i.is_delete=0
+		");
+
+		$var['barang'] = array();
+
+		if ($query->num_rows() > 0) {
+			$var['barang'] = $query->result();
+		}
+
+		$this->load->view('consumable/v-export_consumable', $var);
+	}
 }

@@ -25,7 +25,7 @@
         <br>
         <hr style="border-top: 3px double #8c8b8b;">
 
-        <table id="tb_item" class="table table-bordered table-striped table-hover datatable" cellspacing="0" width="100%">
+        <table id="tb_item" class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>Nomor</th>

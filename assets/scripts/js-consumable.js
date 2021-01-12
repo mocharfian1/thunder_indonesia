@@ -1,3 +1,9 @@
+$('#tb_item').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
 var itemsInTable = [];
 
 function setBtnDelItem(id=null,server=null){
@@ -76,8 +82,8 @@ var datatable = $('.datatable').DataTable({
 var items = [];
 
 class Sparepart {
-	static kat = 0;
-	static sub_kat = 0;
+ 	kat = 0;
+	sub_kat = 0;
 
 	add(type = null) {
 		$.confirm({
