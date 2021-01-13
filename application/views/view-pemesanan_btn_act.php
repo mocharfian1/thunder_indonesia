@@ -61,12 +61,12 @@
         <?php } ?>
 
         <button class="csstooltip btn btn-xs btn-success"  data-toggle="popover"  data-placement="left" data-trigger="focus" onclick="location.href = '<?php echo base_url('transaksi/cetak_surat_jalan/'); ?><?= $id_pem; ?>'">
-          <span class="tooltiptext" style="width: 300%;">Print</span>
-          <span class="glyphicon glyphicon-print"></span>
+          <span class="tooltiptext" style="width: 25vh;">Invoice Produksi</span>
+          <span class="glyphicon glyphicon-save"></span>
         </button>
 
         <button class="csstooltip btn btn-xs btn-default"  data-toggle="popover"  data-placement="left" data-trigger="focus" onclick="location.href = '<?php echo base_url('transaksi/cetak_surat_jalan_simple/'); ?><?= $id_pem; ?>'">
-          <span class="tooltiptext" style="width: 300%;">Print</span>
+          <span class="tooltiptext" style="width: 25vh;">Print Surat Jalan</span>
           <span class="glyphicon glyphicon-print"></span>
         </button>
 

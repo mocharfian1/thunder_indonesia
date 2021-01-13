@@ -1240,7 +1240,8 @@ class Transaksi extends CI_Controller {
 
         $css = [];
 
-        $pdfFilePath = "Production.pdf";
+
+        $pdfFilePath = "Surat Jalan ".$var['r'][0]->no_pemesanan.".pdf";
 
         $pdf = $this->m_pdf->load();
        	
@@ -1311,8 +1312,9 @@ class Transaksi extends CI_Controller {
 
         $css = [];
 
-        $pdfFilePath = "Production.pdf";
-
+		$pdfFilePath = "Production ".$var['r'][0]->no_pemesanan.".pdf";
+		// print_r($var['r']);
+		// return false;
         $pdf = $this->m_pdf->load();
        	
 
@@ -1321,7 +1323,7 @@ class Transaksi extends CI_Controller {
         
         $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
 
-        $pdf->Output($pdfFilePath, "I");
+        $pdf->Output($pdfFilePath, "D");
 
         // $this->load->view('view-surat_jalan',$var);
 

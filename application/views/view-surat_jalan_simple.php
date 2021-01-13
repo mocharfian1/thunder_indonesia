@@ -43,7 +43,7 @@
 <table width="100%" style="font-size: 0.8em">
 	<tbody>
 		<tr>
-			<td>ACARA : <?= strtoupper($r[0]->nama_event); ?>&nbsp;<?= date('d F Y',strtotime(($r[0]->tanggal_acara))); ?>&nbsp;LOADING (<?= $r[0]->loading_in; ?>)&nbsp;LOKASI&nbsp;:&nbsp;<?= $r[0]->address; ?></td>
+			<td>ACARA : <?= strtoupper($r[0]->nama_event); ?>&nbsp;<?= date('d F Y',strtotime(($r[0]->tanggal_acara))); ?>&nbsp;LOADING (<?= $r[0]->loading_in; ?>)&nbsp;LOKASI&nbsp;:&nbsp;<?= $r[0]->alamat_venue; ?></td>
 		</tr>
 	</tbody>
 </table>
