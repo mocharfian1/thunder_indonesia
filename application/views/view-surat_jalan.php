@@ -55,7 +55,7 @@
         <tr>
           <td style="font-size: 12px;"><b>Tempat</b></td>
           <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= $r[0]->address; ?></td>
+          <td style="font-size: 12px;"><?= $r[0]->alamat_venue; ?></td>
         </tr>
       </tbody>
     </table>
