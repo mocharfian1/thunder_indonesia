@@ -1323,7 +1323,7 @@ class Transaksi extends CI_Controller {
         
         $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
 
-        $pdf->Output($pdfFilePath, "D");
+        $pdf->Output($pdfFilePath, "I");
 
         // $this->load->view('view-surat_jalan',$var);
 

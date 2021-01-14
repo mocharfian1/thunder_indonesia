@@ -12,50 +12,50 @@
 <p width="100%" align="right" style="padding: 0px;">Quotation Produksi</p>
 <div style="border: 2px solid black;">
   <div style="float: left;
-    width: 50%;">
-    <table width="45%">
+    width:60%">
+    <table width="100%">
       <tbody>
         <tr>
-          <td style="font-size: 12px;"><b>Kepada</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= $r[0]->nama_pemesan; ?></td>
+          <td style="font-size: 0.7em;"><b>Kepada</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= $r[0]->nama_pemesan; ?></td>
         </tr>
         <tr>
-          <td style="font-size: 12px;"><b>Perusahaan</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= strtoupper($r[0]->nama_perusahaan); ?></td>
+          <td style="font-size: 0.7em;"><b>Perusahaan</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= strtoupper($r[0]->nama_perusahaan); ?></td>
         </tr>
         <tr>
-          <td style="font-size: 12px;"><b>Nomor</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= strtoupper($r[0]->no_pemesanan); ?></td>
+          <td style="font-size: 0.7em;"><b>Nomor</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= strtoupper($r[0]->no_pemesanan); ?></td>
         </tr>
         <tr>
-          <td style="font-size: 12px;"><b>No. Fax</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= strtoupper($r[0]->fax); ?></td>
+          <td style="font-size: 0.7em;"><b>No. Fax</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= strtoupper($r[0]->fax); ?></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div style="">
-    <table width="45%">
+  <div style="width:40%">
+    <table width="100%">
       <tbody>
         <tr>
-          <td style="font-size: 12px;"><b>Acara</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= strtoupper($r[0]->nama_event); ?></td>
+          <td style="font-size: 0.7em;"><b>Acara</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= strtoupper($r[0]->nama_event); ?></td>
         </tr>
         <tr>
-          <td style="font-size: 12px;"><b>Tanggal</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= date('d',strtotime($r[0]->loading_in)).'-'.date('d&\n\b\s\p;F&\n\b\s\p;Y',strtotime($r[0]->loading_out)); ?></td>
+          <td style="font-size: 0.7em;"><b>Tanggal</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= date('d',strtotime($r[0]->loading_in)).'-'.date('d&\n\b\s\p;F&\n\b\s\p;Y',strtotime($r[0]->loading_out)); ?></td>
         </tr>
         <tr>
-          <td style="font-size: 12px;"><b>Tempat</b></td>
-          <td style="font-size: 12px;">:</td>
-          <td style="font-size: 12px;"><?= $r[0]->alamat_venue; ?></td>
+          <td style="font-size: 0.7em;"><b>Tempat</b></td>
+          <td style="font-size: 0.7em;">:</td>
+          <td style="font-size: 0.7em;"><?= $r[0]->alamat_venue; ?></td>
         </tr>
       </tbody>
     </table>
