@@ -31,6 +31,31 @@ class report extends CI_Controller {
 		$this->load->view('view-index',$var);
 	}
 
+	public function report_jurnal(){
+		
+
+		$var['title'] = 'Report';
+		$var['page_title'] = 'REPORT';
+		$var['content']='view-report_jurnal';
+		$var['s_active']='report_jurnal';
+		$var['js'] = 'js-report_jurnal';
+		$var['plugin'] = 'plugin_1';
+		$var['user'] = $_SESSION['user_type'];
+		$var['mode']='view';
+
+		$this->load->model('model_report');
+		
+		$var['allItem'] = $this->model_report->getAllItem();
+
+		$items = $var['allItem'];
+
+		
+
+		
+
+		$this->load->view('view-index',$var);
+	}
+
 	public function tb_driver(){
 		$id_kurir = $_POST['id_kurir'];
 		$month = $_POST['month'];

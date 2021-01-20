@@ -1,181 +1,81 @@
-<!-- <div class="col-lg-12">
-  <div class="row">
-      <div class="col-lg-6 form-group">
-          <label>Pilih Barang</label>
-          <select class="form-control select2" id="sel_barang">
-            <?php foreach ($items as $key => $value) { ?>
-                <option value='<?php echo $value->ID_ITEM; ?>'><?php echo $value->nama_item?></option>
-            <? } ?>
-          </select>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-lg-12">
-          <div class="panel panel-default">
-              <div class="panel-heading">List Barang (Serial Number)</div>
-              <div class="panel-body">
-                  <table class="table table-wrapper table-bordered table-hover table-striped">
-                    <thead>
-                      <tr style="color: white;">
-                        <th>No.</th>
-                        <th>Nama Vendor</th>
-                        <th>Serial Number</th>
-                        <th>Tanggal Masuk</th>
-                        <th>Tanggal Masuk</th>
-                      </tr>
-                    </thead>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </div>
-</div> -->
-
-
 <?php if($mode=='view'){ ?>
-    <!-- Content Header (Page header) -->
-    <input type="hidden" id="BASE_URL" value="<?php echo base_url(); ?>">
-    <script type="text/javascript">
-      var URL = '<?php echo base_url(); ?>';
-    </script>
-    <!-- <input type="hidden" id="type_pos" value="<?php //echo $type; ?>"> -->
+  <!-- Content Header (Page header) -->
+  <input type="hidden" id="BASE_URL" value="<?php echo base_url(); ?>">
+  <script type="text/javascript">
+    var URL = '<?php echo base_url(); ?>';
+  </script>
+  <!-- <input type="hidden" id="type_pos" value="<?php //echo $type; ?>"> -->
 
-      <div class="row">
-        <div class="col-md-12">
-          <div id="table-wrapper">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="table-wrapper">
 
-              <center>
-                <h2>LIST <?php echo $page_title; ?></h2>
-                <hr style="border-top: 3px double #8c8b8b;">
-                <?php //$this->load->view('tpl_form_message'); ?>
-              </center>
+        <center>
+          <h2>LIST <?php echo $page_title; ?></h2>
+          <hr style="border-top: 3px double #8c8b8b;">
+          <?php //$this->load->view('tpl_form_message'); ?>
+        </center>
 
-              <br>
-              <!-- <a href="<?php //echo base_url('kategori/add'); ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
-              <button type="button" id="add_service" onclick="location.href = '<?php echo base_url(); ?>'+'service/view_add'" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>
-                Service Barang
-              </button>&nbsp;
-              <button type="button" id="add_service" onclick="add_vendor()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>
-                Vendor
-              </button>
+        <br>
+        <!-- <a href="<?php //echo base_url('kategori/add'); ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
+        <button type="button" id="add_service" onclick="location.href = '<?php echo base_url(); ?>'+'service/view_add'" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>
+          Service Barang
+        </button>&nbsp;
+        <button type="button" id="add_service" onclick="add_vendor()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>
+          Vendor
+        </button>
 
-              <br><br>
-              <table id="tb_service" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%">
-                <thead>
+        <br><br>
+        <table id="tb_service" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th class="" style="background-color: #4F81BD; color: white;">NO.</th>
+              <th class="" style="background-color: #4F81BD; color: white;">JUDUL</th>
+              <th class="" style="background-color: #4F81BD; color: white;">NAMA VENDOR SERVICE</th>
+              <th class="" style="background-color: #4F81BD; color: white;">TANGGAL SERVICE</th>
+              <th class="" style="background-color: #4F81BD; color: white;">ESTIMASI SELESAI</th>
+              <th class="" style="background-color: #4F81BD; color: white;">DETAIL SERVICE</th>
+              <th class="" style="background-color: #4F81BD; color: white;">UPDATE DATE</th>
+              <th class="" style="background-color: #4F81BD; color: white;">UPDATE BY</th>
+              <th class="" style="background-color: #4F81BD; color: white; width: 10%;">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <?php $no = 1; ?>
+            <?php if(!empty($tb_service) && $tb_service !== NULL){ ?>
+              <?php foreach ($tb_service as $key => $tb) { ?>
                 <tr>
-                  <th class="" style="background-color: #4F81BD; color: white;">NO.</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">JUDUL</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">NAMA VENDOR SERVICE</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">TANGGAL SERVICE</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">ESTIMASI SELESAI</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">DETAIL SERVICE</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">UPDATE DATE</th>
-                  <th class="" style="background-color: #4F81BD; color: white;">UPDATE BY</th>
-                  <th class="" style="background-color: #4F81BD; color: white; width: 10%;">ACTION</th>
-                </tr>
-                </thead>
-                <tbody>
-                  
-                    <?php $no = 1; ?>
-                    <?php if(!empty($tb_service) && $tb_service !== NULL){ ?>
-                      <?php foreach ($tb_service as $key => $tb) { ?>
-                          <tr>
-                            <input type="hidden" name="id" value="<?php echo $tb->S_ID; ?>" />
-                            <td><?php echo $no; ?></td>
-                            <td><?php echo $tb->judul; ?></td>
-                            <td><?php echo $tb->nama_vendor; ?></td>
-                            <td><?php echo $tb->tanggal_service; ?></td>
-                            <td><?php echo $tb->estimasi_selesai; ?></td>
-                            <td><?php echo $tb->detail_service; ?></td>
-                            <td><?php echo $tb->service_update_date; ?></td>
-                            <td><?php echo $tb->service_update_by; ?></td>
-                            <td>
-                              <?php if($tb->status_service==0){ ?>
-                                  <!-- <button onclick="status_done(<?php
-                                       echo $tb->S_ID; ?>,<?php echo $tb->jml_barang; ?>,<?php echo $tb->id_item; ?>)" class="btn bg-green btn-xs" title="Ubah Status Service">
-                                    <span class="glyphicon glyphicon-check"></span>
-                                  </button> -->
-                              
-                                  <!-- <button value="<?php
-                                       echo $tb->S_ID.'|'.
-                                       $tb->ID_ITEM .'|'.
-                                       $tb->nama_vendor .'|'.
-                                       $tb->tanggal_service .'|'.
-                                       $tb->estimasi_selesai .'|'.
-                                       $tb->detail_service .'|'.
-                                       $tb->jml_barang .'|'.
-                                       $tb->service_update_date .'|'.
-                                       $tb->service_update_by;
-                                  ?>" class="btn btn-warning btn-xs" title="Edit" 
-                                    onclick="ae_service('edit',$(this))">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                  </button> -->
-                                  <button class="btn btn-warning" onclick="location.href='<?php echo base_url('service/view_edit').'?id='.$tb->id; ?>'"><span class="glyphicon glyphicon-edit"></span></button>
-                              <?php } ?>
-                              <button onclick="del(<?php
-                                   echo $tb->S_ID; ?>)" class="btn btn-danger btn-xs" title="Delete">
-                                <span class="glyphicon glyphicon-trash"></span>
-                              </button>
-                            </td>
-                          </tr>
-                          <?php $no++; ?>
-                      <?php } ?>
+                  <input type="hidden" name="id" value="<?php echo $tb->S_ID; ?>" />
+                  <td><?php echo $no; ?></td>
+                  <td><?php echo $tb->judul; ?></td>
+                  <td><?php echo $tb->nama_vendor; ?></td>
+                  <td><?php echo $tb->tanggal_service; ?></td>
+                  <td><?php echo $tb->estimasi_selesai; ?></td>
+                  <td><?php echo $tb->detail_service; ?></td>
+                  <td><?php echo $tb->service_update_date; ?></td>
+                  <td><?php echo $tb->service_update_by; ?></td>
+                  <td>
+                    <?php if($tb->status_service==0){ ?>
+
+                      <button class="btn btn-warning" onclick="location.href='<?php echo base_url('service/view_edit').'?id='.$tb->id; ?>'"><span class="glyphicon glyphicon-edit"></span></button>
                     <?php } ?>
-                  
-                </tbody>
-              </table>
-              <?php echo '<input type="hidden" class="cKat" value="'. $no .'">'; ?>
-          </div>
-        </div>
+                    <button onclick="del(<?php echo $tb->S_ID; ?>)" class="btn btn-danger btn-xs" title="Delete">
+                      <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                  </td>
+                </tr>
+                <?php $no++; ?>
+              <?php } ?>
+            <?php } ?>
+
+          </tbody>
+        </table>
+        <?php echo '<input type="hidden" class="cKat" value="'. $no .'">'; ?>
       </div>
-
-      <!-- <div class="modal modal-success fade" id="add-kategori" style="display: none;">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Add Kategori</h4>
-              </div>
-              <div class="modal-body">
-                <input type="hidden" id="id_kat" name="id" value=""/>
-                <div class="row">
-                  <label for="code" class="col-sm-4 control-label">Code <span class="asterisk">*</span></label>
-
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="code" name="code" placeholder="" value="">
-                  </div>
-                </div>  
-                <br>
-                <div class="row">
-                  <label for="name_txt" class="col-sm-4 control-label">Name <span class="asterisk">*</span></label>
-
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="name_txt" name="name_txt" placeholder="" value="">
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" id="save" class="btn btn-outline">Save</button>
-              </div>
-            </div>
-
-          </div>
-
-        </div> -->
-
-    <!-- /.content -->
-
-    <div id="items" style="display: none;">
-        <?php foreach ($items as $key => $value) { ?>
-            <option value='<?php echo $value->ID_ITEM; ?>'><?php echo $value->nama_item?></option>
-        <? } ?>
     </div>
+  </div>
 <?php } ?>
-
-
-
 
 <?php if($mode=='add'||$mode=='edit'){ ?>
 
@@ -188,7 +88,7 @@
                     id:<?php echo $value->ID_ITEM; ?>,
                     name:`<?php echo $value->nama_item; ?>`
                   });
-              <? } ?>
+              <?php } ?>
             <?php } ?>
     </script>
 
@@ -234,7 +134,7 @@
                             <?php if(!empty($vendor)){ ?>
                               <?php foreach ($vendor as $key => $value) { ?>
                                   <option <?php echo (!empty($tb_service[0]->id_vendor)&&$mode=='edit'&&$tb_service[0]->id_vendor==$value->id)?'selected="selected"':''; ?> value='<?php echo $value->id; ?>'><?php echo $value->nama_vendor?></option>
-                              <? } ?>
+                              <?php } ?>
                             <?php } ?>
                           </select>
                       </div>
@@ -356,6 +256,4 @@
           <input type="number" name="no_hp" class="form-control" placeholder="Masukkan Nomor HP Vendor">
         </div>
     </div>
-
-
 </div>
