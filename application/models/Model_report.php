@@ -154,18 +154,40 @@ class Model_report extends CI_Model {
 			            i.harga_jual,
 			            i.cost_percentage,
 			            sb.update_date, 
-			            sb.is_delete
+			            sb.is_delete,
+                        rep.in_repair,
+                        ot.jml_out
 
 			from        pos_kategori as kt, 
-			            pos_item as i, 
-			            pos_sub_kategori as sb left join user as u on u.id = sb.update_by
+			            pos_item as i 
+			            left join (SELECT 
+                                it.id_item,count(*) as in_repair 
+                            FROM 
+                                `item_service` it 
+                            join 
+                                service sv on it.id_service=sv.id 
+                            where 
+                                (date(now()) between date(sv.tanggal_service) and date(sv.estimasi_selesai) and not it.status=1) 
+                                and it.is_delete = 0 
+                                and sv.is_delete=0 group BY it.id_item) as rep on rep.id_item=i.id
+                        left join (SELECT 
+                                        it.id_item,sum(it.qty) jml_out
+                                    FROM 
+                                        `item_pemesanan` it 
+                                        join pemesanan p on p.id = it.id_pemesanan 
+                                    where 
+                                        date(it.out_date)<=date(now()) 
+                                        and it.is_in=0 group by it.id_item) as ot on ot.id_item=i.id
+                        join pos_sub_kategori as sb left join user as u on u.id = sb.update_by
+                        
 
-			where       sb.is_delete = '0' and 
-			            kt.is_delete = '0' and 
+			where       sb.is_delete = 0 and 
+			            kt.is_delete = 0 and 
 			            i.is_delete = '0' and
 			            i.id_sub_kategori=sb.id AND
 			            i.id_kategori=kt.id AND 
 			            i.id_sub_kategori=sb.id
+                        
 			order by 
 						i.id_kategori asc, i.id_sub_kategori asc, i.merek asc
 		");

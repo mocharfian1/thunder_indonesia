@@ -48,12 +48,15 @@ class report extends CI_Controller {
 		$var['allItem'] = $this->model_report->getAllItem();
 
 		$items = $var['allItem'];
-
 		
-
 		
+		if($this->input->get('export') == 'true'){
+			header('Content-Disposition: attachment; filename="Jurnal_'.date("d-m-Y").'.xls"');
+			$this->load->view('view-export_jurnal',$var);
+		}else{
+			$this->load->view('view-index',$var);
+		}
 
-		$this->load->view('view-index',$var);
 	}
 
 	public function tb_driver(){
