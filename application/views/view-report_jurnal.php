@@ -1,3 +1,5 @@
+
+
 <div class="panel panel-default">
 	<div class="panel-heading clearfix">
 		<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Jurnal Hari Ini</h4>
@@ -11,33 +13,43 @@
 		<div class="row">
 			<div class="col-lg-12">
 
-				<table width="100%" border="1" class="table table-responsive table-striped table-bordered">
+				<table width="100%" border="1" class="table table-responsive table-striped table-bordered" id="tb_report_jurnal">
 					<thead style="text-align: center" class="bg-primary">
-						<tr>
-							<td colspan="2">Div</td>
-							<td colspan="2">Audio System</td>
-							<td colspan="6" rowspan="2">Listen Warehouse</td>
-							<td rowspan="3">Remarks</td>
+						<tr class="red">
+							<th colspan="2">Div</th>
+							<th colspan="2">Audio System</th>
+							<th colspan="6" rowspan="2">Listen Warehouse</th>
+							<th rowspan="3">Remarks</th>
 						</tr>
-						<tr>
-							<td colspan="2">Update</td>
-							<td colspan="2"><?= date('d F Y'); ?></td>
+						<tr class="red">
+							<th colspan="2">Update</th>
+							<th colspan="2"><?= date('d F Y'); ?></th>
 						</tr>
-						<tr>
-							<td>No.</td>
-							<td>Product</td>
-							<td>Brand</td>
-							<td>Category</td>
-							<td>Model / Specification</td>
-							<td>In Repair</td>
-							<td>Out</td>
-							<td>Stock</td>
-							<td>Balance</td>
-							<td>Qty [Repair]</td>
-							<!-- <td>Remarks</td> -->
+						<tr class="red">
+							<th>No.</th>
+							<th>Product</th>
+							<th>Brand</th>
+							<th>Category</th>
+							<th>Model / Specification</th>
+							<th>In Repair</th>
+							<th>Out</th>
+							<th>Stock</th>
+							<th>Balance</th>
+							<th>Qty [Repair]</th>
+							<!-- <th>Remarks</th> -->
 						</tr>
-						<tr class="bg-success">
-							<td colspan="11">&nbsp;</td>
+						<tr class="bg-purple red r_width">
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -59,7 +71,24 @@
 						<?php $no++; } ?>
 					</tbody>
 				</table>
+				<table id="tb_header_fixed" class="table"></table>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style type="text/css">
+	#tb_header_fixed {
+	    position: fixed;
+	    top: 0px; display:none;
+	    background-color:white;
+	}
+
+	table > thead > tr > th {
+	    text-align: center;
+	}
+
+	table#tb_report_jurnal > thead > tr.r_width > th {
+		height: 20px;
+	}
+</style>

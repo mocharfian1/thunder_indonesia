@@ -51,8 +51,14 @@ class report extends CI_Controller {
 		
 		
 		if($this->input->get('export') == 'true'){
+			// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Description: File Transfer');
+    		header('Content-Type: application/octet-stream');
+			// header("Content-Type: application/vnd.ms-excel");
 			header('Content-Disposition: attachment; filename="Jurnal_'.date("d-m-Y").'.xls"');
+			// ob_end_clean();
 			$this->load->view('view-export_jurnal',$var);
+
 		}else{
 			$this->load->view('view-index',$var);
 		}
