@@ -51,17 +51,47 @@ class report extends CI_Controller {
 		
 		
 		if($this->input->get('export') == 'true'){
-			// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			header('Content-Description: File Transfer');
-    		header('Content-Type: application/octet-stream');
-			// header("Content-Type: application/vnd.ms-excel");
-			header('Content-Disposition: attachment; filename="Jurnal_'.date("d-m-Y").'.xls"');
-			// ob_end_clean();
-			$this->load->view('view-export_jurnal',$var);
+			// require(__DIR__ . '/../third_party/excel_reader/php-excel-reader/excel_reader2.php');
+			// require(__DIR__ . '/../third_party/excel_reader/SpreadsheetReader.php');
+			require(__DIR__ . '/../third_party/excel/PHPExcel.php');
+			require(__DIR__ . '/../third_party/excel/PHPExcel/Reader/HTML.php');
+			// require_once( APPPATH . 'third_party/PHPExcel-1.8/Classes/PHPExcel.php');
+			// header('Content-Description: File Transfer');
+   //  		header('Content-Type: application/octet-stream');
+		
+			// header('Content-Disposition: attachment; filename="Jurnal_'.date("d-m-Y").'.xls"');
+			
+			$htmlnya = $this->load->view('view-export_jurnal',$var,TRUE);
+
+			$temp_html_file = './assets/'.time().'.html';
+			file_put_contents($temp_html_file, $htmlnya);
+
+			$reader = PHPExcel_IOFactory::createReader('Html');
+
+			$spreadsheet = $reader->load($temp_html_file);
+
+			$writer = PHPExcel_IOFactory::createWriter($spreadsheet, 'Excel2007');
+
+			$filename = 'assets/doc_jurnal/Jurnal_'.date("d-m-Y").'_'.time().'.xlsx';
+
+			$writer->save($filename);
+
+			header('Content-Type: application/x-www-form-urlencoded');
+			header('Content-Transfer-Encoding: Binary');
+			header('Location:'.base_url().$filename);
+
+			readfile($filename);
+
+			unlink($temp_html_file);
+			// unlink($filename);
+
+			exit;
 
 		}else{
 			$this->load->view('view-index',$var);
 		}
+
+		
 
 	}
 
