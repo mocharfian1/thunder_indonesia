@@ -13,7 +13,7 @@
 				<h2>Surat Jalan</h2>
 			</td>
 			<td colspan="3" width="50%" style="text-align: right">
-				<img width="150px" src="<?= $logo; ?>" />
+				<img width="100px" src="<?= $logo; ?>" />
 			</td>
 		</tr>
 		<tr>
