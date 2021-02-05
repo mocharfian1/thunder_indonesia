@@ -4,11 +4,8 @@
 			<th colspan="5">PT. ARCOMEGA DIGITAL PERKASA - Delivery Note - View</th>
 		</tr> -->
 		<tr>
-			<td colspan="2" width="50%" style="vertical-align: top;">
+			<td colspan="4" width="50%" style="vertical-align: top;">
 				<h2>Surat Jalan</h2>
-			</td>
-			<td colspan="3" width="50%" style="text-align: right">
-				<img width="70px" src="<?= $logo; ?>" />
 			</td>
 		</tr>
 	</thead>
@@ -17,11 +14,7 @@
 			<td colspan="5" height="20px"></td>
 		</tr> -->
 		<tr>
-			<td>&nbsp;<br>&nbsp;</td>
-		</tr>
-		<tr>
-			<td width="40%" style="vertical-align: top"><?= strtoupper($r[0]->nama_pemesan); ?></td>
-			<!-- <td>&nbsp;</td><td>&nbsp;</td> -->
+			<td style="vertical-align: top"><?= strtoupper($r[0]->nama_pemesan); ?></td>
 			<td style="text-align: right; border-right: solid 2px black; padding-right: 10px">
 				<b>Delivery Date</b><br>
 				<span><?= date('d M Y',strtotime($r[0]->tgl_pemesanan)); ?></span><br><br>
@@ -36,8 +29,11 @@
 				Jakarta Timur - 13730<br>
 				84.864.775.6-009.000
 			</td>
+			<td colspan="3" width="50%" style="text-align: right">
+				<img width="70px" src="<?= $logo; ?>" />
+			</td>
 		</tr>
-		<tr><td><br></td></tr>
+		<tr><td colspan="4"><br></td></tr>
 	</tbody>
 </table>
 <table width="100%" style="font-size: 0.8em">

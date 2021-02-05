@@ -1,9 +1,16 @@
 $('#tb_item').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+          {
+              extend: 'print',
+              exportOptions: {
+                  columns: '0,1,2,3,4,5,6,7,8,9'
+              }
+          },
         ]
     } );
+
+
 var itemsInTable = [];
 
 function setBtnDelItem(id=null,server=null){
@@ -53,7 +60,7 @@ var datatable = $('.datatable').DataTable({
 	    		// var insertTable = [];
 
 				for (var i = 0; i < data.result.length; i++) {
-					
+
 					itemsInTable.push({
 						no : i+1,
 						id : d[i].id,
@@ -407,11 +414,11 @@ class Transaksi {
 					btnClass:'btn-success',
 					action:()=>{
 						var self = this;
-	
+
 						var fd = new FormData();
 						var files = $('#file-import')[0].files;
 						fd.append('file_input',files[0]);
-	
+
 						$.ajax({
 							url: '/import/upload_consumable?jenis='+jenis,
 							type: 'post',
@@ -419,7 +426,7 @@ class Transaksi {
 							contentType: false,
 							processData: false,
 							success: function(d){
-	
+
 								$.confirm({
 									title:'LIST ITEM IMPORT',
 									columnClass:'col-12',
@@ -430,7 +437,7 @@ class Transaksi {
 											btnClass:'btn-primary',
 											action:()=>{
 												var id = $(d).find('input#id_import').val();
-	
+
 												$.post(URL+'import/submit_import_consumable',{id:id}).done((data_import)=>{
 													$.alert({
 														title:'Alert',
@@ -438,7 +445,7 @@ class Transaksi {
 														columnClass:'col-md-8 col-md-offset-2'
 													});
 												}).fail((e)=>{
-													
+
 												});
 											}
 										},
@@ -523,7 +530,7 @@ class Transaksi {
 						for (var i = 0; i < itemsInTable.length; i++) {
 							delete itemsInTable[i].action;
 						}
-						
+
 						$.post(URL+'consumable/submitTransaction',{no_transaksi:no_transaksi,data:itemsInTable}).done((data)=>{
 							// alert(data.success);
 							if(data.success === true){
@@ -541,14 +548,14 @@ class Transaksi {
 				}
 			}
 		});
-		
+
 	}
 
 	submitUpdateTransaction(){
 		for (var i = 0; i < itemsInTable.length; i++) {
 			delete itemsInTable[i].action;
 		}
-		
+
 		$.post(URL+'consumable/submitUpdateTransaction',{no_transaksi:no_transaksi,data:itemsInTable,dataDelete:itemsDelete}).done((data)=>{
 
 		}).fail((e)=>{
@@ -581,7 +588,7 @@ class Transaksi {
 		// 	itemsInTable.splice(itemsInTable.findIndex(({id}) => id == x),1);
 		// }
 
-		
+
 		// console.log(itemsDelete);
 		datatable.clear();
 		datatable.rows.add(itemsInTable);
@@ -618,4 +625,3 @@ function add_kategori() {
 function add_sub_kategori() {
 	SK.addSubKategori();
 }
-
