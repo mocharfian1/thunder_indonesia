@@ -37,7 +37,7 @@ function getSubKat(e){
 	// var optSub = new Option('-- Pilih Sub Kategori --','',false,false);
 	// $('#selSubKategori').append(optSub);
 	$.post(URL+'/produk/getSubKategori',{id:$(e).val()}).done((data)=>{
-		
+
 		var i;
 		for(i=0; i<data.data.length; i++){
 			var optSub = new Option(data.data[i].sub_description, data.data[i].id);
@@ -56,7 +56,7 @@ function getItem(e){
 	$('#item_select').html('<option disabled selected>-- Pilih Item --</option>');
 
 	$.post(URL+'/produk/getItemPem',{id_sub:$(e).val(),id_kat:kat}).done((data)=>{
-		
+
 		var i;
 		for(i=0; i<data.data.length; i++){
 			var value = 	data.data[i].ID_ITEM +'|'+
@@ -84,16 +84,16 @@ function hideForm(x){
 		$('#tf_sel').hide();
 	}
 
-	
+
 	// let frm = $(x).prop('checked');
-	
+
 	// if(frm===true){
-		
+
 	// 	$('#tf_free').show();
 	// 	$('#tf_sel').hide();
 	// 	$(x).prop('checked',true);
 	// }else{
-		
+
 	// 	$('#tf_sel').show();
 	// 	$('#tf_free').hide();
 	// 	$(x).prop('checked',false);
@@ -140,7 +140,7 @@ $(function() {
 	// alert(jenis);
 	// alert('');
 	$('#tb_pemesanan').DataTable();
-	
+
 
 	$('#ch_stat').popover();
 
@@ -173,10 +173,10 @@ $(function() {
 					 			$('#btn_add').prop('disabled',false);
 					 			st_btn_add = true;
 					 		},10);
-					 		
+
 					 	}// $('#item_select').select2();
 					 }else{
-					 	
+
 					 	$('#btn_add').prop('disabled','disabled');
 					 	st_btn_add = false;
 					 	$('#item_select').prop('selectedIndex',0).select2();
@@ -205,7 +205,7 @@ function autoenter(){
 			$('#bc').focus().val('');
 		}
 	},10);
-	
+
 }
 
 function enter(event) {
@@ -217,7 +217,7 @@ function enter(event) {
 	}
 }
 
-function add_item() {	
+function add_item() {
 
 	if(is_durasi==0){
 		let item_val = $('#item_select').val().split('|');
@@ -286,7 +286,7 @@ function add_item() {
 		if (valid && $('#qty').val() >= 1 ) {
 			var match = false;
 			if($('#item_select').val()!=null){
-				
+
 				var item_val = $('#item_select').val().split('|');
 				var item_durasi = $('#sel_durasi').val().split('|');
 
@@ -319,7 +319,7 @@ function add_item() {
 									match = true;
 									// var jml = $('#tb_item_pemesanan').find('tbody tr:eq(' + index + ') td:eq(5)').html();
 									var jml = DataTableItem.cell(index,5).data();
-									
+
 									// alert();
 									// var harga_jual = clear_f_cur($('#tb_item_pemesanan').find('tbody tr:eq(' + index + ') td:eq(6)').html());
 									var harga_jual = clear_f_cur(DataTableItem.cell(index,6).data());
@@ -406,7 +406,7 @@ function add_item() {
 													]).draw(false);
 
 
-								
+
 
 								$.each($('#tb_item_pemesanan').find('tbody tr'), function(index, val) {
 									$('#tb_item_pemesanan').find('tbody tr:eq(' + index + ') td:eq(0) p.no_item').html(index + 1);
@@ -432,7 +432,7 @@ function add_item() {
 
 		}
 	}
-	
+
 
 	// $('#tb_item_pemesanan').DataTable({
  //        responsive: {
@@ -567,7 +567,7 @@ function submit(x,type=null) {
 
 			if(c_item>0){
 				$.each($('#tb_item_pemesanan tbody tr'), function(index, val) {
-						
+
 					if($.parseHTML(DataTableItem.cell(index,0).data())[0].value=='FREE'){
 						// tmpFree.push({
 						// 	barcode:DataTableItem.cell(index,1).data(),
@@ -690,7 +690,7 @@ function submit(x,type=null) {
 							$.each(DataTableItem.rows().data(),function(index,val){
 							// $.each($('.id_item'), function(index, val) {
 								// if($.parseHTML(DataTableItem.cell(index,0).data())[0].value=='FREE'){
-								
+
 
 								var id_i = $.parseHTML(DataTableItem.cell(index,0).data())[0].value;//$('.id_item').eq(index).val();
 								var id_ip = $.parseHTML(DataTableItem.cell(index,0).data())[1].value;//$('.id_it_pemesanan').eq(index).val();
@@ -701,10 +701,10 @@ function submit(x,type=null) {
 								// var sub = $('.id_item').eq(index).parents('tbody tr').find('td:eq(6)').html();
 								// console.log($.parseHTML(DataTableItem.cell(index,0).data()));
 								if(id_i=='FREE'){
-									
-									
+
+
 								}else{
-									
+
 									var qty_i = DataTableItem.cell(index,5).data();
 									var h_stock_i = DataTableItem.cell(index,4).data();
 									var disc = DataTableItem.cell(index,8).data();
@@ -804,7 +804,7 @@ function submit(x,type=null) {
 								var res = JSON.parse(data);
 
 								if (res.status =='1'||res.status ==1) {
-									
+
 									$.alert({
 										title: 'Success',
 										content: 'Sukses ' + msg + ' data',
@@ -969,11 +969,11 @@ function sh_pemesanan(x, y = null) {
 								<td>` + res[index].barcode + `</td>
 								<td>` + res[index].item_name + `</td>
 								<td>` + res[index].h_stock + `</td>
-								<td>` + res[index].qty + `</td>
-								<td>` + res[index].disc + `%</td>
-								<td>` + res[index].extra_charge + `%</td>
-								<td>` + res[index].name_durasi + `</td>
-								<td><input type="checkbox" `+res[index].is_out+` onclick="out_set(`+res[index].id_it_pn+`,$(this))"></td>
+								<td>` + res[index].qty + `</td>`+
+								// <td>` + res[index].disc + `%</td>
+								// <td>` + res[index].extra_charge + `%</td>
+								// <td>` + res[index].name_durasi + `</td>
+								`<td><input type="checkbox" `+res[index].is_out+` onclick="out_set(`+res[index].id_it_pn+`,$(this))"></td>
 								<td><input type="checkbox" `+res[index].is_in+` onclick="in_set(`+res[index].id_it_pn+`,$(this))"></td>
 								<!-- <td class="t_right">` + f_cur(res[index].harga) + `</td>
 								<td class="t_right">` + f_cur(parseInt(res[index].total_harga)) + `</td>
@@ -1068,9 +1068,9 @@ function insert_kurir(x){
 							}
 						});
 					});
-						
 
-					
+
+
 				},
 				cancel: function() {
 
@@ -1081,7 +1081,7 @@ function insert_kurir(x){
 		console.log('Error : '+reason);
 	});
 
-	
+
 }
 
 function kurir_act(x) {
@@ -1123,7 +1123,7 @@ function kurir_act(x) {
 }
 
 function acc_order(x) {
-	
+
 	$.confirm({
 		title: 'Terima pemesanan?',
 		content: 'Anda akan menerima pemesanan ini',
@@ -1313,16 +1313,16 @@ function ch_stat_pem(x,s) {
 function adm_ch_stat(id,x){
 	// alert(id + '>' + x);
 	startloading('Mengubah Status Pemesanan...');
-	$.ajax({ 
-        url: URL + 'transaksi/ch_stat_from_admin', 
-        type : "post",      
-        dataType : "json",                                               
+	$.ajax({
+        url: URL + 'transaksi/ch_stat_from_admin',
+        type : "post",
+        dataType : "json",
         data:{id:id,stat:x},
-        error: function(result){                    
+        error: function(result){
         	endloading();
         },
-        success: function(result) { 
-        	endloading(); 
+        success: function(result) {
+        	endloading();
             $.alert({
             	title:'Sukses',
             	content:result.message,
@@ -1337,7 +1337,7 @@ function adm_ch_stat(id,x){
             });
         }
 
-    }); 
+    });
 }
 
 function pil_stat(stat,id,c,stTxt){
@@ -1347,14 +1347,14 @@ function pil_stat(stat,id,c,stTxt){
 						    `;
 	if(stat!=5){
 		btn1+=`<span class="caret"></span>`;
-	}				
+	}
 		btn1+=`</button>`;
 
 	if(stat!=5){
 		btn1+=`<ul class="dropdown-menu">`;
 		$.each(ket_kurir,function(index,val){
 			if(index>2){
-				btn1+=`<li><a href="#" onclick="adm_ch_stat(`+id+`,`+index+`)">`+val+`</a></li>`;	
+				btn1+=`<li><a href="#" onclick="adm_ch_stat(`+id+`,`+index+`)">`+val+`</a></li>`;
 			}
 		});
 		btn1+= `</ul>`;
@@ -1432,13 +1432,13 @@ function conf_to_prod(x){
 var is_durasi = 0;
 
 function ch_select(x){
-	
+
 	// $('#btn_add').prop('disabled',true);
 	$('#sel_durasi').hide();
 	$('#load_sel_durasi').show();
 
 	var v = x.split("|");
-	$('#bc').val(v[1]); 
+	$('#bc').val(v[1]);
 	setTimeout(function(){
 		$('#qty').focus();
 		$('#btn_add').prop('disabled',false);
@@ -1459,15 +1459,15 @@ function ch_select(x){
 		}else{
 			is_durasi = 1;
 			res = JSON.parse(response);
-			
+
 			res.forEach(function(item,index){
 				$('#sel_durasi').append(`<option value="`+item.id+`|`+item.harga+`|`+item.name+`">`+item.name+` - Rp `+f_cur(item.harga)+`</option>`);
 			});
 			$('#sel_durasi').show();
 			$('#load_sel_durasi').hide();
 		}
-		
-		
+
+
 	}).fail(function(){
 
 	});
@@ -1481,9 +1481,9 @@ function select_customer(x){
 	$('.loading-user').fadeIn(function(){
 		$.post(URL+'transaksi/user_info_pemesanan',{id:x.val()}).done(function(data){
 			$('.loading-user').fadeOut(function(){
-				$('#user_info').html(data);	
+				$('#user_info').html(data);
 			});
-			
+
 		}).fail(function(e){
 
 		});
@@ -1507,7 +1507,7 @@ function ck_status(x){
 
 	            var penawaran = [];
 	            var pemesanan = [];
-	            
+
 	            $.each(response,function(index,val){
 	            	if(val.jenis=='penawaran'){
 	            		penawaran.push('( '+ val.insert_date+' ) => <b style="color:'+clr[val.status]+';">'+val.status_txt+'</b><br>');
@@ -1521,7 +1521,7 @@ function ck_status(x){
 	            	self.setContentAppend(val);
 	            });
 
-	            
+
 
 	            if(jenis=='pemesanan'){
 	            	self.setContentAppend('<h4 style="width:100%;background-color:grey;color:white;"><b>Pemesanan</b></h4>');
@@ -1529,7 +1529,7 @@ function ck_status(x){
 		            	self.setContentAppend(val);
 		            });
 	            }
-	            
+
 	        }).fail(function(){
 	            self.setContent('Terjadi kesalahan, coba beberapa saat lagi.');
 	        });
@@ -1586,7 +1586,7 @@ function add_driver(x=null,y=null){
 			return $.post(URL + 'transaksi/sh_driver?id_pemesanan='+id_pemesanan).done(function(response){
 				self.setContent("");
 	            self.setContentAppend(response);
-	            self.setTitle(`Pilih Driver atau 
+	            self.setTitle(`Pilih Driver atau
 	            				<script src="`+URL+`assets/scripts/autocomplete.js"></script>
 	            				<div class="autocomplete">
 								    <input id="myInput" type="text" name="myCountry" placeholder="Input Nama Freelancer">
@@ -1621,7 +1621,7 @@ function add_crew(x=null,y=null){
 				self.setContent("");
 	            self.setContentAppend(response);
 	            self.setTitle(`	<script src="`+URL+`assets/scripts/freelance.js"></script>
-					            Pilih Crew atau 
+					            Pilih Crew atau
 					            <div class="autocomplete">
 					                <input id="myInput" type="text" name="myCountry" placeholder="Input Nama Freelancer">
 					            </div>
@@ -1672,7 +1672,7 @@ function add_crew(x=null,y=null){
 												}
 											});
 										}).fail();
-									}	
+									}
 								},no:{
 									text:"Tidak"
 								}
@@ -1789,7 +1789,7 @@ function add_freelance(name=null,id_pemesanan=null){
 							});
 						}
 
-						
+
 					}).fail(function(){
 						endloading();
 					});
@@ -1805,12 +1805,12 @@ function add_freelance(name=null,id_pemesanan=null){
 function select_crew(x,id,name){
 	if(x.hasClass('selected')){
 		x.removeClass('selected');
-		x.css('box-shadow','0 4px 8px 0 rgba(0,0,0,0.2)');	
+		x.css('box-shadow','0 4px 8px 0 rgba(0,0,0,0.2)');
 	}else{
 		x.addClass('selected');
-		x.css('box-shadow','rgb(81, 51, 247) 0 0px 14px 6px');	
+		x.css('box-shadow','rgb(81, 51, 247) 0 0px 14px 6px');
 	}
-	
+
 }
 
 function add_freelance_to_dialog(name,id_pemesanan){
@@ -1852,7 +1852,7 @@ function add_freelance_to_dialog(name,id_pemesanan){
 							});
 						}
 
-						
+
 					}).fail(function(){
 						endloading();
 					});
@@ -1916,7 +1916,7 @@ function save_detail_acara(){
 	});
 
 	if(validate==0){
-		
+
 		$.confirm({
 			title:'',
 			content:"Ketika <b>SUBMIT</b>, maka rincian acara akan di \"Hold\" dan jika anda ingin mengubah, klik <b>EDIT</b> dan list item otomatis akan di reset.",
@@ -1949,7 +1949,7 @@ function edit_detail_acara(){
 				text:"OK, Lanjutkan!",
 				btnClass:'btn btn-primary',
 				action:function(){
-					
+
 				}
 			},close:{
 				text:"Cancel"
@@ -1985,7 +1985,7 @@ function out_set(id,x){
 						var remark = self.$content.find('textarea[name="remarks"]').val();
 						$.post(URL+'transaksi/chk_list_out/',{id:id,status:status,remark:remark}).done(function(data){
 							x.prop('disabled',false);
-							
+
 						}).fail(function(e){
 							x.prop('disabled',false);
 						});
@@ -2024,7 +2024,7 @@ function in_set(id,x){
 						var remark = self.$content.find('textarea[name="remarks"]').val();
 						$.post(URL+'transaksi/chk_list_in/',{id:id,status:status,remark:remark}).done(function(data){
 							x.prop('disabled',false);
-							
+
 						}).fail(function(e){
 							x.prop('disabled',false);
 						});
@@ -2402,7 +2402,7 @@ function add_durasi(id=null) {
                     }
                 }
 
-                
+
                 list.append(`
                         <li class="list-group-item clearfix">
                             <div class="col-sm-10 durasi">
@@ -2417,7 +2417,7 @@ function add_durasi(id=null) {
                 `);
 
             });
-          
+
             return $('#add_durasi').html();
         },buttons:{
             ok:{
@@ -2449,7 +2449,7 @@ function add_durasi(id=null) {
                 text:"Close",
                 action:function(){
                     arrDurasi = [];
-                    
+
                     $('#list_durasi').empty();
 
                     var it = this;
