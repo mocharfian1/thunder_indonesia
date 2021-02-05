@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Model_produk extends CI_Model {
 	function __construct(){
 		parent::__construct();
@@ -29,7 +29,7 @@ class Model_produk extends CI_Model {
 						'update_by'=>$session_id
 					);
 			$add_stat = $this->db->insert('pos_kategori',$data);
-			
+
 
 			if($add_stat){
 				$response = true;
@@ -38,9 +38,9 @@ class Model_produk extends CI_Model {
 
 			}
 			return $response;
-			
+
 		}
-		
+
 	}
 	public function edit($id,$code,$nama){
 		$update_by = $this->session->userdata('id_user') ? $this->session->userdata('id_user') : '1';
@@ -58,16 +58,16 @@ class Model_produk extends CI_Model {
 
         if($save){
               $response = array (
-                    "status" => 'success',                    
+                    "status" => 'success',
                     "message" => 'Data updated'
               );
-        }else{                                                
+        }else{
               $response = array(
-                    "status" => 'error',                      
+                    "status" => 'error',
                     "message" => 'Error: Update failed'
               );
-        }   
-        return $response;        
+        }
+        return $response;
 	}
 	public function result_add(){
 		$query = $this->db->query("select mt.id, mt.code, mt.description, u.username as update_by_username, mt.update_date from pos_kategori as mt left join user as u on u.id = mt.update_by where mt.is_delete = '0' and mt.id = (select last_insert_id())");
@@ -85,35 +85,35 @@ class Model_produk extends CI_Model {
 		$delete_date = date('Y-m-d H:i:s');
 
 		$this->db->where('id',$id);
-		$save = $this->db->update('pos_kategori',array('delete_by'=>$delete_by, 'delete_date'=>$delete_date, 'is_delete'=>'1')); 
+		$save = $this->db->update('pos_kategori',array('delete_by'=>$delete_by, 'delete_date'=>$delete_date, 'is_delete'=>'1'));
 
 		if($save){
 		    $response = array(
-		          "status" => 'success',                    
+		          "status" => 'success',
 		          "message" => 'Success delete market type'
 		    );
 		}else{
 		     $response = array(
-		          "status" => 'error',                      
+		          "status" => 'error',
 		          "message" => 'Error: Failed delete market type'
 		    );
-		}           
+		}
 
 		return $response;
 	}
 
 //####################################   SUB KATEGORI ########################################
 	public function tb_sub_kategori(){
-		$query = $this->db->query("select 
+		$query = $this->db->query("select
 									pk.code as kategori_code,
 									pk.description as deskripsi_kategori,
 									mt.id,
 									mt.sub_kategori_code,
 									mt.sub_description,
-									pk.id as id_kat, 
-									u.username as update_by_username, 
-									mt.update_date 
-								from 
+									pk.id as id_kat,
+									u.username as update_by_username,
+									mt.update_date
+								from
 									pos_kategori as pk,
 									pos_sub_kategori as mt left join user as u on u.id = mt.update_by where mt.is_delete = '0' and pk.is_delete = '0' and pk.id=mt.id_kategori order by mt.update_date desc");
 
@@ -140,7 +140,7 @@ class Model_produk extends CI_Model {
 						'update_by'=>$session_id
 					);
 			$add_stat = $this->db->insert('pos_sub_kategori',$data);
-			
+
 
 			if($add_stat){
 				$response = true;
@@ -149,20 +149,20 @@ class Model_produk extends CI_Model {
 
 			}
 			return $response;
-			
-		}	
+
+		}
 	}
 	public function result_add_sub(){
-		$query = $this->db->query("select 
+		$query = $this->db->query("select
 									pk.code as kategori_code,
 									pk.description as deskripsi_kategori,
 									mt.id,
 									mt.sub_kategori_code,
 									mt.sub_description,
-									pk.id as id_kat, 
-									u.username as update_by_username, 
-									mt.update_date 
-								from 
+									pk.id as id_kat,
+									u.username as update_by_username,
+									mt.update_date
+								from
 									pos_kategori as pk,
 									pos_sub_kategori as mt left join user as u on u.id = mt.update_by where mt.is_delete = '0' and pk.is_delete = '0' and pk.id=mt.id_kategori and mt.id = (select last_insert_id())");
 
@@ -189,16 +189,16 @@ class Model_produk extends CI_Model {
 
         if($save){
               $response = array (
-                    "status" => 'success',                    
+                    "status" => 'success',
                     "message" => 'Data updated'
               );
-        }else{                                                
+        }else{
               $response = array(
-                    "status" => 'error',                      
+                    "status" => 'error',
                     "message" => 'Error: Update failed'
               );
-        }   
-        return $response;        
+        }
+        return $response;
 	}
 	public function del_sub_kategori(){
 		$id = $this->input->post('id');
@@ -206,31 +206,31 @@ class Model_produk extends CI_Model {
 		$delete_date = date('Y-m-d H:i:s');
 
 		$this->db->where('id',$id);
-		$save = $this->db->update('pos_sub_kategori',array('delete_by'=>$delete_by, 'delete_date'=>$delete_date, 'is_delete'=>'1')); 
+		$save = $this->db->update('pos_sub_kategori',array('delete_by'=>$delete_by, 'delete_date'=>$delete_date, 'is_delete'=>'1'));
 
 		if($save){
 		    $response = array(
-		          "status" => 'success',                    
+		          "status" => 'success',
 		          "message" => 'Success delete market type'
 		    );
 		}else{
 		     $response = array(
-		          "status" => 'error',                      
+		          "status" => 'error',
 		          "message" => 'Error: Failed delete market type'
 		    );
-		}           
+		}
 
 		return $response;
 	}
 //################################### ITEM ####################################################
 	public function tb_item(){
 		$query = $this->db->query("select      	i.id as ID_ITEM,
-									            kt.code, 
+									            kt.code,
 									            sb.id as id_sub,
 									            kt.id as id_kat,
-									            sb.sub_kategori_code, 
-									            kt.code,  
-									            u.username as update_by_username, 
+									            sb.sub_kategori_code,
+									            kt.code,
+									            u.username as update_by_username,
 									            i.barcode,
 									            i.qty,
 									            i.merek,
@@ -247,25 +247,25 @@ class Model_produk extends CI_Model {
 												i.kode_rak,
 												i.tahun_pembelian,
 
-									             
+
 									            i.item_name as nama_item,
 									            sb.sub_description as jenis_item,
 									            kt.description as kategori_item,
 									            i.harga_beli,
 									            i.harga_jual,
 									            i.cost_percentage,
-									            sb.update_date, 
+									            sb.update_date,
 									            sb.is_delete
 
-									from        pos_kategori as kt, 
-									            pos_item as i, 
+									from        pos_kategori as kt,
+									            pos_item as i,
 									            pos_sub_kategori as sb left join user as u on u.id = sb.update_by
 
-									where       sb.is_delete = '0' and 
-									            kt.is_delete = '0' and 
+									where       sb.is_delete = '0' and
+									            kt.is_delete = '0' and
 									            i.is_delete = '0' and
 									            i.id_sub_kategori=sb.id AND
-									            i.id_kategori=kt.id AND 
+									            i.id_kategori=kt.id AND
 									            i.id_sub_kategori=sb.id");
 
 
@@ -303,17 +303,19 @@ class Model_produk extends CI_Model {
         // $cost_percentage = $this->input->post('cost_percentage');
 
 
-		
+
 		$response=false;
-		if(	$mode == null || 
+		if(	$mode == null ||
 			$nama == null ||
-			$kat_id == null || 
+			$kat_id == null ||
 			$sub_kat_id == null ||
 			// $harga_beli == null ||
-			$harga_jual == null || 
-			$lost_remark == null || 
-			$fragile == null || 
+			$harga_jual == null ||
+			$lost_remark == null ||
+			$fragile == null ||
 			$status == null ||
+			$sat == null ||
+			$sat_des == null ||
 			$it_loc_nm_gudang == null ||
 			$it_loc_kd_gudang == null ||
 			$it_loc_kd_lokasi == null ||
@@ -359,7 +361,7 @@ class Model_produk extends CI_Model {
 				$durasi[$key]['update_by']=$_SESSION['id_user'];
 			}
         	$this->db->insert_batch('durasi',$durasi);
-			
+
 
 			if($add_stat){
 				$response = true;
@@ -367,18 +369,18 @@ class Model_produk extends CI_Model {
 				$response = false;
 
 			}
-			
-			return $response;	
-		}	
+
+			return $response;
+		}
 	}
 	public function result_add_item(){
 		$query = $this->db->query("select      	i.id as ID_ITEM,
-									            kt.code, 
+									            kt.code,
 									            sb.id as id_sub,
 									            kt.id as id_kat,
-									            sb.sub_kategori_code, 
-									            kt.code,  
-									            u.username as update_by_username, 
+									            sb.sub_kategori_code,
+									            kt.code,
+									            u.username as update_by_username,
 									            i.barcode,
 									            i.qty,
 									            i.satuan,
@@ -393,7 +395,7 @@ class Model_produk extends CI_Model {
 												i.kode_lokasi,
 												i.kode_rak,
 
-									             
+
 									            i.item_name as nama_item,
 									            sb.sub_description as jenis_item,
 									            kt.description as kategori_item,
@@ -401,18 +403,18 @@ class Model_produk extends CI_Model {
 									            i.harga_jual,
 									            i.cost_percentage,
 									            i.tahun_pembelian,
-									            sb.update_date, 
+									            sb.update_date,
 									            sb.is_delete
 
-									from        pos_kategori as kt, 
-									            pos_item as i, 
+									from        pos_kategori as kt,
+									            pos_item as i,
 									            pos_sub_kategori as sb left join user as u on u.id = sb.update_by
 
-									where       sb.is_delete = '0' and 
-									            kt.is_delete = '0' and 
+									where       sb.is_delete = '0' and
+									            kt.is_delete = '0' and
 									            i.is_delete = '0' and
 									            i.id_sub_kategori=sb.id AND
-									            i.id_kategori=kt.id AND 
+									            i.id_kategori=kt.id AND
 									            i.id_sub_kategori=sb.id and
 									            i.id = (select last_insert_id())");
 
@@ -431,6 +433,8 @@ class Model_produk extends CI_Model {
 		$kat_id = $this->input->post('kat_id');
 		$sub_kat_id = $this->input->post('sub_kat_id');
 		$qty = $this->input->post('qty');
+		$sat = $this->input->post('sat');
+		$sat_des = $this->input->post('sat_des');
 		$harga_beli = $this->input->post('harga_beli');
 		$harga_jual = $this->input->post('harga_jual');
 		$lost_remark = $this->input->post('lost_remark');
@@ -452,15 +456,17 @@ class Model_produk extends CI_Model {
 
 
 		$response=false;
-		if(	$mode == null || 
+		if(	$mode == null ||
 			$nama == null ||
-			$kat_id == null || 
+			$kat_id == null ||
 			$sub_kat_id == null ||
 			// $harga_beli == null ||
-			$harga_jual == null || 
-			$lost_remark == null || 
-			$fragile == null || 
+			$harga_jual == null ||
+			$lost_remark == null ||
+			$fragile == null ||
 			$status == null ||
+			$sat == null ||
+			$sat_des == null ||
 			$it_loc_nm_gudang == null ||
 			$it_loc_kd_gudang == null ||
 			$it_loc_kd_lokasi == null ||
@@ -479,6 +485,8 @@ class Model_produk extends CI_Model {
 						'id_kategori'=>$kat_id,
 						'id_sub_kategori'=>$sub_kat_id,
 						'qty'=>$qty,
+						'satuan'=>$sat,
+						'deskripsi_satuan'=>$sat_des,
 						'harga_beli'=>$harga_beli,
 						'harga_jual'=>$harga_jual,
 						'lost_remark'=>$lost_remark,
@@ -496,7 +504,7 @@ class Model_produk extends CI_Model {
 
 			$this->db->where('id',$id);
 			$add_stat = $this->db->update('pos_item',$data);
-			
+
 			$durCount = count($durasi);
 			$delCount = count($deldurasi);
 
@@ -517,17 +525,17 @@ class Model_produk extends CI_Model {
 					$delCount--;
 				}
 			}
-			
+
 			if($add_stat && $durCount==0 && $delCount==0){
 				$response = true;
 			}else{
 				$response = false;
 
 			}
-			
+
 			return $response;
-			
-		}	      
+
+		}
 	}
 	public function del_item(){
 		$id = $this->input->post('id');
@@ -535,19 +543,19 @@ class Model_produk extends CI_Model {
 		$delete_date = date('Y-m-d H:i:s');
 
 		$this->db->where('id',$id);
-		$save = $this->db->update('pos_item',array('delete_by'=>$delete_by, 'delete_date'=>$delete_date, 'is_delete'=>'1')); 
+		$save = $this->db->update('pos_item',array('delete_by'=>$delete_by, 'delete_date'=>$delete_date, 'is_delete'=>'1'));
 
 		if($save){
 		    $response = array(
-		          "status" => 'success',                    
+		          "status" => 'success',
 		          "message" => 'Success delete market type'
 		    );
 		}else{
 		     $response = array(
-		          "status" => 'error',                      
+		          "status" => 'error',
 		          "message" => 'Error: Failed delete market type'
 		    );
-		}           
+		}
 
 		return $response;
 	}
@@ -565,32 +573,32 @@ class Model_produk extends CI_Model {
 
 	public function ck_barcode($barcode=null){
 		$query = $this->db->query("select      	i.id as ID_ITEM,
-									            kt.code, 
+									            kt.code,
 									            sb.id as id_sub,
 									            kt.id as id_kat,
-									            sb.sub_kategori_code, 
-									            kt.code,  
-									            u.username as update_by_username, 
+									            sb.sub_kategori_code,
+									            kt.code,
+									            u.username as update_by_username,
 									            i.barcode,
-									             
+
 									            i.item_name as nama_item,
 									            sb.sub_description as jenis_item,
 									            kt.description as kategori_item,
 									            i.harga_beli,
 									            i.harga_jual,
 									            i.cost_percentage,
-									            sb.update_date, 
+									            sb.update_date,
 									            sb.is_delete
 
-									from        pos_kategori as kt, 
-									            pos_item as i, 
+									from        pos_kategori as kt,
+									            pos_item as i,
 									            pos_sub_kategori as sb left join user as u on u.id = sb.update_by
 
-									where       sb.is_delete = '0' and 
-									            kt.is_delete = '0' and 
+									where       sb.is_delete = '0' and
+									            kt.is_delete = '0' and
 									            i.is_delete = '0' and
 									            i.id_sub_kategori=sb.id AND
-									            i.id_kategori=kt.id AND 
+									            i.id_kategori=kt.id AND
 									            i.id_sub_kategori=sb.id AND
 									            i.barcode=$barcode");
 
@@ -605,33 +613,33 @@ class Model_produk extends CI_Model {
 //#################################### EXTEND ITEM ############################################
 	public function tb_item_is_av(){
 		$query = $this->db->query("select      	i.id as ID_ITEM,
-									            kt.code, 
+									            kt.code,
 									            sb.id as id_sub,
 									            kt.id as id_kat,
-									            sb.sub_kategori_code, 
-									            kt.code,  
-									            u.username as update_by_username, 
+									            sb.sub_kategori_code,
+									            kt.code,
+									            u.username as update_by_username,
 									            i.barcode,
 									            i.qty,
-									             
+
 									            i.item_name as nama_item,
 									            sb.sub_description as jenis_item,
 									            kt.description as kategori_item,
 									            i.harga_beli,
 									            i.harga_jual,
 									            i.cost_percentage,
-									            sb.update_date, 
+									            sb.update_date,
 									            sb.is_delete
 
-									from        pos_kategori as kt, 
-									            pos_item as i, 
+									from        pos_kategori as kt,
+									            pos_item as i,
 									            pos_sub_kategori as sb left join user as u on u.id = sb.update_by
 
-									where       sb.is_delete = '0' and 
-									            kt.is_delete = '0' and 
+									where       sb.is_delete = '0' and
+									            kt.is_delete = '0' and
 									            i.is_delete = '0' and
 									            i.id_sub_kategori=sb.id AND
-									            i.id_kategori=kt.id AND 
+									            i.id_kategori=kt.id AND
 									            i.id_sub_kategori=sb.id AND
 									            i.qty>0");
 
@@ -656,30 +664,30 @@ class Model_produk extends CI_Model {
 	public function tb_item_for_pemesanan(){
 		$query = $this->db->query("select      	i.id as ID_ITEM,
 												i.is_external,
-									            (select code from pos_kategori where id=i.id_kategori) as code, 
+									            (select code from pos_kategori where id=i.id_kategori) as code,
 									            (select id from pos_sub_kategori where id=i.id_sub_kategori) as id_sub,
-									            (select id from pos_kategori where id=i.id_kategori) as id_kat, 
-									            (select sub_kategori_code from pos_sub_kategori where id=i.id_sub_kategori), 
-									             
-									            u.username as update_by_username, 
+									            (select id from pos_kategori where id=i.id_kategori) as id_kat,
+									            (select sub_kategori_code from pos_sub_kategori where id=i.id_sub_kategori),
+
+									            u.username as update_by_username,
 									            i.barcode,
 									            i.qty,
-									             
+
 									            i.item_name as nama_item,
 									            (select sub_description from pos_sub_kategori where id=i.id_sub_kategori) as sub_kategori,
 									            (select description from pos_kategori where id=i.id_kategori) as kategori_item,
 									            i.harga_beli,
 									            i.harga_jual,
 									            i.cost_percentage,
-									            (select update_date from pos_sub_kategori where id=i.id_sub_kategori), 
+									            (select update_date from pos_sub_kategori where id=i.id_sub_kategori),
 									            (select is_delete from pos_sub_kategori where id=i.id_sub_kategori),
 									            i.jenis_item
 
-									from         
+									from
 									            pos_item as i
 												join user as u
 
-									where       
+									where
 												u.id=i.update_by and
 												i.status='Active' and
 									            ((i.jenis_item='ITEM') OR (i.jenis_item='PAKET'))");
@@ -698,33 +706,33 @@ class Model_produk extends CI_Model {
 	}
 
 	public function tb_item_for_pemesanan_cust($id_sub,$id_kat){
-		$query = $this->db->query("select      	
+		$query = $this->db->query("select
 										i.id as ID_ITEM,
 										i.is_external,
-							            (select code from pos_kategori where id=i.id_kategori) as code, 
+							            (select code from pos_kategori where id=i.id_kategori) as code,
 							            (select id from pos_sub_kategori where id=i.id_sub_kategori) as id_sub,
-							            (select id from pos_kategori where id=i.id_kategori) as id_kat, 
-							            (select sub_kategori_code from pos_sub_kategori where id=i.id_sub_kategori), 
-							             
-							            u.username as update_by_username, 
+							            (select id from pos_kategori where id=i.id_kategori) as id_kat,
+							            (select sub_kategori_code from pos_sub_kategori where id=i.id_sub_kategori),
+
+							            u.username as update_by_username,
 							            i.barcode,
 							            i.qty,
-							             
+
 							            i.item_name as nama_item,
 							            (select sub_description from pos_sub_kategori where id=i.id_sub_kategori) as sub_kategori,
 							            (select description from pos_kategori where id=i.id_kategori) as kategori_item,
 							            i.harga_beli,
 							            i.harga_jual,
 							            i.cost_percentage,
-							            (select update_date from pos_sub_kategori where id=i.id_sub_kategori), 
+							            (select update_date from pos_sub_kategori where id=i.id_sub_kategori),
 							            (select is_delete from pos_sub_kategori where id=i.id_sub_kategori),
 							            i.jenis_item
 
-									from         
+									from
 									            pos_item as i
 												join user as u
 
-									where       
+									where
 												i.id_kategori=".$id_kat." and
 												i.id_sub_kategori=".$id_sub." and
 												u.id=i.update_by and
@@ -732,13 +740,13 @@ class Model_produk extends CI_Model {
 									            ((i.jenis_item='ITEM') OR (i.jenis_item='PAKET'))");
 
 		$err = $this->db->error();
-		
+
 	 	if ($query->num_rows() > 0){
 		    return $query->result();
 		}else{
 		    return null;
 		}
-		
+
 	}
 
 	public function list_item_paket($id=null){
@@ -753,14 +761,14 @@ class Model_produk extends CI_Model {
 												i.barcode,
 												i.qty as item_h_stock,
 												i.qty as stock,
-												
+
 												p.item_name as package_name,
 												p.item_description as package_description,
 												p.harga_jual as package_price,
 												p.barcode as no_paket,
 												u.name,
 												(select pi.item_qty*i.harga_jual) as total
-												
+
 									from
 												pos_item as p
 												join package_items as pi
@@ -784,7 +792,7 @@ class Model_produk extends CI_Model {
 	public function saveToPackage($data=null){
 
 		if(!empty($data)){
-			$insert = $this->db->insert('pos_item',$data);	
+			$insert = $this->db->insert('pos_item',$data);
 			if($insert){
 				return $this->db->insert_id();
 			}else{
@@ -797,7 +805,7 @@ class Model_produk extends CI_Model {
 
 	public function saveToPackageItems($data=null){
 		if(!empty($data)){
-			$this->db->insert_batch('package_items',$data);	
+			$this->db->insert_batch('package_items',$data);
 		}else{
 			return NULL;
 		}
@@ -807,7 +815,7 @@ class Model_produk extends CI_Model {
 
 		if(!empty($data)){
 			$this->db->where('id',$id);
-			$insert = $this->db->update('pos_item',$data);	
+			$insert = $this->db->update('pos_item',$data);
 		}else{
 			return NULL;
 		}
@@ -833,7 +841,7 @@ class Model_produk extends CI_Model {
 	public function deletePackage($id=null){
 		if(!empty($id)){
 			$this->db->where('id',$id);
-			$delete = $this->db->update('pos_item',array('is_delete'=>1,'delete_by'=>$_SESSION['id_user']));	
+			$delete = $this->db->update('pos_item',array('is_delete'=>1,'delete_by'=>$_SESSION['id_user']));
 		}else{
 			return NULL;
 		}
@@ -852,7 +860,7 @@ class Model_produk extends CI_Model {
 							from
 										pos_item as p
 										join user as u
-							where 		
+							where
 										p.is_delete=0
 										and p.jenis_item="PAKET"
 										and p.update_by=u.id ' . $id_paket);

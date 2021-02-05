@@ -34,9 +34,9 @@
               <th class="" style="background-color: #4F81BD; color: white;">NAMA VENDOR SERVICE</th>
               <th class="" style="background-color: #4F81BD; color: white;">TANGGAL SERVICE</th>
               <th class="" style="background-color: #4F81BD; color: white;">ESTIMASI SELESAI</th>
-              <th class="" style="background-color: #4F81BD; color: white;">DETAIL SERVICE</th>
-              <th class="" style="background-color: #4F81BD; color: white;">UPDATE DATE</th>
-              <th class="" style="background-color: #4F81BD; color: white;">UPDATE BY</th>
+              <!-- <th class="" style="background-color: #4F81BD; color: white;">DETAIL SERVICE</th> -->
+              <!-- <th class="" style="background-color: #4F81BD; color: white;">UPDATE DATE</th> -->
+              <!-- <th class="" style="background-color: #4F81BD; color: white;">UPDATE BY</th> -->
               <th class="" style="background-color: #4F81BD; color: white; width: 10%;">ACTION</th>
             </tr>
           </thead>
@@ -52,9 +52,9 @@
                   <td><?php echo $tb->nama_vendor; ?></td>
                   <td><?php echo $tb->tanggal_service; ?></td>
                   <td><?php echo $tb->estimasi_selesai; ?></td>
-                  <td><?php echo $tb->detail_service; ?></td>
-                  <td><?php echo $tb->service_update_date; ?></td>
-                  <td><?php echo $tb->service_update_by; ?></td>
+                  <!-- <td><?php //echo $tb->detail_service; ?></td> -->
+                  <!-- <td><?php //echo $tb->service_update_date; ?></td> -->
+                  <!-- <td><?php //echo $tb->service_update_by; ?></td> -->
                   <td>
                     <?php if($tb->status_service==0){ ?>
 
@@ -92,7 +92,7 @@
             <?php } ?>
     </script>
 
-    <?php 
+    <?php
         // $stat = $p_value->status;
         function status_item($s){
             if($s==0){
@@ -116,7 +116,7 @@
     <div class="col-lg-12">
         <center><h2>Tambah Barang Service</h2></center>
         <hr style="border: 1pt black solid">
-        
+
         <div class="panel panel-default">
             <div class="panel-heading bg-blue clearfix">Detail</div>
             <div class="panel-body clearfix">
@@ -191,7 +191,7 @@
                               </div>
                             </div>
 
-                            
+
                             <div class="col-lg-1 clearfix">
                               <div class="row">
                                 <div class="col-lg-12 form-group">
@@ -220,7 +220,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 <?php } ?>
 

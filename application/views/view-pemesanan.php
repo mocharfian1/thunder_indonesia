@@ -20,7 +20,7 @@
           <center>
             <h2><?php echo $page_title; ?></h2>
             <hr style="border-top: 3px double #8c8b8b;">
-          </center>     
+          </center>
 
           <?php if($mode=='view'){ ?>
             <?php if($user=='Super Admin'||$user=='Kepala Divisi'||$user=='Admin'||$user=='Karyawan'){ ?>
@@ -32,7 +32,7 @@
                   </a>
 
                   <button class="btn btn-primary pull-right">aa</button>
-                  <br><br> 
+                  <br><br>
               <?php } ?>
 
               <?php if($act_button=='penawaran'){ ?>
@@ -41,10 +41,10 @@
                       <span class="glyphicon glyphicon-plus"></span> Tambah Penawaran
                     </button>
                   </a>
-                  <br><br> 
+                  <br><br>
               <?php } ?>
-            <?php } ?> 
-            
+            <?php } ?>
+
               <table id="tb_pemesanan" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%" style="font-size: small;">
                 <thead>
                 <tr>
@@ -65,23 +65,23 @@
                       <th class="" style="background-color: #4F81BD; color: white; ">RATING</th>
                       <th class="" style="background-color: #4F81BD; color: white; ">LOADING STATUS</th>
                   <?php } ?>
-                  
+
                   <th class="" style="background-color: #4F81BD; color: white; width: 17%">ACTION</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <?php 
-                    
+                  <?php
+
                     if(!empty($tb_pemesanan)||$tb_pemesanan!=null){ ?>
-                      
+
                       <?php $no=1; foreach ($tb_pemesanan as $key => $value) { ?>
 
                         <script>arr_cs.push({"id":"<?php echo $value->id_pemesanan; ?>","status":"<?php echo $value->status; ?>"})</script>
                         <?php if($act_button=='pemesanan'){ ?>
 
-                            <?php 
+                            <?php
                               // echo $value->status;
-                              $s = (int)$value->status; 
+                              $s = (int)$value->status;
                               $c = $stat_pemesanan[$s]['color'];
                               $st = $stat_pemesanan[$s]['status'];
                               $id_pem = $value->id_pemesanan;
@@ -120,7 +120,7 @@
                               </td>
                               <td><?php echo $value->rating; ?></td>
                               <td>
-                                  <?php 
+                                  <?php
                                       if($value->loading_status==1){ ?>
                                         <b class="blink">IS OUT</b>
                                       <?php }
@@ -133,10 +133,10 @@
                         <?php } ?>
 
                         <?php if($act_button=='penawaran'){ ?>
-                        
+
                             <?php if($value->jenis=='penawaran'){ ?>
-                                <?php 
-                                  $s = $value->status; 
+                                <?php
+                                  $s = $value->status;
                                   $c = $stat_pemesanan[$s]['color'];
                                   $st = $stat_pemesanan[$s]['status'];
                                   $id_pem = $value->id_pemesanan;
@@ -164,24 +164,24 @@
                                   <button class="btn btn-xs btn-success" style="width: 100%; white-space: pre-line;">Done - In Production</button>
                                 </td>
                                 <td>
-                                  
+
                                 </td>
                               <?php } ?>
-                              
-                              
+
+
                             </tr>
                         <?php } ?>
 
                       <?php $no++; } ?>
-                  <?php  } 
+                  <?php  }
                   ?>
-                  
+
                 </tbody>
               </table>
           <?php } ?>
-          
 
-          <?php if($mode=='add' || $mode == 'edit'){ ?> 
+
+          <?php if($mode=='add' || $mode == 'edit'){ ?>
             <script type="text/javascript">
 
               var arr_it = <?php echo json_encode($it_bc); ?>;
@@ -190,7 +190,7 @@
               //alert(arr_it[0].barcode);
             </script>
 
-            <?php 
+            <?php
                 function nego(){
                     if(!empty($_GET['nego'])){
                         if($_GET['nego'] == "nego"){
@@ -235,7 +235,7 @@
                                             <option value="<?php echo $value->id; ?>"
                                               <?php echo ($mode=='edit'&&$tb_pemesanan[0]->id_pemesan==$value->id) ? 'selected=selected':''; ?>>
                                               <?php echo $value->name; ?>
-                                            
+
                                             </option>
                                         <?php } ?>
                                       </select>
@@ -243,16 +243,16 @@
 
                                 <div class="form-group col-xs-12">
                                     <div id="user_info">
-                                      
+
                                     </div>
                                     <center class="loading-user" style="display: none;">
                                         <div style='width:100px; height: 100px; background-size: cover; background-image: url("http://localhost/thunder_indonesia/assets/dist/img/loading_mini.gif");'></div>
                                     </center>
                                 </div>
-                                
+
                             </div>
                             <div class="panel-footer">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -311,7 +311,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="form-group col-lg-12">
                                     <label>Nama Event</label>
@@ -351,7 +351,7 @@
                                     <label>No HP PIC</label>
                                     <input type="number" name="no_hp_pic" class="form-control" placeholder="Masukkan No HP PIC" value="<?php echo !empty($tb_pemesanan) ? $tb_pemesanan[0]->no_hp_pic:''; ?>">
                                 </div>
-                                
+
                             </div>
                             <div class="panel-footer clearfix">
                                 <!-- <div class="col-sm-12 simpan">
@@ -363,7 +363,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <!-- <div class="panel-group col-md-7">
                         <div class="panel panel-default">
@@ -374,13 +374,13 @@
 
                                         <div class="form-group">
                                           <label for="extra">Duration (Day)</label>
-                                          <input <?php echo nego(); ?> type="number" min="1" max="100" class="form-control" id="duration" placeholder="Masukkan Durasi" value="<?php echo !empty($tb_pemesanan[0])?$tb_pemesanan[0]->duration:''; ?>" req-s-pem> 
+                                          <input <?php echo nego(); ?> type="number" min="1" max="100" class="form-control" id="duration" placeholder="Masukkan Durasi" value="<?php echo !empty($tb_pemesanan[0])?$tb_pemesanan[0]->duration:''; ?>" req-s-pem>
                                         </div>
 
                                 </div>
                             </div>
                             <div class="panel-footer">
-                                
+
                             </div>
                         </div>
                     </div> -->
@@ -397,11 +397,11 @@
                                   <div class="form-group">
                                     <label for="item_select">Select Item *</label>
                                     <div class="input-group" style="width:100%;">
-                                      
+
                                       <!-- <select <?php echo nego(); ?> class="select2 act" id="item_select" onchange="ch_select($(this).val())">
                                         <?php if(!array_key_exists('status', $items)){?>
                                             <?php foreach ($items as $key => $value) { ?>
-                                              <?php 
+                                              <?php
                                                 $val =  $value->ID_ITEM . '|' .
                                                         $value->barcode . '|' .
                                                         $value->nama_item . '|' .
@@ -442,7 +442,7 @@
                                   <div class="form-group">
                                     <label for="item_select">Extra Charge</label>
                                     <div class="input-group" style="width:100%;">
-                                      
+
                                       <!-- <select <?php echo nego(); ?> id="extra" class="form-control">
                                         <option value="0" selected="selected">0 % - Default</option>
                                         <?php if(!empty($extra)){?>
@@ -458,14 +458,14 @@
                                   <div class="form-group">
                                     <label for="item_select">Durasi</label>
                                     <div class="input-group" style="width:100%;">
-                                      
+
                                       <!-- <select <?php echo nego(); ?> class="form-control" id="sel_durasi" >
-                                          
+
                                       </select> -->
                                     </div>
                                   </div>
                                 </div>
-                                
+
                                 <div class="col-xs-12 col-md-2">
                                   <div class="form-group">
                                     <label for="qty">Jumlah *</label>
@@ -509,13 +509,13 @@
                                         </thead>
                                         <tbody>
                                           <?php if($mode=='edit'){ ?>
-                                            
-                                            
+
+
                                             <?php if(!empty($list)){ ?>
-                                              
-                                              
+
+
                                               <?php $no=1; foreach($list as $key => $value) { ?>
-                                                
+
                                                 <tr>
                                                   <td>
                                                       <input type="hidden" class="id_item" value="<?php echo $value->ID_ITEM; ?>"><input type="hidden" class="id_it_pemesanan" value="<?php echo $value->ID_IT_PEMESANAN; ?>"><p class="no_item"><?php echo $no; ?></p>
@@ -546,7 +546,7 @@
                                               <?php $no++; } ?>
                                             <?php }?>
                                           <?php }?>
-                                          
+
                                         </tbody>
                                         <tfoot style="font-size:11px;" id="tf_sel">
                                           <tr style="background-color: grey; color: white;">
@@ -566,7 +566,7 @@
                                                 <option disabled="disabled" selected="selected">-- Pilih Item --</option>
                                                 <?php if(!array_key_exists('status', $items)){?>
                                                     <?php foreach ($items as $key => $value) { ?>
-                                                      <?php 
+                                                      <?php
                                                         $val =  $value->ID_ITEM . '|' .
                                                                 $value->barcode . '|' .
                                                                 $value->nama_item . '|' .
@@ -635,7 +635,7 @@
                                 </div>
                               </div>
                           </div>
-                          <div class="panel panel-footer">                        
+                          <div class="panel panel-footer">
                             <div class="row">
                               <div class="col-xs-12">
                                 <div onclick="submit('<?php echo $mode; ?>','<?php echo !empty($_GET['type']) ? $_GET['type']:''; ?>')" class="btn btn-success btn-sm pull-right">
@@ -674,7 +674,7 @@
         <h4 class="modal-title judul_pemesanan">PEMESANAN</h4>
       </div>
       <div class="modal-body">
-          
+
           <label>Nomor Pemesanan : <i class="no_pemesanan"></i></label>
           <br>
           <label>Tanggal Pemesanan : <i class="tgl_pemesanan"></i></label>
@@ -733,7 +733,7 @@
           </div>
           <br><br>
 
-          <div class="row verifikasi" style="display: none;">  
+          <div class="row verifikasi" style="display: none;">
           </div>
           <div class="row">
             <div class="col-xs-12">
@@ -747,9 +747,9 @@
                         <th>Nama Barang</th>
                         <th>Stock</th>
                         <th>Jumlah</th>
-                        <th>Disc</th>
-                        <th>Extra Charge</th>
-                        <th>Durasi</th>
+                        <!-- <th>Disc</th> -->
+                        <!-- <th>Extra Charge</th> -->
+                        <!-- <th>Durasi</th> -->
                         <th>Out</th>
                         <th>In</th>
                         <!-- <th>Harga Satuan</th>
@@ -759,7 +759,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      
+
                     </tbody>
                     <!-- <tfoot>
                       <tr class="bg-gray">
@@ -815,9 +815,9 @@
   <?php }else{ ?>
         <label>Kurir Kosong</label>
   <?php } ?>
-  
+
      <button onclick="insert_kurir($(this).parent())" data-toggle="popover" type="button" class="btn btn-default" style="width: 100%; margin-top: 10px;">Submit</button>
-  
+
 </ul> -->
 
 <ul id="popover-content" class="list-group" style="display: none;">
@@ -871,7 +871,7 @@
   <style type="text/css">
     * { box-sizing: border-box; }
 body {
-  font: 16px Arial; 
+  font: 16px Arial;
 }
 .autocomplete {
   /*the container must be positioned relative:*/
@@ -906,17 +906,17 @@ input[type=submit] {
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
 }
 .autocomplete-items div:hover {
   /*when hovering an item:*/
-  background-color: #e9e9e9; 
+  background-color: #e9e9e9;
 }
 .autocomplete-active {
   /*when navigating through the items using the arrow keys:*/
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
+  background-color: DodgerBlue !important;
+  color: #ffffff;
 }
 
 #select2-selSubKategori{
@@ -952,14 +952,3 @@ input[type=number]::-webkit-inner-spin-button {
       }
     }
 </style>
-
-
-
-
-
-
-
-
-
-
-
