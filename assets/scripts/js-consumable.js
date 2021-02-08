@@ -10,6 +10,24 @@ $('#tb_item').DataTable( {
         ]
     } );
 
+$('#tb_kategori').DataTable({
+  dom: 'Bfrtip',
+  buttons: [{
+      extend: 'print',
+      exportOptions: {
+          columns: '0,1,2'
+      }
+  }]
+});
+$('#tb_kategori_sub').DataTable({
+  dom: 'Bfrtip',
+  buttons: [{
+      extend: 'print',
+      exportOptions: {
+          columns: '0,1,2,3'
+      }
+  }]
+});;
 
 var itemsInTable = [];
 

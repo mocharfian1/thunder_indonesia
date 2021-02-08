@@ -4,12 +4,12 @@
       <center>
         <h2>SET UP <?php echo $page_title; ?></h2>
         <hr style="border-top: 3px double #8c8b8b;">
-        <?php //$this->load->view('tpl_form_message'); 
+        <?php //$this->load->view('tpl_form_message');
         ?>
       </center>
 
       <br>
-      <!-- <a href="<?php //echo base_url('kategori/add'); 
+      <!-- <a href="<?php //echo base_url('kategori/add');
                     ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
       <button type="button" id="addRow" class="btn btn-success" onclick="add_kategori()">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Kategori
@@ -17,7 +17,7 @@
       <br>
       <hr style="border-top: 3px double #8c8b8b;">
 
-      <table id="tb_item" class="table table-bordered table-striped table-hover datatable" cellspacing="0" width="100%">
+      <table id="tb_kategori" class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th>No.</th>
@@ -52,12 +52,12 @@
       <center>
         <h2>SET UP <?php echo $page_title_2; ?></h2>
         <hr style="border-top: 3px double #8c8b8b;">
-        <?php //$this->load->view('tpl_form_message'); 
+        <?php //$this->load->view('tpl_form_message');
         ?>
       </center>
 
       <br>
-      <!-- <a href="<?php //echo base_url('kategori/add'); 
+      <!-- <a href="<?php //echo base_url('kategori/add');
                     ?>" class="btn btn-info pull-right"><i class="fa fa-plus"></i> ADD KATEGORI</a> -->
       <button type="button" id="addRow" class="btn btn-success" onclick="add_sub_kategori()">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah Sub Kategori
@@ -65,7 +65,7 @@
       <br>
       <hr style="border-top: 3px double #8c8b8b;">
 
-      <table id="tb_item" class="table table-bordered table-striped table-hover datatable" cellspacing="0" width="100%">
+      <table id="tb_kategori_sub" class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th>No.</th>
