@@ -167,17 +167,18 @@ class Model_report extends CI_Model {
                             join 
                                 service sv on it.id_service=sv.id 
                             where 
-                                (date(now()) between date(sv.tanggal_service) and date(sv.estimasi_selesai) and not it.status=1) 
+                                not it.status=1
                                 and it.is_delete = 0 
                                 and sv.is_delete=0 group BY it.id_item) as rep on rep.id_item=i.id
                         left join (SELECT 
-                                        it.id_item,sum(it.qty) jml_out
+                                        ip.id_item,sum(ip.qty) jml_out
                                     FROM 
-                                        `item_pemesanan` it 
-                                        join pemesanan p on p.id = it.id_pemesanan 
+                                        `item_pemesanan` ip
+                                        join pemesanan p on p.id = ip.id_pemesanan 
                                     where 
-                                        date(it.out_date)<=date(now()) 
-                                        and it.is_in=0 group by it.id_item) as ot on ot.id_item=i.id
+                                        date(ip.out_date)<=date(now()) 
+                                   		
+                                        and ip.is_in=0 group by ip.id_item) as ot on ot.id_item=i.id
                         join pos_sub_kategori as sb left join user as u on u.id = sb.update_by
                         
 
