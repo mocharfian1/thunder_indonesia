@@ -1,5 +1,5 @@
 <button data-toggle="tooltip" title="Tampilkan Item Pemesanan" class="btn btn-default btn-xs ps_view" onclick="sh_pemesanan(<?php echo $id_pem; ?>)">
-          
+
           <span class="glyphicon glyphicon-fullscreen"></span>
   </button>
 
@@ -29,7 +29,7 @@
           </button>
         <?php } ?>
       <?php } ?>
-      
+
         <?php if($user=='Super Admin'||$user=='Kepala Divisi'){ ?>
           <?php if($s==1){ ?>
             <button data-toggle="tooltip" title="Verifikasi Crew" class="btn btn-xs btn-primary" onclick="ver_crew(<?php echo $id_pem; ?>)">
@@ -70,7 +70,11 @@
           <span class="glyphicon glyphicon-print"></span>
         </button>
 
-        
+        <button class="csstooltip btn btn-xs btn-danger"  data-toggle="popover"  data-placement="left" data-trigger="focus" onclick="location.href = '<?php echo base_url('transaksi/cetak_pemesanan/'); ?><?= $id_pem; ?>'">
+          <span class="tooltiptext" style="width: 25vh;">Download Pemesanan</span>
+          <span class="glyphicon glyphicon-file"></span>
+        </button>
+
 
   <?php } ?>
 
@@ -85,9 +89,9 @@
       <?php } ?>
     <?php } ?>
 
-    <?php if($user=='Super Admin'||$user=='Kepala Divisi'){ ?>    
+    <?php if($user=='Super Admin'||$user=='Kepala Divisi'){ ?>
       <?php if($s==3){ ?>
-          <button data-toggle="tooltip" title="Confirm to Production" class="btn btn-xs bg-white" onclick="conf_to_prod(<?php echo $id_pem; ?>)" data-html="true"> 
+          <button data-toggle="tooltip" title="Confirm to Production" class="btn btn-xs bg-white" onclick="conf_to_prod(<?php echo $id_pem; ?>)" data-html="true">
                   <span class="glyphicon glyphicon glyphicon-open"></span>
           </button>
       <?php } ?>

@@ -58,7 +58,7 @@
                   <td>
                     <?php if($tb->status_service==0){ ?>
 
-                      <button class="btn btn-warning" onclick="location.href='<?php echo base_url('service/view_edit').'?id='.$tb->id; ?>'"><span class="glyphicon glyphicon-edit"></span></button>
+                      <button class="btn btn-warning btn-xs" onclick="location.href='<?php echo base_url('service/view_edit').'?id='.$tb->id; ?>'"><span class="glyphicon glyphicon-edit"></span></button>
                     <?php } ?>
                     <button onclick="del(<?php echo $tb->S_ID; ?>)" class="btn btn-danger btn-xs" title="Delete">
                       <span class="glyphicon glyphicon-trash"></span>

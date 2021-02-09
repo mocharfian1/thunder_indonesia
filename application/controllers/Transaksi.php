@@ -5,8 +5,8 @@ class Transaksi extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
-		
-		
+
+
 
 	}
 	public function index(){
@@ -57,12 +57,12 @@ class Transaksi extends CI_Controller {
 
 		$var['stat_user']=$var['user_id'][0]->user_type;
 		$var['user'] = $_SESSION['user_type'];
-		
+
 		$var['js'] = 'js-pengajuan';
 		$var['plugin'] = 'plugin_1';
 		$var['content']='view-pengajuan';
-		
-		
+
+
 		$this->load->view('view-index',$var);
 	}
 
@@ -82,28 +82,28 @@ class Transaksi extends CI_Controller {
 	}
 	public function del_it_pengajuan(){
 		$id = $this->input->post('id');
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('item_pengajuan',array('is_delete'=>1));
 	}
 
 	public function del_pengajuan(){
 		$id = $this->input->post('id');
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('pengajuan',array('is_delete'=>1));
 	}
 	public function accept_pengajuan(){
 		$session_id = $this->session->userdata('id_user') ? $this->session->userdata('id_user') : '1';
 		$id = $this->input->post('id');
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('pengajuan',array('status'=>1,'stat_penerimaan'=>0,'approval'=>$session_id,'approve_date'=>date('Y-m-d H:i:s')));
 	}
 
 	public function reject_pengajuan(){
 		$id = $this->input->post('id');
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('pengajuan',array('status'=>2));
 	}
@@ -120,7 +120,7 @@ class Transaksi extends CI_Controller {
 		$jml = $this->input->post('jml');
 		$id_item = $this->input->post('id_item');
 		$qty = $this->input->post('qty');
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('item_pengajuan',array('qty_masuk'=>$jml));
 
@@ -129,7 +129,7 @@ class Transaksi extends CI_Controller {
 
 		$this->db->where('id',$id_item);
 		$this->db->update('pos_item',array('qty'=>$qtyDB+$qty));
-		
+
 
 	}
 
@@ -143,7 +143,7 @@ class Transaksi extends CI_Controller {
 
 
 					);
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('pengajuan',$data);
 	}
@@ -157,7 +157,7 @@ class Transaksi extends CI_Controller {
 			$this->db->where('id',$value['id_it_pn']);
 			$this->db->update('item_pengajuan',array('qty_masuk'=>$value['qty_masuk']));
 
-			
+
 
 			if($value['qty_masuk']==$value['qty']){
 				$c_it--;
@@ -176,7 +176,7 @@ class Transaksi extends CI_Controller {
 
 
 					);
-		
+
 			$this->db->where('id',$dt[0]['id']);
 			$u_pengajuan = $this->db->update('pengajuan',$data);
 
@@ -198,16 +198,16 @@ class Transaksi extends CI_Controller {
 				}else{
 					echo '{"status":-3,"message":"Error saat menambahkan ke item."}';
 				}
-				
+
 			}else{
 				echo '{"status":-1,"message":"Error saat memverifikasi penerimaan."}';
 			}
 		}else{
 			echo '{"status":2,"message":"Sukses memverifikasi item(s)"}';
 		}
-		
 
-		
+
+
 	}
 //##########################   PEMESANAN    ###########################
 	public function pemesanan($mode=null,$id=null){
@@ -224,17 +224,17 @@ class Transaksi extends CI_Controller {
 			$var['mode']='view';
 			$var['act_button']='pemesanan';
 			$var['page_title']='FILE PRODUKSI';
-			
+
 
 			$var['tb_pemesanan'] = $this->model_transaksi->tb_pemesanan_view('pemesanan');
-						
+
 			if(!empty($var['tb_pemesanan'])){
 				$no = '';
 				foreach ($var['tb_pemesanan'] as $key => $value) {
 					//$crew_t = $this->model_transaksi->crew_assigned($value->id_pemesanan);
 					$value->crew= $this->model_transaksi->crew_assigned($value->id_pemesanan);
 					$value->crew_txt= '<h4><b>LIST CREW : </b></h4>';
-					
+
 					// print_r($value->crew);
 					//$c_arr = json_decode(json_encode($value->crew),true);
 					// print_r($c_arr[$key(array)ey]);
@@ -258,15 +258,15 @@ class Transaksi extends CI_Controller {
 					}else{
 						$value->crew_txt = "Crew masih kosong. Silahkan memilih crew.";
 					}
-					
+
 				}
 
 			}
-			
+
 
 
 			// print_r($var['tb_pemesanan']);
-			
+
 			$var['list_kurir'] = $this->model_user->list_kurir();
 
 			$var['stat_pemesanan'][0]=array('color'=>'bg-red','status'=>'Waiting Approval'); //Order Received
@@ -289,24 +289,24 @@ class Transaksi extends CI_Controller {
 			// for($i; $i<=5; $i++){
 			// 	array_push($var['send_data'][2], $var['stat_pemesanan'][$i]);
 			// }
-			
-		}	
+
+		}
 
 		if($mode=='view_penawaran'){
 			$var['s_active']='penawaran';
 			$var['mode']='view';
 			$var['act_button']='penawaran';
 			$var['page_title']='PENAWARAN';
-			
+
 
 			$var['tb_pemesanan'] = $this->model_transaksi->tb_pemesanan_view('penawaran');
-			
+
 			if(!empty($var['tb_pemesanan'])){
 				foreach ($var['tb_pemesanan'] as $key => $value) {
 					//$crew_t = $this->model_transaksi->crew_assigned($value->id_pemesanan);
 					$value->crew= $this->model_transaksi->crew_assigned($value->id_pemesanan);
 					$value->crew_txt= '<h4><b>LIST CREW : </b></h4>';
-					
+
 					// print_r($value->crew);
 					//$c_arr = json_decode(json_encode($value->crew),true);
 					// print_r($c_arr[$key(array)ey]);
@@ -319,15 +319,15 @@ class Transaksi extends CI_Controller {
 					}else{
 						$value->crew_txt = "Crew masih kosong. Silahkan memilih crew.";
 					}
-					
+
 				}
 
 			}
-			
+
 
 
 			// print_r($var['tb_pemesanan']);
-			
+
 			$var['list_kurir'] = $this->model_user->list_kurir();
 
 			$var['stat_pemesanan'][0]=array('color'=>'bg-yellow','status'=>'Pending'); //Order Received
@@ -350,7 +350,7 @@ class Transaksi extends CI_Controller {
 			// for($i; $i<=5; $i++){
 			// 	array_push($var['send_data'][2], $var['stat_pemesanan'][$i]);
 			// }
-			
+
 		}
 
 		if($mode=='add'){
@@ -359,8 +359,8 @@ class Transaksi extends CI_Controller {
 			$var['type']=$_GET['type'];
 
 			$var['page_title']='TAMBAH ' . strtoupper($_GET['type']);
-			
-			
+
+
 			$this->load->model('model_user');
 			$this->load->model('model_produk');
 			$this->load->model('model_transaksi');
@@ -382,7 +382,7 @@ class Transaksi extends CI_Controller {
 			}
 
 			//echo count($var['it_bc']);
-			
+
 		}
 
 		if($mode=='edit'){
@@ -412,7 +412,7 @@ class Transaksi extends CI_Controller {
 		$var['js'] = 'js-pemesanan';
 		$var['plugin'] = 'plugin_1';
 		$var['content']='view-pemesanan';
-		
+
 		$this->load->view('view-index',$var);
 	}
 
@@ -463,15 +463,15 @@ class Transaksi extends CI_Controller {
 			$id_customer = $customer->row()->id_pemesan;
 
 			$customer = $this->model_customer->getCustomer($id_customer);
-			
+
 			$mail = $this->gen_excel($_POST['id'],'NEGOSIASI');
 
-			if($mail){				
+			if($mail){
 				echo $var['add_pengajuan'];
 			}else{
 				echo '{"status":"1","message":"Sukses mengubah data"}';
 			}
-			
+
 		}else{
 			echo $var['add_pengajuan'];
 		}
@@ -519,7 +519,7 @@ class Transaksi extends CI_Controller {
 
 	public function del_it_pemesanan(){
 		$id = $this->input->post('id');
-		
+
 		$this->db->where('id',$id);
 		$this->db->update('item_pemesanan',array('is_delete'=>1));
 	}
@@ -568,7 +568,7 @@ class Transaksi extends CI_Controller {
 							array_push($error_message['message'],array('status'=>-2,'message'=>'Stock item <b>'.$val->item_name.'</b> saat ini dengan barcode <b>'.$val->barcode.'</b> <b style="color:red;">kurang dari jumlah pemesanan</b>.'));
 						}else{
 							$stat++;
-												
+
 						}
 					}
 				}
@@ -577,10 +577,10 @@ class Transaksi extends CI_Controller {
 				if($jenis->row()->jenis_item=='PAKET'){
 					$stat_item = 0;
 					$id_paket = $this->db->select('id,qty,barcode,item_name,jenis_item')->where('id',$val->id_item)->get('pos_item');
-					
+
 					$this->load->model('Model_produk');
 					$ls_item_paket = json_decode(json_encode($this->Model_produk->list_item_paket($id_paket->row()->id)),true);
-					
+
 
 					foreach ($ls_item_paket as $key => $val_item_paket) {
 
@@ -593,7 +593,7 @@ class Transaksi extends CI_Controller {
 							}else{
 								// echo "SUK";
 								$stat_item++;
-													
+
 							}
 						}
 					}
@@ -615,32 +615,32 @@ class Transaksi extends CI_Controller {
 		//echo $stat.'>>'.count($ls_item);
 
 			if($stat==count($ls_item)){
-				
+
 				if(1+2==4){ //DELETE SYNTAX UNTUK MEMFUNGSIKANNYA
 					foreach ($ls_item as $k => $v) {
 						if($v['jenis_item']=='ITEM'){
 							$this->db->set('qty','qty-'.$v['qty'],false);
 							$this->db->where('id',$v['id_item']);
-							$act_item = $this->db->update('pos_item');	
+							$act_item = $this->db->update('pos_item');
 						}
 
-						
+
 						if($v['jenis_item']=='PAKET'){
 							$this->load->model('Model_produk');
 							$ls_it_pkt = json_decode(json_encode($this->Model_produk->list_item_paket($v['id_item'])),true);
-							
+
 							foreach ($ls_it_pkt as $key => $v_pkt) {
 								$this->db->set('qty','qty-'.($v['qty']*$v_pkt['item_qty']),false);
 								$this->db->where('id',$v_pkt['ID_ITEM']);
 								$act_item = $this->db->update('pos_item');
 							}
-								
 
-						}				
+
+						}
 					}
 				}
-			
-			
+
+
 				$data = array(
 								'status'=>1
 							);
@@ -665,8 +665,8 @@ class Transaksi extends CI_Controller {
 			}else{
 				echo json_encode($error_message);
 			}
-		
-		
+
+
 	}
 
 	public function ck_stat($get=null){
@@ -675,13 +675,13 @@ class Transaksi extends CI_Controller {
 		$this->load->model('model_transaksi');
 		$var['ck_stat'] = $this->model_transaksi->ck_stat();
 
-		
+
 		$dt_post = json_decode(json_encode($dt),true);
 		$dt_arr = json_decode(json_encode($var['ck_stat']),true);
 
 
 		//print_r($dt_arr);
-		
+
 
 		if($get=='get'){
 			if($var['ck_stat']){
@@ -699,16 +699,16 @@ class Transaksi extends CI_Controller {
 				//print_r($var['ck_']);
 
 
-				
+
 
 				$var['send_data'][0]=$var['ck_stat'];
 				$var['send_data'][1]=$var['ck_ls'];
 				$var['send_data'][2]=[];
-				
 
 
-				$i=$var['ck_ls'][0]->status; 
-				
+
+				$i=$var['ck_ls'][0]->status;
+
 				array_push($var['send_data'][2], $stat[$i]);
 
 				echo json_encode($var['send_data']);
@@ -729,7 +729,7 @@ class Transaksi extends CI_Controller {
 		$var['s']=$status;
 		$var['id_pem']=$id;
 		$var['user']=$_SESSION['user_type'];
-		
+
 		$this->load->view('view-pemesanan_btn_act',$var);
 	}
 
@@ -840,7 +840,7 @@ class Transaksi extends CI_Controller {
 				$data[$key]['insert_by'] = $_SESSION['id_user'];
 				$data[$key]['update_by'] = $_SESSION['id_user'];
 			}
-			
+
 
 			$this->db->where('id',$data[0]['id_pemesanan']);
 			$update = $this->db->update('pemesanan',array('status'=>2));
@@ -870,7 +870,7 @@ class Transaksi extends CI_Controller {
 
 	public function verifikasi_crew(){
 		$id_pemesanan = $_POST['id'];
-	
+
 		$update = $this->db->where('id',$id_pemesanan)->update('pemesanan',array('status'=>2));
 
 		if($update){
@@ -896,7 +896,7 @@ class Transaksi extends CI_Controller {
 			$id_pem = $id_;
 			$stat = $status_;
 		}
-		
+
 		//KIRIM EMAIL
 		//$id_pem = $this->input->post('id_pem');
 		$data = array(
@@ -940,9 +940,9 @@ class Transaksi extends CI_Controller {
 				if($mail){
 					$status = $st[1];
 					$messageStat.=$msg[1];
-					
 
-					
+
+
 				}else{
 					$status = $st[1];
 					$messageStat.=$msg[3];
@@ -966,8 +966,8 @@ class Transaksi extends CI_Controller {
 
 	public function cetak_pengajuan($id=null){
 		$this->load->library('m_pdf');
-        
-        
+
+
         $this->load->model('model_transaksi');
         $val['items']=$this->model_transaksi->list_item_pengajuan($id);
 
@@ -975,12 +975,12 @@ class Transaksi extends CI_Controller {
         	$date = date_create($val['items'][0]->update_date);
 			$val['date']=date_format($date,"d-M-Y");
         }
-        
+
         $this->load->view('view-print_pengajuan',$val);
         $html = $this->load->view('view-print_pengajuan',$val,TRUE);
 
 
-        
+
 
         // if(!empty($mode)){
 	        $css = [];
@@ -997,7 +997,7 @@ class Transaksi extends CI_Controller {
 	        foreach ($css as $key => $v) {
 	        	$pdf->WriteHTML($v, 1);
 	        }
-	        
+
 	        $pdf->WriteHTML($html);
 
 	        $pdf->Output($pdfFilePath, "D");
@@ -1008,8 +1008,8 @@ class Transaksi extends CI_Controller {
 
 	public function cetak_penerimaan($id=null){
 		$this->load->library('m_pdf');
-        
-        
+
+
         $this->load->model('model_transaksi');
         $val['items']=$this->model_transaksi->list_item_pengajuan($id);
 
@@ -1035,7 +1035,7 @@ class Transaksi extends CI_Controller {
 	        foreach ($css as $key => $v) {
 	        	$pdf->WriteHTML($v, 1);
 	        }
-	        
+
 	        $pdf->WriteHTML($html);
 
 	        $pdf->Output($pdfFilePath, "D");
@@ -1068,9 +1068,9 @@ class Transaksi extends CI_Controller {
 		$log = $this->db->select('*')->get('log_status_pemesanan');
 
 		if($log->num_rows()>0){
-			echo json_encode($log->result());	
+			echo json_encode($log->result());
 		}
-		
+
 	}
 
 	public function sendNego(){
@@ -1083,7 +1083,7 @@ class Transaksi extends CI_Controller {
 
 	public function cetak_penawaran($type=null,$id=null){
 		$this->load->library('m_pdf');
-        
+
         $css = [];
 
         $pdfFilePath = "hasil.pdf";
@@ -1092,8 +1092,8 @@ class Transaksi extends CI_Controller {
        	// $mpdf = new Mpdf(['format' => 'Legal']);
 
         $pdf->AddPage('P','','','','','','','','',20,20);
-        
-        
+
+
         $pdf->WriteHTML('DOKUMEN INI ADALAH HASIL PENAWARAN');
 
         $pdf->Output($pdfFilePath, "F");
@@ -1106,7 +1106,7 @@ class Transaksi extends CI_Controller {
 		  	echo ("Deleted $file");
 		}
 
-			  
+
 
         // }
 	}
@@ -1118,7 +1118,7 @@ class Transaksi extends CI_Controller {
 		$this->load->model('model_produk');
 
 
-        
+
 		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
 		$var['kat'] = $this->model_transaksi->katItemPemesanan($id);
 
@@ -1136,7 +1136,7 @@ class Transaksi extends CI_Controller {
 		}
 
 		// print_r($var['total']);
-		
+
 
 		// return false;
 		// // $var['id_kategori']
@@ -1163,8 +1163,8 @@ class Transaksi extends CI_Controller {
        	// $mpdf = new Mpdf(['format' => 'Legal']);
 
         $pdf->AddPage('P','','','','','','','','',20,20);
-        
-        
+
+
         $pdf->WriteHTML($this->load->view('view-print_penawaran_produksi',$var,TRUE));
 
         if(!empty($type)&&$type=='mail'){
@@ -1179,7 +1179,7 @@ class Transaksi extends CI_Controller {
 		// $var['s']='';
   //       $this->load->view('view-print_penawaran_produksi',$var);
 
-	}	
+	}
 
 	public function testpdf(){
 		$this->load->library('M_pdf');
@@ -1201,14 +1201,14 @@ class Transaksi extends CI_Controller {
 			$var['logo'] = '';
 		}
 
-		
+
 
 
 		$this->load->library('m_pdf');
 
 		$this->load->model('model_transaksi');
 		$var['kat'] = $this->model_transaksi->katItemPemesanan($id);
-        
+
 		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
 
 		foreach ($var['kat'] as $key => $value) {
@@ -1244,11 +1244,11 @@ class Transaksi extends CI_Controller {
         $pdfFilePath = "Surat Jalan ".$var['r'][0]->no_pemesanan.".pdf";
 
         $pdf = $this->m_pdf->load();
-       	
+
 
         $pdf->AddPage('P','','','','','','','','',20,20);
-        
-        
+
+
         $pdf->WriteHTML($this->load->view('view-surat_jalan_simple',$var,TRUE));
 
         $pdf->Output($pdfFilePath, "I");
@@ -1265,6 +1265,62 @@ class Transaksi extends CI_Controller {
 
 	}
 
+	public function cetak_pemesanan($id=null)
+	{
+		$logo = $this->db->get_where('images',array('name'=>'LOGO'));
+		if($logo->num_rows()>0){
+			$var['logo'] = $logo->row()->url;
+		}else{
+			$var['logo'] = '';
+		}
+
+		$this->load->library('m_pdf');
+
+		$this->load->model('model_transaksi');
+		$var['list_item_pemesanan'] = $this->model_transaksi->list_item_pemesanan($id);
+		$var['ls_tgl'] = $this->db->get_where('tanggal_acara',array('id_pemesanan'=>$id,'is_delete'=>0))->result();
+
+		$var['ls_tgl_acara'] = [];
+
+		if(!empty($var['ls_tgl'])){
+			foreach ($var['ls_tgl'] as $key => $value) {
+				// echo $value->tanggal_awal;
+				array_push($var['ls_tgl_acara'],array(
+					'tanggal_awal'=>date('d M Y',strtotime($value->tanggal_awal)),
+					'tanggal_akhir'=>date('d M Y',strtotime($value->tanggal_akhir))
+				));
+			}
+		}
+
+		// print_r($var['ls_tgl_acara']);
+
+		if(!empty($var['list_item_pemesanan'])){
+			foreach ($var['list_item_pemesanan'] as $key => $value) {
+				$var['list_item_pemesanan'][$key]->ls_tanggal_acara = $var['ls_tgl_acara'];
+			}
+		}
+
+		$this->load->view('view-pemesanan_pdf', $var);
+		// var_dump($var);
+		//
+		// die();
+
+		$css = [];
+
+
+		$pdfFilePath = "Checklist ".$var['list_item_pemesanan'][0]->no_pemesanan.".pdf";
+
+		$pdf = $this->m_pdf->load();
+
+
+		$pdf->AddPage('P','','','','','','','','',20,20);
+
+
+		$pdf->WriteHTML($this->load->view('view-pemesanan_pdf',$var,TRUE));
+
+		$pdf->Output($pdfFilePath, "I");
+	}
+
 	public function cetak_surat_jalan($id=null){
 		$logo = $this->db->get_where('images',array('name'=>'LOGO'));
 		if($logo->num_rows()>0){
@@ -1273,14 +1329,14 @@ class Transaksi extends CI_Controller {
 			$var['logo'] = '';
 		}
 
-		
+
 
 
 		$this->load->library('m_pdf');
 
 		$this->load->model('model_transaksi');
 		$var['kat'] = $this->model_transaksi->katItemPemesanan($id);
-        
+
 		$var['r']=$this->model_transaksi->list_item_pemesanan($id);
 
 		foreach ($var['kat'] as $key => $value) {
@@ -1316,11 +1372,11 @@ class Transaksi extends CI_Controller {
 		// print_r($var['r']);
 		// return false;
         $pdf = $this->m_pdf->load();
-       	
+
 
         $pdf->AddPage('P','','','','','','','','',20,20);
-        
-        
+
+
         $pdf->WriteHTML($this->load->view('view-surat_jalan',$var,TRUE));
 
         $pdf->Output($pdfFilePath, "I");
@@ -1358,8 +1414,8 @@ class Transaksi extends CI_Controller {
        	// $mpdf = new Mpdf(['format' => 'Legal']);
 
         $pdf->AddPage('P','','','','','','','','',20,20);
-        
-        
+
+
         $pdf->WriteHTML($html);
 
         $pdf->Output($pdfFilePath, "F");
@@ -1513,7 +1569,7 @@ class Transaksi extends CI_Controller {
 		foreach($list as $key => $value) {
 			$row = $baseRow + $key;
 			$total_all += $value->harga_akhir;
-			
+
 			// echo $row;
 			$objPHPExcel->getActiveSheet()->insertNewRowBefore($row,1);
 			$objPHPExcel->setActiveSheetIndex(0)->mergeCells('D'.$row.':'.'E'.$row);
@@ -1525,10 +1581,10 @@ class Transaksi extends CI_Controller {
 			                              ->setCellValue('J'.$row,$value->harga)
 			                              ->setCellValue('K'.$row,$value->harga_akhir);
 
-			
+
 			        // 'size'  => 12,
 			        // 'name'  => 'Verdana'
-			    
+
 
 			// $phpExcel->getActiveSheet()->getCell('A1')->setValue('Some text');
 			$objPHPExcel->getActiveSheet()->getStyle('F'.$row)->applyFromArray($styleArray1);
@@ -1553,9 +1609,9 @@ class Transaksi extends CI_Controller {
 		// echo $this->tambahan->terbilang(500000);
 		$objPHPExcel->setActiveSheetIndex(0)->mergeCells('F'.$r_terbilang.':'.'K'.$r_terbilang);
 		$objPHPExcel->getActiveSheet()->setCellValue('F'.$r_terbilang,$this->tambahan->terbilang($total_all).' Rupiah');
-		
+
 		// $objPHPExcel->getActiveSheet()->insertNewRowBefore($row,1);
-		
+
 
 		// $objPHPExcel->getActiveSheet()->removeRow($baseRow-1,1);
 
@@ -1568,7 +1624,7 @@ class Transaksi extends CI_Controller {
 
 		// $this->load->library('m_pdf');
 
-        
+
 		// $var['r']=$this->model_transaksi->list_item_pemesanan($id);
 
 		// $var['ls_tgl'] = $this->db->get_where('tanggal_acara',array('id_pemesanan'=>$id,'is_delete'=>0))->result();
@@ -1591,7 +1647,7 @@ class Transaksi extends CI_Controller {
   //       $pdf = $this->m_pdf->load();
 
   //       $pdf->AddPage('P','','','','','','','','',20,20);
-        
+
   //       $pdf->WriteHTML($this->load->view('view-print_penawaran_produksi',$var,TRUE));
 
   //       $pdf->Output($pdfFilePath, "F");
@@ -1599,7 +1655,7 @@ class Transaksi extends CI_Controller {
         $file2 = $this->cetak_produksi($id,'mail');
 
         $file3 = $this->cetak_invoice($id);
-        
+
 		// if (!unlink($file)){
 		// 	echo ("Error deleting $file");
 		// }else{
@@ -1655,7 +1711,7 @@ class Transaksi extends CI_Controller {
 					$qty = (int)$item->row()->qty-$getItem->row()->qty;
 					$setItem = $this->db->where('id',$getItem->row()->id_item)->update('pos_item',array('qty'=>$qty));
 				}
-				// 
+				//
 			}
 		}
 
@@ -1682,7 +1738,7 @@ class Transaksi extends CI_Controller {
 					$qty = (int)$item->row()->qty+$getItem->row()->qty;
 					$setItem = $this->db->where('id',$getItem->row()->id_item)->update('pos_item',array('qty'=>$qty));
 				}
-				// 
+				//
 			}
 		}
 	}
@@ -1858,7 +1914,7 @@ class Transaksi extends CI_Controller {
 		// 	));
 		// }
 	}
-	
-		
+
+
 }
 ?>
