@@ -71,7 +71,7 @@
         </button>
 
         <button class="csstooltip btn btn-xs btn-danger"  data-toggle="popover"  data-placement="left" data-trigger="focus" onclick="location.href = '<?php echo base_url('transaksi/cetak_pemesanan/'); ?><?= $id_pem; ?>'">
-          <span class="tooltiptext" style="width: 25vh;">Download Pemesanan</span>
+          <span class="tooltiptext" style="width: 25vh;">Download Checklist</span>
           <span class="glyphicon glyphicon-file"></span>
         </button>
 

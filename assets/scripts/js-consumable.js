@@ -263,6 +263,57 @@ class SubKat {
 		});
 	}
 
+  editKategori(id) {
+
+		$.confirm({
+			title: `Ubah Kategori`,
+			content: `
+				<form>
+					<div class="form-group">
+					    <input id="nama_kategori" type='text' class="form-control" placeholder="Masukkan Nama Kategori" value="">
+					</div>
+				</form>
+			`,
+			buttons: {
+				submit: {
+					text: 'Simpan',
+					btnClass: 'btn-primary',
+					action: function () {
+						var self = this;
+						var nama_kategori = self.$content.find('#nama_kategori').val();
+
+						if (nama_kategori.trim() == '') {
+							alert('Nama kategori belum diisi.');
+						} else {
+							$.post(URL + 'consumable/update_kategori', { nama_kategori: nama_kategori, id:id }).done((data) => {
+								alert('Berhasil Mengubah Data');
+								window.location.reload();
+							}).fail((e) => {
+
+							});
+						}
+
+					}
+				}, cancel: {
+					text: 'Batal'
+				}
+			},
+      onContentReady: function () {
+        // bind to events
+        var jc = this;
+        this.$content.find('form').on('submit', function (e) {
+            // if the user submits the form by pressing enter in the field.
+            e.preventDefault();
+            jc.$$formSubmit.trigger('click'); // reference the button and click it
+        });
+        $.get(URL + 'consumable/getKategoriConsumable/'+id).done((data) => {
+          var nowKat = data.data[0].description;
+          $('#nama_kategori').val(nowKat);
+        });
+    }
+		});
+	}
+
 	addSubKategori() {
 		$.confirm({
 			title: `Tambah Sub Kategori`,
@@ -318,6 +369,82 @@ class SubKat {
 					text: 'Batal'
 				}
 			}
+		});
+	}
+
+  editSubKategori(id) {
+		$.confirm({
+			title: `Ubah Sub Kategori`,
+			content: function () {
+				var self = this;
+				return $.get(URL + 'consumable/getKategoriConsumable').done((data) => {
+					var opt = `<option disabled>-- Pilih Kategori --</option>`;
+
+					if (data.success == true) {
+						for (var i = 0; i < data.data.length; i++) {
+              opt += `<option value=` + data.data[i].id + `>` + data.data[i].description + `</option>`;
+						}
+
+						self.setContent(`
+							<form>
+								<div class="form-group">
+									<select class="form-control" id="kategori">
+										`+ opt + `
+									</select>
+								</div>
+								<div class="form-group">
+								    <input id="nama_sub_kategori" type='text' class="form-control" placeholder="Masukkan Nama Kategori" value="">
+								</div>
+							</form>
+						`);
+					} else {
+						self.setContent(`
+							Data Kategori belum ada.
+						`);
+					}
+
+				}).fail((e) => {
+
+				});
+			},
+			buttons: {
+				submit: {
+					text: 'Simpan',
+					btnClass: 'btn-primary',
+					action: function () {
+						var self = this;
+						var kategori = self.$content.find('#kategori').val();
+						var nama_sub_kategori = self.$content.find('#nama_sub_kategori').val();
+
+						$.post(URL + 'consumable/update_sub_kategori', { id_subkat:id, kategori: kategori, nama_sub_kategori: nama_sub_kategori }).done((data) => {
+							alert('Berhasil Mengubah Data');
+							window.location.reload();
+						}).fail((e) => {
+
+						});
+					}
+				}, cancel: {
+					text: 'Batal'
+				}
+			},
+      onContentReady: function () {
+        // bind to events
+        var jc = this;
+        this.$content.find('form').on('submit', function (e) {
+            // if the user submits the form by pressing enter in the field.
+            e.preventDefault();
+            jc.$$formSubmit.trigger('click'); // reference the button and click it
+        });
+        $.get(URL + 'consumable/getSubKategoriConsumable/'+id).done((data) => {
+          console.log(data);
+          var nowKat = data.data[0].id_kategori;
+          var nowSub = data.data[0].sub_description;
+          // $('select#kategori select option[value="' + nowKat + '"]').html();
+          // $("#kategori option[value="+nowKat+"]").attr('selected', 'selected');
+          $("#kategori").val(nowKat);
+          $('#nama_sub_kategori').val(nowSub);
+        });
+    }
 		});
 	}
 
@@ -642,4 +769,12 @@ function add_kategori() {
 
 function add_sub_kategori() {
 	SK.addSubKategori();
+}
+
+function editKat(id) {
+  SK.editKategori(id);
+}
+
+function editSubKat(id) {
+  SK.editSubKategori(id);
 }

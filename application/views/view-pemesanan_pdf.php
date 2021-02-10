@@ -57,21 +57,21 @@
           <th align="left" colspan="5">Checklist Equipment</th>
           <th align="right" rowspan="4"><img width="70px" src="<?= $logo; ?>"></th>
         </tr>
-        <tr>
+        <tr style="font-size: 0.7em">
           <td width="23%">Nama Event</td>
           <td>: <?=$list_item_pemesanan[0]->nama_event?></td>
           <td></td>
           <td width="15%">Kepala Team</td>
-          <td>:</td>
+          <td width="15%">:</td>
         </tr>
-        <tr>
+        <tr style="font-size: 0.7em">
           <td>Alamat</td>
           <td>: <?=$list_item_pemesanan[0]->alamat_venue?></td>
           <td></td>
           <td>Crew</td>
           <td>:</td>
         </tr>
-        <tr>
+        <tr style="font-size: 0.7em">
           <td>Tanggal Acara</td>
           <td>: <?=$list_item_pemesanan[0]->ls_tanggal_acara[0]['tanggal_awal']?></td>
           <td></td>
@@ -81,7 +81,7 @@
       </thead>
     </table>
     <br>
-    <table cellpadding="5px" cellspacing="0" border="1" width="100%">
+    <table cellpadding="3px" cellspacing="0" border="1" width="100%" style="font-size: 11px">
       <tbody>
         <tr>
           <th>No</th>
@@ -110,7 +110,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-    <p>&nbsp;</p>
+    <br>
 <p>Mengetahui:</p>
 <table width="100%" style="text-align:center" cellpadding="5px">
   <tbody>

@@ -47,9 +47,9 @@
 <table width="100%" border="1" cellspacing="0" style="font-size: 11px;">
   <thead>
     <tr style="background-color: yellow;">
-      <td width="30px">No.</td>
-      <td>QTY</td>
-      <td>UNIT</td>
+      <th width="30px">No.</th>
+      <th>Description </th>
+      <th>Qty</th>
     </tr>
   </thead>
   <tbody>
@@ -67,7 +67,7 @@
                 <td class="b"></td>
                 <!-- <td class="b t"><?= $v->satuan; ?></td> -->
                 <td class="b"><?= $v->item_name; ?></td>
-                <td class="b t" width="10%" style="padding-right: 20px; text-align: right;"><?= $v->qty; ?></td>
+                <td class="b t" width="10%" style="padding-right: 0; text-align: center;"><?= $v->qty; ?></td>
               </tr>
               <?php if($v->jenis_item=='PAKET'){ ?>
                 <?php foreach ($v->isi_paket as $kp => $vp) { ?>
@@ -75,7 +75,7 @@
                     <td class="b"></td>
                     <td class="b t"></td>
                     <td class="b t"></td>
-                    <td class="b" width="10%" style="padding-right: 20px; text-align: right;">---- <?= $vp->item_name; ?> <b>[<?= $vp->item_qty; ?> <?= $vp->satuan; ?>]</b></td>
+                    <td class="b" width="10%" style="padding-right: 20px; text-align: center;">---- <?= $vp->item_name; ?> <b>[<?= $vp->item_qty; ?> <?= $vp->satuan; ?>]</b></td>
 
                   </tr>
                 <?php } ?>

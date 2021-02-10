@@ -100,7 +100,7 @@ class Consumable extends CI_Controller
 		$var['js'] = 'js-consumable';
 		$var['plugin'] = 'plugin_1';
 		$var['user'] = $_SESSION['user_type'];
-		
+
 
 		$q_list_transaksi = $this->db->select('*')->select('(select count(*) from consumable_transaksi_item where no_transaksi = ct.no_transaksi and is_delete=0) as jml',false,false)->get_where('consumable_transaksi ct',array(
 			'is_delete'=>0
@@ -120,8 +120,8 @@ class Consumable extends CI_Controller
 		$_cons_id = $this->input->post('id');
 		$_cons_qty = $this->input->post('qty');
 
-		
-		
+
+
 		$item = $dbs->get_where('consumable_item',array('is_delete'=>0,'id'=>$_cons_id));
 
 
@@ -132,7 +132,7 @@ class Consumable extends CI_Controller
 			if($getKat->num_rows()>0 && $getSub->num_rows()>0){
 				$item->row()->nm_kat = $getKat->row()->description;
 				$item->row()->nm_sub_kat = $getSub->row()->sub_description;
-				
+
 				echo json_encode(array(
 					'success'=>true,
 					'message'=>'Sukses mengambil data.',
@@ -188,7 +188,7 @@ class Consumable extends CI_Controller
 		$no_transaksi = $this->input->post('no_transaksi');
 
 		$q_getTransaksi = $this->db->query("
-			select 
+			select
 				ci.id,
 				cti.no_transaksi,
 				ci.barcode,
@@ -196,10 +196,10 @@ class Consumable extends CI_Controller
 				cti.qty,
 				ci.id_kategori,
 				ci.id_sub_kategori
-			from 
-				consumable_transaksi_item cti 
-				join consumable_item ci on cti.id_consumable_item=ci.id 
-			where 
+			from
+				consumable_transaksi_item cti
+				join consumable_item ci on cti.id_consumable_item=ci.id
+			where
 				cti.is_delete=0
 				and cti.no_transaksi='".$no_transaksi."'");
 
@@ -242,7 +242,7 @@ class Consumable extends CI_Controller
 		$var['type'] = $this->input->get('type');
 
 		$query = $this->db->query("
-			select 
+			select
 				ck.description,cs.sub_description,i.*
 			from
 				consumable_item i
@@ -275,11 +275,11 @@ class Consumable extends CI_Controller
 		// $var['mode'] = 'view';
 
 		$query_sub = $this->db->query("
-			select 
+			select
 				cs.id,
 				ck.description,
 				cs.sub_description
-			from 
+			from
 				consumable_kategori ck
 				join consumable_sub_kategori cs on ck.id=cs.id_kategori
 			where
@@ -294,10 +294,10 @@ class Consumable extends CI_Controller
 		}
 
 		$query_kat = $this->db->query("
-			select 
-				ck.id,			
+			select
+				ck.id,
 				ck.description
-			from 
+			from
 				consumable_kategori ck
 			where
 				ck.is_delete = 0
@@ -344,12 +344,19 @@ class Consumable extends CI_Controller
 		}
 	}
 
-	public function getKategoriConsumable()
+	public function getKategoriConsumable($id=null)
 	{
 		header('Content-type:application/json');
-		$query = $this->db->get_where('consumable_kategori', array(
-			'is_delete' => 0
-		));
+		if ($id) {
+			$query = $this->db->get_where('consumable_kategori', array(
+				'is_delete' => 0, 'id' => $id
+			));
+		}else {
+			$query = $this->db->get_where('consumable_kategori', array(
+				'is_delete' => 0
+			));
+
+		}
 
 		if ($query->num_rows() > 0) {
 			echo json_encode(array(
@@ -364,15 +371,21 @@ class Consumable extends CI_Controller
 		}
 	}
 
-	public function getSubKategoriConsumable()
+	public function getSubKategoriConsumable($id=null)
 	{
 		header('Content-type:application/json');
 		$id_kat = $this->input->post('id_kat');
 
-		$query = $this->db->get_where('consumable_sub_kategori', array(
-			'id_kategori' => $id_kat,
-			'is_delete' => 0
-		));
+		if ($id) {
+			$query = $this->db->get_where('consumable_sub_kategori', array(
+				'id' => $id
+			));
+		}else {
+			$query = $this->db->get_where('consumable_sub_kategori', array(
+				'id_kategori' => $id_kat,
+				'is_delete' => 0
+			));
+		}
 
 		if ($query->num_rows() > 0) {
 			echo json_encode(array(
@@ -453,6 +466,22 @@ class Consumable extends CI_Controller
 		}
 	}
 
+	public function update_kategori()
+	{
+		header('Content-type:application/json');
+
+		$id = $this->input->post('id');
+		$nama = $this->input->post('nama_kategori');
+
+		$query = $this->db->update('consumable_kategori', array('description' => $nama ), "id = ".$id);
+
+		if ($query) {
+			$this->resultJSON(1);
+		} else {
+			$this->resultJSON(0);
+		}
+	}
+
 	public function create_sub_kategori()
 	{
 		header('Content-type:application/json');
@@ -464,6 +493,28 @@ class Consumable extends CI_Controller
 			'id_kategori'		=>	$id_kat,
 			'sub_description'	=>	$nama
 		));
+
+		if ($query) {
+			$this->resultJSON(1);
+		} else {
+			$this->resultJSON(0);
+		}
+	}
+
+	public function update_sub_kategori()
+	{
+		header('Content-type:application/json');
+
+		$id_subkat = $this->input->post('id_subkat');
+		$id_kat 	= $this->input->post('kategori');
+		$nama 		= $this->input->post('nama_sub_kategori');
+
+		$query = $this->db->insert('consumable_sub_kategori', array(
+			'id_kategori'		=>	$id_kat,
+			'sub_description'	=>	$nama
+		));
+
+		$query = $this->db->update('consumable_sub_kategori', array('id_kategori' => $id_kat, 'sub_description'	=>	$nama ), "id = ".$id_subkat);
 
 		if ($query) {
 			$this->resultJSON(1);
@@ -522,12 +573,12 @@ class Consumable extends CI_Controller
 		$inp = $this->input;
 		$no_transaksi = !empty($inp->post('no_transaksi'))?$inp->post('no_transaksi'):'CNS-'.time();
 
-		
+
 
 		$ins_consumable_item = array();
 
 
-		for ($i=0; $i < count($inp->post('data')); $i++) { 
+		for ($i=0; $i < count($inp->post('data')); $i++) {
 			array_push($ins_consumable_item,array(
 				'no_transaksi'=>$no_transaksi,
 				'id_consumable_item'=>$inp->post('data')[$i]['id'],
@@ -553,7 +604,7 @@ class Consumable extends CI_Controller
 					)
 				);
 		}
-		
+
 
 		$insert = $_D->insert_batch('consumable_transaksi_item',$ins_consumable_item);
 
@@ -591,7 +642,7 @@ class Consumable extends CI_Controller
 
 		$no_transaksi = $this->input->post('no_transaksi');
 
-		for ($i=0; $i < count($this->input->post('dataDelete')); $i++) { 
+		for ($i=0; $i < count($this->input->post('dataDelete')); $i++) {
 			$update = $this->db->
 				where('id_consumable_item',$this->input->post('dataDelete')[$i])->
 				where('no_transaksi',$no_transaksi)->
@@ -602,7 +653,7 @@ class Consumable extends CI_Controller
 				);
 		}
 
-		for ($i=0; $i < count($this->input->post('data')); $i++) { 
+		for ($i=0; $i < count($this->input->post('data')); $i++) {
 			$from_local = $this->input->post('data')[$i];
 			$from_server = $this->db->get_where('consumable_transaksi_item',array(
 				'no_transaksi'=>$no_transaksi,
@@ -651,11 +702,11 @@ class Consumable extends CI_Controller
 	}
 
 	public function exportNow(){
-		
+
 		$var['type'] = $this->input->get('type');
 
 		$query = $this->db->query("
-			select 
+			select
 				ck.description,cs.sub_description,i.*
 			from
 				consumable_item i

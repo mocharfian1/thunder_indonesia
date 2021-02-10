@@ -35,7 +35,7 @@
                 <td><?= $value->id; ?></td>
                 <td><?= $value->description; ?></td>
                 <td>
-                  <button onclick="edit(<?= $value->id; ?>)" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>
+                  <button onclick="editKat(<?= $value->id; ?>)" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>
                   <button onclick="SK.delKat(<?= $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
                 </td>
               </tr>
@@ -85,7 +85,7 @@
                 <td><?= $value->description; ?></td>
                 <td><?= $value->sub_description; ?></td>
                 <td>
-                  <button onclick="edit(<?= $value->id; ?>)" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>
+                  <button onclick="editSubKat(<?= $value->id; ?>)" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>
                   <button onclick="SK.delSubKat(<?= $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
                 </td>
               </tr>
