@@ -15,12 +15,12 @@
         <center>
           <h2><?php echo $page_title; ?></h2>
           <hr style="border-top: 3px double #8c8b8b;">
-        </center>     
+        </center>
         <button type="button" id="addRow" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-item"><span class="glyphicon glyphicon-plus"></span>
           Tambah Item
         </button>
         <button class="btn btn-primary" onclick="opForm()"><i class="glyphicon glyphicon-file"></i>&nbsp;Upload Excel</button>
-        <br><br>            
+        <br><br>
         <table id="tblItem" class="table table-bordered table-striped table-hover dt-responsive" cellspacing="0" width="100%" style="font-size: 12px;">
           <thead>
           <tr>
@@ -44,10 +44,10 @@
           </thead>
           <tbody>
 
-            <?php 
+            <?php
               $no = 1;
               if(!empty($tb_item) && $tb_item !== NULL){
-                
+
                 foreach ($tb_item as $tb) {
                   $nama_gudang = !empty($tb->nama_gudang) ? $tb->nama_gudang:"<b class=\'c_red\'>Belum ditentukan</b>";
                   $kode_gudang = !empty($tb->kode_gudang) ? $tb->kode_gudang:"<b class=\'c_red\'>Belum ditentukan</b>";
@@ -106,7 +106,7 @@
                       </tr>';
                   $no++;
                 }
-               
+
               }
             ?>
           </tbody>
@@ -143,13 +143,13 @@
               </div>
             </div> <br>
             <div class="row">
-              <label for="katName" class="col-sm-3 control-label">Kategori <span class="asterisk">*</span></label>  
+              <label for="katName" class="col-sm-3 control-label">Kategori <span class="asterisk">*</span></label>
               <div class="col-sm-9">
                 <select  onchange="setSub($(this))" id="kat_id" class="katName select2 req form-control col-sm-12" name="it_id_kat" required>
-                  
+
                   <?php
                     foreach ($tb_kategori as $op_kat) {
-                        echo '<option value="'. $op_kat->id .'" ';                         
+                        echo '<option value="'. $op_kat->id .'" ';
 
                         echo '>'.$op_kat->description.'</option>';
                     }
@@ -159,12 +159,12 @@
             </div>
             <br>
             <div class="row">
-              <label for="subKatName" class="col-sm-3 control-label">Sub Kategori <span class="asterisk">*</span></label>  
+              <label for="subKatName" class="col-sm-3 control-label">Sub Kategori <span class="asterisk">*</span></label>
               <div class="col-sm-9">
                 <select  id="sub_kat_id" class="subKatName select2 req form-control col-sm-12" name="it_id_sub" required>
                   <?php
                     foreach ($tb_sub_kategori as $op_sub_kat) {
-                        echo '<option value="'. $op_sub_kat->id .'" ';                         
+                        echo '<option value="'. $op_sub_kat->id .'" ';
 
                         echo '>'.$op_sub_kat->sub_description.'</option>';
                     }
@@ -177,7 +177,7 @@
               <label for="qty" class="col-sm-3 control-label">Qty <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <input type="number" class="req form-control" id="it_qty" name="it_qty" placeholder="Jumlah Item" value="" required>
+                <input type="number" class=" form-control" id="it_qty" name="it_qty" placeholder="Jumlah Item" value="" >
               </div>
             </div> <br>
 
@@ -185,7 +185,7 @@
               <label for="sat" class="col-sm-3 control-label">Satuan <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <input type="text" class="req form-control" id="it_sat" name="it_sat" placeholder="Satuan Item. Ex: Pcs" value="" required>
+                <input type="text" class=" form-control" id="it_sat" name="it_sat" placeholder="Satuan Item. Ex: Pcs" value="" >
               </div>
             </div> <br>
 
@@ -193,33 +193,33 @@
               <label for="it_sat_des" class="col-sm-3 control-label">Deskripsi Satuan <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <textarea type="text" class="req form-control" id="it_sat_des" name="it_sat_des" placeholder="Ex : 1 Box Isi 10 Pcs" value="" required></textarea>
+                <textarea type="text" class=" form-control" id="it_sat_des" name="it_sat_des" placeholder="Ex : 1 Box Isi 10 Pcs" value="" ></textarea>
               </div>
             </div> <br>
 
 
             <div class="row">
-              <label for="it_harga_beli" class="col-sm-3 control-label">Harga Beli <span class="asterisk">*</span></label>
+              <label for="it_harga_beli" class="col-sm-3 control-label">Harga Beli <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <input onkeydown="toIDR(this)" type="text" class="form-control" id="it_harga_beli" name="it_harga_beli" placeholder="" value="" required>
+                <input onkeydown="toIDR(this)" type="text" class="form-control" id="it_harga_beli" name="it_harga_beli" placeholder="" value="" >
               </div>
             </div> <br>
 
             <div class="row">
-              <label for="it_harga_jual" class="col-sm-3 control-label">Harga Jual <span class="asterisk">*</span></label>
+              <label for="it_harga_jual" class="col-sm-3 control-label">Harga Jual <span class="asterisk"></span></label>
               <div class="col-sm-9">
                 <div class="btn btn-default btn-block" onclick="add_durasi()">List Durasi (Click to Manage)</div>
               </div>
-                <input onkeydown="toIDR(this)" type="hidden" class="req form-control" id="it_harga_jual" name="it_harga_jual" placeholder="" value="0" required>
+                <input onkeydown="toIDR(this)" type="hidden" class=" form-control" id="it_harga_jual" name="it_harga_jual" placeholder="" value="0" >
 
             </div><br>
 
             <div class="row">
-              <label for="it_lost_remark" class="col-sm-3 control-label">Lost Remark <span class="asterisk">*</span></label>
+              <label for="it_lost_remark" class="col-sm-3 control-label">Lost Remark <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <input type="text" class="req form-control" id="it_lost_remark" name="it_lost_remark" placeholder="" value="" required>
+                <input type="text" class=" form-control" id="it_lost_remark" name="it_lost_remark" placeholder="" value="">
               </div>
             </div><br>
 
@@ -235,15 +235,15 @@
             </div><br>
 
             <div class="row">
-              <label for="it_status" class="col-sm-3 control-label">Remark Status <span class="asterisk">*</span></label>
+              <label for="it_status" class="col-sm-3 control-label">Remark Status <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <input type="text" class="req form-control" id="it_status" name="it_status" placeholder="" value="" required>
+                <input type="text" class=" form-control" id="it_status" name="it_status" placeholder="" value="" >
               </div>
             </div><br>
 
             <div class="row">
-              <label for="it_status" class="col-sm-3 control-label">Location <span class="asterisk">*</span></label>
+              <label for="it_status" class="col-sm-3 control-label">Location <span class="asterisk"></span></label>
               <style type="text/css">
                 .lbl-location{
                   font-size: 11px;
@@ -255,30 +255,30 @@
               </style>
               <div class="col-sm-9" style="padding-left: 0px;">
                   <div class="col-sm-3 inp-location">
-                        <label for="it_status" class="lbl-location control-label">Nm. Gudang <span class="asterisk">*</span></label>
-                        <input type="text" class=" req form-control col-sm-3" id="it_loc_nm_gudang" name="it_loc_nm_gudang" placeholder="" value="" required>
+                        <label for="it_status" class="lbl-location control-label">Nm. Gudang <span class="asterisk"></span></label>
+                        <input type="text" class="  form-control col-sm-3" id="it_loc_nm_gudang" name="it_loc_nm_gudang" placeholder="" value="" >
                   </div>
                   <div class="col-sm-3 inp-location">
-                        <label for="it_status" class="lbl-location control-label">Kd. Gudang <span class="asterisk">*</span></label>
-                        <input type="text" class=" req form-control col-sm-3" id="it_loc_kd_gudang" name="it_loc_kd_gudang" placeholder="" value="" required>
+                        <label for="it_status" class="lbl-location control-label">Kd. Gudang <span class="asterisk"></span></label>
+                        <input type="text" class="  form-control col-sm-3" id="it_loc_kd_gudang" name="it_loc_kd_gudang" placeholder="" value="" >
                   </div>
                   <div class="col-sm-3 inp-location">
-                        <label for="it_status" class="lbl-location control-label">Kd. Lokasi <span class="asterisk">*</span></label>
-                        <input type="text" class=" req form-control col-sm-3" id="it_loc_kd_lokasi" name="it_loc_kd_lokasi" placeholder="" value="" required>
+                        <label for="it_status" class="lbl-location control-label">Kd. Lokasi <span class="asterisk"></span></label>
+                        <input type="text" class="  form-control col-sm-3" id="it_loc_kd_lokasi" name="it_loc_kd_lokasi" placeholder="" value="" >
                   </div>
                   <div class="col-sm-3 inp-location">
-                        <label for="it_status" class="lbl-location control-label">Kd. Rak <span class="asterisk">*</span></label>
-                        <input type="text" class=" req form-control col-sm-3" id="it_loc_kd_rak" name="it_loc_kd_rak" placeholder="" value="" required>
+                        <label for="it_status" class="lbl-location control-label">Kd. Rak <span class="asterisk"></span></label>
+                        <input type="text" class="  form-control col-sm-3" id="it_loc_kd_rak" name="it_loc_kd_rak" placeholder="" value="" >
                   </div>
               </div>
 
             </div><br>
 
             <div class="row">
-              <label for="it_th_beli" class="col-sm-3 control-label">Th. Pembelian <span class="asterisk">*</span></label>
+              <label for="it_th_beli" class="col-sm-3 control-label">Th. Pembelian <span class="asterisk"></span></label>
 
               <div class="col-sm-9">
-                <input type="text" class="req date_pembelian form-control" id="it_th_beli" name="it_th_beli" placeholder="" value="" required>
+                <input type="text" class=" date_pembelian form-control" id="it_th_beli" name="it_th_beli" placeholder="" value="" >
               </div>
               <style type="text/css">
                   .bootstrap-datetimepicker-widget table thead tr th,.bootstrap-datetimepicker-widget table tbody tr td{color:black;}
@@ -288,7 +288,7 @@
 
 
         <div class="row">
-          <label for="code" class="col-sm-3 control-label">Photos <span class="asterisk">*</span></label>
+          <label for="code" class="col-sm-3 control-label">Photos <span class="asterisk"></span></label>
 
           <div class="col-sm-9">
             <form id="up" method="post" enctype="multipart/form-data">
@@ -314,7 +314,7 @@
               </div>
             </form>
           </div>
-          
+
         </div><br>
 
 
@@ -343,7 +343,7 @@
     background:rgba(255,0,0,0.1);
 /*    width:100px; height:100px;
     position:relative;*/
-    
+
     -webkit-transition: background .5s ease-out;
        -moz-transition: background .5s ease-out;
          -o-transition: background .5s ease-out;

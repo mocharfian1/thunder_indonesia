@@ -308,19 +308,19 @@ class Model_produk extends CI_Model {
 		if(	$mode == null ||
 			$nama == null ||
 			$kat_id == null ||
-			$sub_kat_id == null ||
+			$sub_kat_id == null
 			// $harga_beli == null ||
-			$harga_jual == null ||
-			$lost_remark == null ||
-			$fragile == null ||
-			$status == null ||
-			$sat == null ||
-			$sat_des == null ||
-			$it_loc_nm_gudang == null ||
-			$it_loc_kd_gudang == null ||
-			$it_loc_kd_lokasi == null ||
-			$it_loc_kd_rak == null ||
-			$it_th_beli == null
+			// $harga_jual == null ||
+			// $lost_remark == null ||
+			// $fragile == null ||
+			// $status == null ||
+			// $sat == null ||
+			// $sat_des == null ||
+			// $it_loc_nm_gudang == null ||
+			// $it_loc_kd_gudang == null ||
+			// $it_loc_kd_lokasi == null ||
+			// $it_loc_kd_rak == null ||
+			// $it_th_beli == null
 			// $cost_percentage == null
 			){
 				$response = false;
@@ -459,19 +459,19 @@ class Model_produk extends CI_Model {
 		if(	$mode == null ||
 			$nama == null ||
 			$kat_id == null ||
-			$sub_kat_id == null ||
+			$sub_kat_id == null 
 			// $harga_beli == null ||
-			$harga_jual == null ||
-			$lost_remark == null ||
-			$fragile == null ||
-			$status == null ||
-			$sat == null ||
-			$sat_des == null ||
-			$it_loc_nm_gudang == null ||
-			$it_loc_kd_gudang == null ||
-			$it_loc_kd_lokasi == null ||
-			$it_loc_kd_rak == null ||
-			$it_th_beli == null
+			// $harga_jual == null ||
+			// $lost_remark == null ||
+			// $fragile == null ||
+			// $status == null ||
+			// $sat == null ||
+			// $sat_des == null ||
+			// $it_loc_nm_gudang == null ||
+			// $it_loc_kd_gudang == null ||
+			// $it_loc_kd_lokasi == null ||
+			// $it_loc_kd_rak == null ||
+			// $it_th_beli == null
 			// $cost_percentage == null
 			){
 				$response = false;

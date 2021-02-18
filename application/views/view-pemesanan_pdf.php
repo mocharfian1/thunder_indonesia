@@ -103,8 +103,8 @@
             <td><?=$list->item_name?></td>
             <td><?=$list->h_stock?></td>
             <td><?=$list->qty?></td>
-            <td><?=$list->is_out='checked'?'Y':' '?></td>
-            <td><?=$list->is_in='checked'?'Y':' '?></td>
+            <td><?=$list->is_out?'Y':' '?></td>
+            <td><?=$list->is_in?'Y':' '?></td>
           </tr>
 
         <?php endforeach; ?>

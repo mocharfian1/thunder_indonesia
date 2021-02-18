@@ -3,7 +3,7 @@ var URL = $('#BASE_URL').val();
 var TYPE = $('#type_pos').val();
 
 function previewFile(x) {
-    
+
     var file = "";
     var preview = x.parent().find('img'); //selects the query named img
     file = (x)[0].files[0]; //sames as here
@@ -37,7 +37,7 @@ function c_barcode(){
 }
 
 function del(id) {
-    
+
     $.confirm({
         title: 'Confirmation!',
         content: 'Delete data?',
@@ -101,7 +101,7 @@ function edit(el, id) {
     md.find('#it_loc_kd_rak').val(dt[15]);
     md.find('#it_th_beli').val(dt[16]);
 
-    
+
 
     $.ajax({
         type:'POST',
@@ -115,21 +115,21 @@ function edit(el, id) {
             if (data != '') {
                 var jParse = JSON.parse(data);
                 try {
-                            
+
                     $('.photo').eq(0).attr('src', URL + 'assets/img/' + jParse[0].img_name);
 
-                    
+
                     $('.photo').eq(1).attr('src', URL + 'assets/img/' + jParse[1].img_name);
 
-                    
+
                     $('.photo').eq(2).attr('src', URL + 'assets/img/' + jParse[2].img_name);
 
-                    
+
                 } catch (e) {
-                    
-                    console.log(e);   
+
+                    console.log(e);
                 }
-                
+
             }else{
                 endloading();
             }
@@ -150,13 +150,13 @@ function edit(el, id) {
             arrDurasi = JSON.parse(response);
             endloading();
         }
-        
+
     }).fail(function(){
 
     });
 
 
-    
+
 
     $('.select2').select2({
         width: '100%'
@@ -167,7 +167,7 @@ function edit(el, id) {
 }
 
 function setSubFromEdit(x, idSub) {
-    
+
     var subSel = $('#sub_kat_id');
     subSel.html('');
     indexKat = x;
@@ -178,7 +178,7 @@ function setSubFromEdit(x, idSub) {
 }
 
 function setSub(x) {
-    
+
     var subSel = $('#sub_kat_id');
     subSel.html('');
     indexKat = x.prop('selectedIndex');
@@ -188,27 +188,27 @@ function setSub(x) {
 }
 
 function setSubFirst() {
-    
+
     var subSel = $('#sub_kat_id');
-    
+
     subSel.html('');
-    
+
     indexKat = 0;
-    
+
     //if(indexKat>0){
         sub[indexKat].forEach(function(element, index) {
-            
+
             subSel.append('<option value=' + sub[indexKat][index].id + '>' + sub[indexKat][index].sub_description + '</option>')
-            
+
         });
     //}
-    
+
     $('.katName').select2();
-    
+
 }
 
 function uploadImage(id) {
-    
+
     $.ajax({
         url: URL + 'produk/upload/' + id, // Url to which the request is send
         type: "POST", // Type of request to be send, called as method
@@ -283,7 +283,7 @@ $(document).ready(function() {
 
         var it_th_beli = $('#it_th_beli').val();
 
-        
+
 
         var inp = $('.req').toArray();
         $('.req').css({"background":"white"});
@@ -304,7 +304,7 @@ $(document).ready(function() {
 
 
 
-        
+
         // var cost_percentage = $('#it_cost_percentage').val();
 
         if(firstInp.length==0){
@@ -324,17 +324,17 @@ $(document).ready(function() {
                         if (barcode == '' ||
                             nama == '' ||
                             kat_id == '' ||
-                            sub_kat_id == '' ||
+                            sub_kat_id == '' 
                             // harga_beli == '' ||
-                            harga_jual == '' ||
-                            lost_remark == '' ||
-                            fragile == '' ||
-                            status == '' || 
-                            it_loc_nm_gudang == '' ||
-                            it_loc_kd_gudang == '' ||
-                            it_loc_kd_lokasi == '' ||
-                            it_th_beli == '' ||
-                            it_loc_kd_rak == ''
+                            // harga_jual == '' ||
+                            // lost_remark == '' ||
+                            // fragile == '' ||
+                            // status == '' ||
+                            // it_loc_nm_gudang == '' ||
+                            // it_loc_kd_gudang == '' ||
+                            // it_loc_kd_lokasi == '' ||
+                            // it_th_beli == '' ||
+                            // it_loc_kd_rak == ''
                             // cost_percentage == ''
                         ) {
                             $.alert('Data tidak Lengkap');
@@ -396,7 +396,7 @@ $(document).ready(function() {
                                                         ok:{
                                                             text:"OK",
                                                             action:function(){
-                                                                window.location = URL + 'produk/item/view';                
+                                                                window.location = URL + 'produk/item/view';
                                                             }
                                                         }
                                                     }
@@ -414,18 +414,18 @@ $(document).ready(function() {
                                                 //     res.status,
                                                 //     res.harga_beli,
                                                 //     res.harga_jual,
-                                                    
+
                                                 //     // res.cost_percentage,
                                                 //     res.update_by_username,
                                                 //     res.update_date,
-                                                //     `<center><button class="btn btn-warning" onclick="edit($(this),` + res.ID_ITEM + `)" value="` 
-                                                //     + res.barcode + `|` 
-                                                //     + res.nama_item + `|` 
-                                                //     + res.id_kat + `|` 
-                                                //     + res.id_sub + `|` 
+                                                //     `<center><button class="btn btn-warning" onclick="edit($(this),` + res.ID_ITEM + `)" value="`
+                                                //     + res.barcode + `|`
+                                                //     + res.nama_item + `|`
+                                                //     + res.id_kat + `|`
+                                                //     + res.id_sub + `|`
                                                 //     + res.qty + `|`
-                                                //     + res.satuan + `|` 
-                                                //     + res.deskripsi_satuan + `|` 
+                                                //     + res.satuan + `|`
+                                                //     + res.deskripsi_satuan + `|`
                                                 //     + res.harga_beli+`|`
                                                 //     + res.harga_jual+`|`
                                                 //     + res.lost_remark+`|`
@@ -454,7 +454,7 @@ $(document).ready(function() {
                             } else {
                                 var id_item = $('#add-item').find('#id_item').val();
                                 startloading('Mengubah data...');
-                                
+
                                 $.ajax({
                                     url: URL + 'produk/item/edit',
                                     type: "post",
@@ -484,7 +484,7 @@ $(document).ready(function() {
                                         // del_durasi:delDurasi
                                             // cost_percentage:cost_percentage
                                     },
-                                    
+
                                     success: function(result) {
                                         endloading();
                                         var k = $.ajax({
@@ -506,12 +506,12 @@ $(document).ready(function() {
                                                         ok:{
                                                             text:"OK",
                                                             action:function(){
-                                                                window.location = URL + 'produk/item/view';                
+                                                                window.location = URL + 'produk/item/view';
                                                             }
                                                         }
                                                     }
                                                 });
-                                                
+
                                             },
                                             complete: function() {
                                                 endloading();
@@ -519,7 +519,7 @@ $(document).ready(function() {
                                         });
 
                                     }
-                                    
+
                                 });
                             }
                         }
@@ -566,7 +566,7 @@ function add_durasi(id=null) {
                     }
                 }
 
-                
+
                 list.append(`
                         <li class="list-group-item clearfix">
                             <div class="col-sm-10 durasi">
@@ -581,7 +581,7 @@ function add_durasi(id=null) {
                 `);
 
             });
-          
+
             return $('#add_durasi').html();
         },buttons:{
             ok:{
@@ -613,7 +613,7 @@ function add_durasi(id=null) {
                 text:"Close",
                 action:function(){
                     arrDurasi = [];
-                    
+
                     $('#list_durasi').empty();
 
                     var it = this;
@@ -655,7 +655,7 @@ function trCheck(e){
     }else{
         $('.pilih').prop('checked',false);
     }
-    
+
 }
 
 function opForm(){
@@ -706,7 +706,7 @@ function opForm(){
                                                     columnClass:'col-md-8 col-md-offset-2'
                                                 });
                                             }).fail((e)=>{
-                                                
+
                                             });
                                         }
                                     },
