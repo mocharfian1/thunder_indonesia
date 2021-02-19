@@ -74,7 +74,12 @@ function del(id) {
     });
 }
 
+$('#addRow').click(function() {
+  $('#md_title').text('Add Item');
+});
+
 function edit(el, id) {
+  $('#md_title').text('Edit Item');
     delDurasi = [];
     arrDurasi = [];
 
@@ -100,7 +105,7 @@ function edit(el, id) {
     md.find('#it_loc_kd_lokasi').val(dt[14]);
     md.find('#it_loc_kd_rak').val(dt[15]);
     md.find('#it_th_beli').val(dt[16]);
-
+    md.find('#it_merek').val(dt[17]);
 
 
     $.ajax({
@@ -126,10 +131,8 @@ function edit(el, id) {
 
 
                 } catch (e) {
-
                     console.log(e);
                 }
-
             }else{
                 endloading();
             }
@@ -275,6 +278,7 @@ $(document).ready(function() {
         var lost_remark = $('#it_lost_remark').val();
         var fragile = $('#it_fragile').val();
         var status = $('#it_status').val();
+        var merek = $('#it_merek').val();
 
         var it_loc_nm_gudang = $('#it_loc_nm_gudang').val();
         var it_loc_kd_gudang = $('#it_loc_kd_gudang').val();
@@ -324,7 +328,7 @@ $(document).ready(function() {
                         if (barcode == '' ||
                             nama == '' ||
                             kat_id == '' ||
-                            sub_kat_id == '' 
+                            sub_kat_id == ''
                             // harga_beli == '' ||
                             // harga_jual == '' ||
                             // lost_remark == '' ||
@@ -357,6 +361,7 @@ $(document).ready(function() {
                                         sat_des: it_sat_des,
                                         harga_beli:clear_f_cur(harga_beli),
                                         harga_jual:clear_f_cur(harga_jual),
+                                        merek:merek,
                                         lost_remark:lost_remark,
                                         fragile:fragile,
                                         status:status,
@@ -471,6 +476,7 @@ $(document).ready(function() {
                                         sat_des: it_sat_des,
                                         harga_beli:clear_f_cur(harga_beli),
                                         harga_jual:clear_f_cur(harga_jual),
+                                        merek:merek,
                                         lost_remark:lost_remark,
                                         fragile:fragile,
                                         status:status,

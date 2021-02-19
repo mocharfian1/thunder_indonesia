@@ -95,7 +95,8 @@
                           .$tb->kode_gudang . '|'
                           .$tb->kode_lokasi . '|'
                           .$tb->kode_rak . '|'
-                          .$tb->tahun_pembelian .
+                          .$tb->tahun_pembelian . '|'
+                          .$tb->merek.
 
 
                           '"><span class="glyphicon glyphicon-edit"></span></button>
@@ -122,7 +123,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">Add Item</h4>
+        <h4 id='md_title' class="modal-title">Add Item</h4>
       </div>
       <div class="modal-body">
         <input type="hidden" id="id_item" name="id" value=""/><br>
@@ -213,6 +214,14 @@
               </div>
                 <input onkeydown="toIDR(this)" type="hidden" class=" form-control" id="it_harga_jual" name="it_harga_jual" placeholder="" value="0" >
 
+            </div><br>
+
+            <div class="row">
+              <label for="it_merek" class="col-sm-3 control-label">Merek <span class="asterisk"></span></label>
+
+              <div class="col-sm-9">
+                <input type="text" class=" form-control" id="it_merek" name="it_merek" placeholder="" value="">
+              </div>
             </div><br>
 
             <div class="row">

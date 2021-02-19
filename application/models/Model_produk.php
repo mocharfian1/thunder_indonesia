@@ -291,6 +291,7 @@ class Model_produk extends CI_Model {
 		$lost_remark = $this->input->post('lost_remark');
 		$fragile = $this->input->post('fragile');
 		$status = $this->input->post('status');
+		$merek = $this->input->post('merek');
 
 
 		$it_loc_nm_gudang = $this->input->post('it_loc_nm_gudang');
@@ -335,6 +336,7 @@ class Model_produk extends CI_Model {
 						'id_kategori'=>$kat_id,
 						'id_sub_kategori'=>$sub_kat_id,
 						'qty'=>$qty,
+						'merek'=>$merek,
 						'satuan'=>$sat,
 						'deskripsi_satuan'=>$sat_des,
 						'harga_beli'=>$harga_beli,
@@ -433,6 +435,7 @@ class Model_produk extends CI_Model {
 		$kat_id = $this->input->post('kat_id');
 		$sub_kat_id = $this->input->post('sub_kat_id');
 		$qty = $this->input->post('qty');
+		$merek = $this->input->post('merek');
 		$sat = $this->input->post('sat');
 		$sat_des = $this->input->post('sat_des');
 		$harga_beli = $this->input->post('harga_beli');
@@ -459,7 +462,7 @@ class Model_produk extends CI_Model {
 		if(	$mode == null ||
 			$nama == null ||
 			$kat_id == null ||
-			$sub_kat_id == null 
+			$sub_kat_id == null
 			// $harga_beli == null ||
 			// $harga_jual == null ||
 			// $lost_remark == null ||
@@ -485,6 +488,7 @@ class Model_produk extends CI_Model {
 						'id_kategori'=>$kat_id,
 						'id_sub_kategori'=>$sub_kat_id,
 						'qty'=>$qty,
+						'merek'=>$merek,
 						'satuan'=>$sat,
 						'deskripsi_satuan'=>$sat_des,
 						'harga_beli'=>$harga_beli,
