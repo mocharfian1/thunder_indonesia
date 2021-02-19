@@ -99,5 +99,17 @@
 			<td>Diketahui Oleh, <br>Sekuriti</td>
 			<td>Penerima,</td>
 		</tr>
+		<tr>
+			<td><br>&nbsp;<br></td>
+		</tr>
+		<tr>
+			<td><br>&nbsp;<br></td>
+		</tr>
+		<tr>
+			<td><br>&nbsp;<br></td>
+		</tr>
+		<tr>
+			<td colspan="5" style="font-size:9px"><i>*Tanda tangan disertakan Nama Jelas dan Tanggal<i></td>
+		</tr>
 	</tbody>
 </table>
