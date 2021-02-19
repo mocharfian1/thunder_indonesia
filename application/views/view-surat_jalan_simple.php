@@ -95,6 +95,7 @@
 		<tr>
 			<td>Dibuat Oleh, <br>Kepala Gudang</td>
 			<td>Disiapkan Oleh, <br>Staff Gudang</td>
+			<td>Dibawa Oleh, <br>Driver</td>
 			<td>Diketahui Oleh, <br>Sekuriti</td>
 			<td>Penerima,</td>
 		</tr>
