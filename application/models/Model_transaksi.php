@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Model_transaksi extends CI_Model {
 	function __construct(){
 		parent::__construct();
@@ -37,7 +37,7 @@ class Model_transaksi extends CI_Model {
 										p.approve_date,
 										p.receive_date
 								from pengajuan as p
-										join user as u 
+										join user as u
 								where p.is_delete="0" ' . $ex . '
 										and p.update_by=u.id'
 									);
@@ -50,7 +50,7 @@ class Model_transaksi extends CI_Model {
 	}
 
 	public function list_item_pengajuan($id=null){
-		
+
 		$query = $this->db->query('	select 	p.id,p.no_pengajuan,
 												p.judul,
 												p.tgl_pengajuan,
@@ -70,7 +70,7 @@ class Model_transaksi extends CI_Model {
 									from pengajuan as p
 											join item_pengajuan as ip
 											join pos_item as i
-											
+
 									where p.id='.$id.' and ip.id_pengajuan=p.id and ip.id_item=i.id and ip.is_delete=0');
 
 		if ($query->num_rows() > 0){
@@ -98,7 +98,7 @@ class Model_transaksi extends CI_Model {
 									from pengajuan as p
 											join item_pengajuan as ip
 											join pos_item as i
-											
+
 									where p.id='.$id.' and ip.id_pengajuan=p.id and ip.id_item=i.id and ip.is_delete=0');
 
 		if ($query->num_rows() > 0){
@@ -135,20 +135,20 @@ class Model_transaksi extends CI_Model {
 					$items[$key]['insert_by']=$session_id;
 					$items[$key]['update_by']=$session_id;
 				}
-				
+
 				$this->db->insert_batch('item_pengajuan',$items);
 			}
 		}
 
 		if($mode == 'edit'){
 			try{
-				$data = array(	
+				$data = array(
 								'judul'=>$judul,
 								'update_by'=>$session_id
 							);
 
 				$this->db->where('id', $id);
-				$this->db->update('pengajuan', $data); 
+				$this->db->update('pengajuan', $data);
 			}catch(Exception $e){
 
 			}finally{
@@ -161,7 +161,7 @@ class Model_transaksi extends CI_Model {
 
 					}finally{
 
-						$this->db->query('insert into item_pengajuan (id,id_pengajuan,id_item,qty,h_stock,insert_by,update_by) 
+						$this->db->query('insert into item_pengajuan (id,id_pengajuan,id_item,qty,h_stock,insert_by,update_by)
 							values("'. $items[$key]['id'] .'",'
 									. $items[$key]['id_pengajuan'] .','
 									. $items[$key]['id_item'] .','
@@ -171,7 +171,7 @@ class Model_transaksi extends CI_Model {
 									. $items[$key]['update_by'].') on duplicate key update qty='. $items[$key]['qty'] . ',h_stock='. $items[$key]['h_stock']);
 					}
 				}
-				
+
 				// $this->db->replace_batch('item_pengajuan',$items);
 
 			}
@@ -195,23 +195,24 @@ class Model_transaksi extends CI_Model {
 		}
 
 
-		$query = $this->db->query('select 	
+		$query = $this->db->query('select
 										p.id as id_pemesanan,
 										u_p.name as pemesan,
 										u_p.id as id_pemesan,
-										p.no_pemesanan, 
-										p.tgl_pemesanan, 
+										p.no_pemesanan,
+										p.tgl_pemesanan,
 										p.group,
 										p.lantai,
 										p.`status`,
-										p.tanggal_acara,	
-										p.tanggal_acara_awal,	
-										p.tanggal_acara_akhir,	
+										p.tanggal_acara,
+										p.tanggal_acara_awal,
+										p.tanggal_acara_akhir,
+										p.no_sales_order,
 										p.nama_event,
-										p.alamat_venue,	
-										p.loading_in,	
-										p.loading_out,	
-										p.pic,	
+										p.alamat_venue,
+										p.loading_in,
+										p.loading_out,
+										p.pic,
 										p.no_hp_pic,
 										(select u.id from user as u where u.id=p.id_kurir) as id_kurir,
 										(select u.name from user as u where u.id=p.id_kurir) as kurir,
@@ -224,10 +225,10 @@ class Model_transaksi extends CI_Model {
 								from pemesanan as p
 										join user as u_u
 										join user as u_p
-								where p.is_delete="0" 
-										' . $ex . ' 
-										' . $pemesan . ' 
-										' . $kurir . ' 
+								where p.is_delete="0"
+										' . $ex . '
+										' . $pemesan . '
+										' . $kurir . '
 										and p.update_by=u_u.id
 										and p.id_pemesan=u_p.id order by p.tgl_pemesanan desc');
 
@@ -245,12 +246,13 @@ class Model_transaksi extends CI_Model {
 			$mode=null;
 		}
 
-		$query = $this->db->query('select 	
+		$query = $this->db->query('select
 										p.id as id_pemesanan,
 										u_p.name as pemesan,
 										u_p.id as id_pemesan,
-										p.no_pemesanan, 
-										p.tgl_pemesanan, 
+										p.no_sales_order,
+										p.no_pemesanan,
+										p.tgl_pemesanan,
 										p.loading_status,
 										p.`group`,
 										p.lantai,
@@ -265,10 +267,10 @@ class Model_transaksi extends CI_Model {
 								from pemesanan as p
 										join user as u_u
 										join user as u_p
-								where p.is_delete="0" 
+								where p.is_delete="0"
 										and p.update_by=u_u.id
 										and p.id_pemesan=u_p.id '.$mode.' order by p.tgl_pemesanan desc');
-		
+
 		if ($query->num_rows() > 0){
 		    return $query->result();
 		}else{
@@ -280,12 +282,12 @@ class Model_transaksi extends CI_Model {
 		if(!empty($id_pemesanan)){
 			$pemesanan = 'and id_pemesanan=' . $id_pemesanan;
 		}
-		$query = $this->db->query('	select 
-											* 
-									from 
-											crew_pemesanan as c 
+		$query = $this->db->query('	select
+											*
+									from
+											crew_pemesanan as c
 											join user as u on u.id=c.id_kurir
-									where  
+									where
 											c.is_delete=0 ' . $pemesanan);
 		if ($query->num_rows() > 0){
 		    return $query->result();
@@ -305,6 +307,7 @@ class Model_transaksi extends CI_Model {
 		$ls_tgl_acara_del = !empty($_POST['ls_tgl_acara_del'])?$_POST['ls_tgl_acara_del']:null;
 		// $tanggal_acara_awal = $_POST['tanggal_acara_awal'];
 		// $tanggal_acara_akhir = $_POST['tanggal_acara_akhir'];
+		$no_sales_order =$_POST['no_sales_order'];
 		$nama_event=$_POST['nama_event'];
 		$alamat_venue=$_POST['alamat_venue'];
 		$loading_in=$_POST['loading_in'];
@@ -313,8 +316,8 @@ class Model_transaksi extends CI_Model {
 		$no_hp_pic=$_POST['no_hp_pic'];
 		// $duration = $this->input->post('duration');
 		$insert_id_pemesanan;
-		
-		
+
+
 		// if($is_mobile=='mobile'){
 		// 	$id_pemesan = $id_p;
 		// }
@@ -326,9 +329,9 @@ class Model_transaksi extends CI_Model {
 
 			$q_user = $this->db->query("	select
 										(SELECT IFNULL(NULL, (select `group` from user where id=u.id)) as `Group`) as `group` ,
-										(SELECT IFNULL(NULL, (select `lantai` from user where id=u.id)) as `lantai`) as `lantai` 
-										
-								from 
+										(SELECT IFNULL(NULL, (select `lantai` from user where id=u.id)) as `lantai`) as `lantai`
+
+								from
 										user as u where u.id=" . $id_pemesan);
 
 			if($q_user->num_rows()>0){
@@ -340,7 +343,7 @@ class Model_transaksi extends CI_Model {
 			}
 
 			$mode = $this->input->post('mode');
-			
+
 			if($is_mobile==null){
 				//echo "A";
 				$nomor = $this->input->post('nomor');
@@ -350,7 +353,7 @@ class Model_transaksi extends CI_Model {
 					return '{"status":"-2","message":"Error : Nomor Pemesanan Kosong."}';
 					return false;
 				}
-				
+
 			}else{
 				if($is_mobile=='mobile'){
 					$nomor = 'PSN-'.time().'-'.date('Y');
@@ -371,7 +374,7 @@ class Model_transaksi extends CI_Model {
 			}else{
 				$session_id = $this->session->userdata('id_user') ? $this->session->userdata('id_user') : '1';
 			}
-			
+
 
 
 			$mod_db = 0;
@@ -381,13 +384,14 @@ class Model_transaksi extends CI_Model {
 			try{
 				if($mode == 'add'){
 					try{
-						$data = array(	
+						$data = array(
 										'jenis'=>$_GET['type'],
 										'id_pemesan'=>$id_pemesan,
 										'no_pemesanan'=>$nomor,
 										'tanggal_acara'=>$tanggal_acara,
 										//'tanggal_acara_awal'=>$tanggal_acara_awal,
 										//'tanggal_acara_akhir'=>$tanggal_acara_akhir,
+										'no_sales_order'=>$no_sales_order,
 										'nama_event'=>$nama_event,
 										'alamat_venue'=>$alamat_venue,
 										'loading_in'=>$loading_in,
@@ -411,7 +415,7 @@ class Model_transaksi extends CI_Model {
 							}
 						}
 
-						
+
 
 
 					}catch(Exception $e){
@@ -443,7 +447,7 @@ class Model_transaksi extends CI_Model {
 
 				if($mode == 'edit'){
 					try{
-						$data = array(	
+						$data = array(
 										//'judul'=>$judul,
 										'jenis'=>$_GET['type'],
 										'id_pemesan'=>$id_pemesan,
@@ -461,7 +465,7 @@ class Model_transaksi extends CI_Model {
 									);
 
 						$this->db->where('id', $id);
-						$mod_db = $this->db->update('pemesanan', $data); 
+						$mod_db = $this->db->update('pemesanan', $data);
 
 						if(!empty($ls_tgl_acara)){
 							foreach ($_POST['ls_tgl_acara'] as $key_acr => $value_acr) {
@@ -505,7 +509,7 @@ class Model_transaksi extends CI_Model {
 									// 	$nego="";
 									// }
 
-									$q = 'insert into item_pemesanan (id,id_pemesanan,id_item,qty,h_stock,disc,extra_charge,durasi,harga,total_harga,insert_by,update_by) 
+									$q = 'insert into item_pemesanan (id,id_pemesanan,id_item,qty,h_stock,disc,extra_charge,durasi,harga,total_harga,insert_by,update_by)
 										values('. $id_i .','
 												. $items[$key]['id_pemesanan'] .','
 												. $items[$key]['id_item'] .','
@@ -517,7 +521,7 @@ class Model_transaksi extends CI_Model {
 												. $items[$key]['harga'] .','
 												. $items[$key]['total_harga'] .','
 												. $items[$key]['insert_by'] .','
-												. $items[$key]['update_by'].') on duplicate key update 
+												. $items[$key]['update_by'].') on duplicate key update
 												qty='. $items[$key]['qty'] . ',
 												h_stock='. $items[$key]['h_stock'] . ',
 												disc='. $items[$key]['disc'] . ',
@@ -527,7 +531,7 @@ class Model_transaksi extends CI_Model {
 												total_harga='. $items[$key]['total_harga'];
 									$mod_item += $this->db->query($q);
 									// echo $q;
-									
+
 								}
 							}
 						}
@@ -549,7 +553,7 @@ class Model_transaksi extends CI_Model {
 							$mod_item += $this->db->insert_batch('item_pemesanan',$itemFree);
 
 						}
-						
+
 						// $this->db->replace_batch('item_pengajuan',$items);
 
 
@@ -560,7 +564,7 @@ class Model_transaksi extends CI_Model {
 
 			}finally{
 				if(!empty($id_pemesan)){
-					if($mode=='add'){	
+					if($mode=='add'){
 						if($mod_db==1 && ($mod_item>0 || $mod_item_free>0)){
 							return '{"status":"1","message":"Sukses menambah pemesanan"}';
 							$jenis_pemesanan = $this->db->where('id',$insert_id_pemesanan)->select('jenis')->get('pemesanan');
@@ -573,7 +577,7 @@ class Model_transaksi extends CI_Model {
 							return '{"status":"-1","message":"Error Menambah Pemesanan (Item Kosong)"}';
 						}
 					}
-					if($mode=='edit'){	
+					if($mode=='edit'){
 						if($mod_db==1 && $mod_item>0){
 							return '{"status":"1","message":"Sukses Mengubah Pemesanan"}';
 						}else{
@@ -596,8 +600,8 @@ class Model_transaksi extends CI_Model {
 		}else{
 			$id=$id_pem;
 		}
-		
-		$query = $this->db->query('	select 		
+
+		$query = $this->db->query('	select
 												i.is_external,
 												k.id as id_kat,
 												k.description as kategori,
@@ -605,13 +609,14 @@ class Model_transaksi extends CI_Model {
 												p.tgl_pemesanan,
 												p.`status`,
 												p.tanggal_acara,
-												p.tanggal_acara_awal,	
+												p.tanggal_acara_awal,
 												p.tanggal_acara_akhir,
+												p.no_sales_order,
 												p.nama_event,
-												p.alamat_venue,	
-												p.loading_in,	
-												p.loading_out,	
-												p.pic,	
+												p.alamat_venue,
+												p.loading_in,
+												p.loading_out,
+												p.pic,
 												p.no_hp_pic,
 												up.nama_pic,
 												up.name as nama_pemesan,
@@ -658,9 +663,9 @@ class Model_transaksi extends CI_Model {
 											left join pos_item as i on ip.id_item=i.id
 											join user as up
 											left JOIN pos_kategori AS k ON i.id_kategori=k.id
-									where p.id='.$id.' and 
-											ip.id_pemesanan=p.id and 
-											ip.is_delete=0 and 
+									where p.id='.$id.' and
+											ip.id_pemesanan=p.id and
+											ip.is_delete=0 and
 											p.id_pemesan=up.id
 
 									order by ip.id_item asc
@@ -681,16 +686,16 @@ class Model_transaksi extends CI_Model {
 		}else{
 			$id=$id_pem;
 		}
-		
-		$query = $this->db->query('	select 		
+
+		$query = $this->db->query('	select
 											k.id,
 											k.description AS nama_kategori
 									from pemesanan as p
 											join item_pemesanan as ip
 											left join pos_item as i on ip.id_item=i.id
 											left JOIN pos_kategori AS k ON i.id_kategori=k.id
-									where p.id='.$id.' and 
-											ip.id_pemesanan=p.id and 
+									where p.id='.$id.' and
+											ip.id_pemesanan=p.id and
 											ip.is_delete=0
 									GROUP BY k.id
 									order by k.description asc
@@ -729,10 +734,10 @@ class Model_transaksi extends CI_Model {
 									from pemesanan as p
 											join item_pemesanan as ip
 											left join pos_item as i on ip.id_item=i.id
-											
-											
-									where 	p.id='.$id.' and 
-											ip.id_pemesanan=p.id and 
+
+
+									where 	p.id='.$id.' and
+											ip.id_pemesanan=p.id and
 											ip.is_delete=0');
 
 		if ($query->num_rows() > 0){
@@ -755,7 +760,7 @@ class Model_transaksi extends CI_Model {
 	public function cancel_pemesanan($id){
 		$query = $this->db->query("update pemesanan set status=6 where id=".$id." and status<5");
 
-		
+
 		if($query){
 			$ck_stat = $this->db->where('id',$id)->select('status')->get('pemesanan');
 
@@ -772,26 +777,26 @@ class Model_transaksi extends CI_Model {
 				}else{
 					if($ck_stat->row()->status==5){
 						return '{"status":-3,"message":"Gagal membatalkan pemesanan, Status pemesanan sudah Selesai"}';
-					}					
+					}
 				}
-				
+
 			}else{
 				return '{"status":-2,"message":"Gagal membatalkan pemesanan. Data tidak ditemukan"}';
 			}
-			
+
 		}else{
 			return '{"status":-1,"message":"Gagal membatalkan pemesanan"}';
 		}
 	}
 
 	public function extra_charge(){
-		$query = $this->db->query('	select 
+		$query = $this->db->query('	select
 											e.*,
 											u.name as update_by_username
-									from 
-											extra_charge as e 
-											join user as u 
-									where 
+									from
+											extra_charge as e
+											join user as u
+									where
 											e.update_by=u.id
 											and e.is_delete=0');
 

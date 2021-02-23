@@ -676,6 +676,7 @@ function submit(x,type=null) {
 						var tanggal_acara = $('input[name="tanggal_acara"]').val();
 						//var tanggal_acara_awal = $('input[name="tanggal_acara_awal"]').val();
 						//var tanggal_acara_akhir = $('input[name="tanggal_acara_akhir"]').val();
+						var no_sales_order = $('input[name="no_sales_order"]').val();
 						var nama_event = $('input[name="nama_event"]').val();
 						var alamat_venue = $('textarea[name="alamat_venue"]').val();
 						var loading_in = $('input[name="loading_in"]').val();
@@ -784,6 +785,7 @@ function submit(x,type=null) {
 								tanggal_acara:tanggal_acara,
 								//tanggal_acara_awal:tanggal_acara_awal,
 								//tanggal_acara_akhir:tanggal_acara_akhir,
+								no_sales_order:no_sales_order,
 								nama_event:nama_event,
 								alamat_venue:alamat_venue,
 								loading_in:loading_in,
@@ -928,6 +930,7 @@ function sh_pemesanan(x, y = null) {
 				$('.v_group').html(res[0].group);
 				$('.v_lantai').html(res[0].lantai);
 				$('.pic').html(res[0].pic);
+				$('.no_sales_order').html(res[0].no_sales_order);
 				$('.nama_event').html(res[0].nama_event);
 				$('.alamat_venue').html(res[0].alamat_venue);
 				$('.loading_in').html(res[0].loading_in);

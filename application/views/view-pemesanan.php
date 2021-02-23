@@ -49,7 +49,8 @@
                 <thead>
                 <tr>
                   <th class="" style="background-color: #4F81BD; color: white; ">NO.</th>
-                  <th class="" style="background-color: #4F81BD; color: white; ">JENIS</th>
+                  <th class="" style="background-color: #4F81BD; color: white; ">No. Sales Order</th>
+                  <!-- <th class="" style="background-color: #4F81BD; color: white; ">JENIS</th> -->
                   <th class="" style="background-color: #4F81BD; color: white; ">NO. PEMESANAN</th>
                   <th class="" style="background-color: #4F81BD; color: white; ">NAMA PEMESAN</th>
                   <!-- <th class="" style="background-color: #4F81BD; color: white; ">DURASI</th> -->
@@ -90,7 +91,8 @@
 
                             <tr class="id-<?php echo $value->id_pemesanan; ?>">
                               <td><?php echo $no; ?></td>
-                              <td><?php echo ucfirst($value->jenis); ?></td>
+                              <td><?=$value->no_sales_order?></td>
+                              <!-- <td><?php// echo ucfirst($value->jenis); ?></td> -->
                               <td><?php echo $value->no_pemesanan; ?></td>
                               <td><?php echo $value->pemesan; ?></td>
                               <!-- <td><?php echo $value->duration; ?> Hari</td> -->
@@ -145,7 +147,8 @@
 
                             <tr class="id-<?php echo $value->id_pemesanan; ?>">
                               <td><?php echo $no; ?></td>
-                              <td><?php echo ucfirst($value->jenis); ?></td>
+                              <!-- <td><?php// echo ucfirst($value->jenis); ?></td> -->
+                              <td><?=$value->no_sales_order?></td>
                               <td><?php echo $value->no_pemesanan; ?></td>
                               <td><?php echo $value->pemesan; ?></td>
                               <!-- <td><?php echo $value->duration; ?> Hari</td> -->
@@ -312,6 +315,10 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group col-lg-12">
+                                    <label>No Sales Order</label>
+                                    <input name="no_sales_order" type="text" class="form-control form-control" value="<?php echo !empty($tb_pemesanan) ? $tb_pemesanan[0]->no_sales_order:''; ?>">
+                                </div>
 
                                 <div class="form-group col-lg-12">
                                     <label>Nama Event</label>
@@ -704,6 +711,8 @@
                 </div>
                 <div class="panel-body">
                     <label style="font-weight: normal;">PIC : <i style="font-weight: bold; color: blue;" class="pic"></i></label>
+                    <br>
+                    <label style="font-weight: normal;">No. Sales Order : <i style="font-weight: bold; color: blue;" class="no_sales_order"></i></label>
                     <br>
                     <label style="font-weight: normal;">Nama Event : <i style="font-weight: bold; color: blue;" class="nama_event"></i></label>
                     <br>
