@@ -75,8 +75,8 @@
           <td>Tanggal Acara</td>
           <td>: <?=$list_item_pemesanan[0]->ls_tanggal_acara[0]['tanggal_awal']?></td>
           <td></td>
-          <td></td>
-          <td></td>
+          <td>No. SO</td>
+          <td>: <?=$list_item_pemesanan[0]->no_sales_order?></td>
         </tr>
       </thead>
     </table>
