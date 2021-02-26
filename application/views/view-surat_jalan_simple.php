@@ -28,7 +28,7 @@
 				Kelapa Dua Wetan - Ciracas<br>
 				Jakarta Timur - 13730<br>
 				84.864.775.6-009.000 <br>
-				<b>No. So:</b> <?=$r[0]->no_sales_order?>
+				<b>No. SO:</b> <?=$r[0]->no_sales_order?>
 			</td>
 			<td colspan="3" width="50%" style="text-align: right">
 				<img width="70px" src="<?= $logo; ?>" />

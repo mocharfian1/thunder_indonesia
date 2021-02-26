@@ -4,7 +4,7 @@
 	<div class="panel-heading clearfix">
 		<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Jurnal Hari Ini</h4>
 			<div class="btn-group pull-right">
-			<a href="?export=true" class="btn btn-success btn-sm">Export Excel</a><!-- 
+			<a href="?export=true" class="btn btn-success btn-sm">Export Excel</a><!--
 			<a href="#" class="btn btn-default btn-sm">## Delete</a>
 			<a href="#" class="btn btn-default btn-sm">## Move</a> -->
 		</div>
@@ -18,7 +18,7 @@
 						<tr class="red">
 							<th colspan="2">Div</th>
 							<th colspan="2">Audio System</th>
-							<th colspan="6" rowspan="2">Listen Warehouse</th>
+							<th colspan="5" rowspan="2">Listen Warehouse</th>
 							<th rowspan="3">Remarks</th>
 						</tr>
 						<tr class="red">
@@ -35,7 +35,7 @@
 							<th>Out</th>
 							<th>Stock</th>
 							<th>Balance</th>
-							<th>Qty [Repair]</th>
+							<!-- <th>Qty [Repair]</th> -->
 							<!-- <th>Remarks</th> -->
 						</tr>
 						<tr class="bg-purple red r_width">
@@ -49,7 +49,7 @@
 							<th></th>
 							<th></th>
 							<th></th>
-							<th></th>
+							<!-- <th></th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -65,7 +65,7 @@
 								<td><?= $value->jml_out; ?></td>
 								<td><?= $value->qty+$value->in_repair+$value->jml_out; ?></td>
 								<td><?= $value->qty; ?></td>
-								<td><?= $value->in_repair; ?></td>
+								<!-- <td><?//= $value->in_repair; ?></td> -->
 								<td></td>
 							</tr>
 						<?php $no++; } ?>

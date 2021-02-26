@@ -20,7 +20,7 @@
 			<td>Out</td>
 			<td>Stock</td>
 			<td>Balance</td>
-			<td>Qty [Repair]</td>
+			<!-- <td>Qty [Repair]</td> -->
 			<!-- <td>Remarks</td> -->
 		</tr>
 		<tr class="bg-success">
@@ -40,7 +40,7 @@
 				<td><?= $value->jml_out; ?></td>
 				<td><?= $value->qty+$value->in_repair+$value->jml_out; ?></td>
 				<td><?= $value->qty; ?></td>
-				<td><?= $value->in_repair; ?></td>
+				<!-- <td><?//= $value->in_repair; ?></td> -->
 				<td></td>
 			</tr>
 		<?php $no++; } ?>
